@@ -12,7 +12,7 @@ df = wb.download(indicator=indicator, country=countries, start=1973, end=2024)
 df = df.reset_index().pivot(index="year", columns="country", values=indicator)
 df.index = df.index.astype(int)
 df["multiple_usa_india"] = df["United States"] / df["India"]
-df["multiple_chn_india"] = df["China"] / df["India"]  # New ratio for China/India
+df["multiple_chn_india"] = df["China"] / df["India"]
 persistent_years = [1993, 2001, 2013, 2023]
 
 # Create figure and axes
@@ -23,12 +23,12 @@ fig, (ax1, ax2) = plt.subplots(
 # Plot formatting
 ax1.set_yscale("log")
 ax1.set_xlim(df.index.min(), df.index.max())
-ax1.set_ylim(df.min().min() * 0.9, df.max().max() * 1.1)
+ax1.set_ylim(100, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP per capita: India vs USA vs China (1973-2023)")  # Updated title
+ax1.set_title("GDP per capita: India vs USA vs China (1973-2023)")
 ax1.set_ylabel("GDP per capita (USD)")
 
-ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_chn_india"].max()) * 1.1)  # Adjust ylim for both ratios
+ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_chn_india"].max()) * 1.1)
 ax2.set_xlim(df.index.min(), df.index.max())
 ax2.grid(True)
 ax2.set_ylabel("Multiple (Country/India)")
@@ -37,9 +37,9 @@ ax2.set_xlabel("Year")
 # Initialize elements
 (line1,) = ax1.plot([], [], lw=2, label="India")
 (line2,) = ax1.plot([], [], lw=2, label="USA")
-(line3,) = ax1.plot([], [], lw=2, label="China")  # New line for China
+(line3,) = ax1.plot([], [], lw=2, label="China")
 (ratio_line_usa,) = ax2.plot([], [], lw=2, color="purple", label="USA/India Multiple")
-(ratio_line_chn,) = ax2.plot([], [], lw=2, color="green", label="China/India Multiple")  # New line for China/India ratio
+(ratio_line_chn,) = ax2.plot([], [], lw=2, color="green", label="China/India Multiple")
 year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
 multiple_texts = []
 
@@ -59,30 +59,30 @@ def animate(i):
         current_year = years[i]
         line1.set_data(years, df["India"].iloc[: i + 1])
         line2.set_data(years, df["United States"].iloc[: i + 1])
-        line3.set_data(years, df["China"].iloc[: i + 1])  # Data for China
+        line3.set_data(years, df["China"].iloc[: i + 1])
         ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: i + 1])
-        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: i + 1])  # Data for China/India ratio
+        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: i + 1])
         y_india = df["India"].iloc[i]
         y_usa = df["United States"].iloc[i]
-        y_chn = df["China"].iloc[i]  # China GDP per capita
+        y_chn = df["China"].iloc[i]
         current_multiple_usa = df["multiple_usa_india"].iloc[i]
-        current_multiple_chn = df["multiple_chn_india"].iloc[i]  # China/India ratio
+        current_multiple_chn = df["multiple_chn_india"].iloc[i]
     else:
         years = df.index[: len(df) - 1 + 1]
         current_year = years[len(df) - 1]
         line1.set_data(years, df["India"].iloc[: len(df) - 1 + 1])
         line2.set_data(years, df["United States"].iloc[: len(df) - 1 + 1])
-        line3.set_data(years, df["China"].iloc[: len(df) - 1 + 1])  # Data for China
+        line3.set_data(years, df["China"].iloc[: len(df) - 1 + 1])
         ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: len(df) - 1 + 1])
-        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: len(df) - 1 + 1])  # Data for China/India ratio
+        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: len(df) - 1 + 1])  # Fixed typo
         y_india = df["India"].iloc[len(df) - 1]
         y_usa = df["United States"].iloc[len(df) - 1]
-        y_chn = df["China"].iloc[len(df) - 1]  # China GDP per capita
+        y_chn = df["China"].iloc[len(df) - 1]
         current_multiple_usa = df["multiple_usa_india"].iloc[len(df) - 1]
-        current_multiple_chn = df["multiple_chn_india"].iloc[len(df) - 1]  # China/India ratio
+        current_multiple_chn = df["multiple_chn_india"].iloc[len(df) - 1]
 
     mid_y_usa = math.exp((math.log(y_india) + math.log(y_usa)) / 2)
-    mid_y_chn = math.exp((math.log(y_india) + math.log(y_chn)) / 2)  # Midpoint for China
+    mid_y_chn = math.exp((math.log(y_india) + math.log(y_chn)) / 2)
 
     # Create arrows and text for USA
     arrow_usa = ax1.annotate(
@@ -117,14 +117,14 @@ def animate(i):
     )
 
     # Create arrows and text for China
-    arrow_chn = ax1.annotate(
+    arrow_chn_ind = ax1.annotate(
         "",
         xy=(current_year, y_chn),
         xytext=(current_year, y_india),
-        arrowprops=dict(arrowstyle="<->", color="green", lw=1.5),  # Different color for China
+        arrowprops=dict(arrowstyle="<->", color="green", lw=1.5),
     )
     multiple_text_chn = ax1.text(
-        current_year + 1,  # Slight offset to avoid overlap
+        current_year + 1,
         mid_y_chn,
         f"{current_multiple_chn:.1f}x",
         ha="center",
@@ -136,13 +136,13 @@ def animate(i):
         y_chn,
         f"${y_chn:.0f}",
         ha="left",
-        va="top" if y_chn < y_usa else "bottom",  # Adjust position to avoid overlap
+        va="top" if y_chn < y_usa else "bottom",
         backgroundcolor="white",
     )
 
-    multiple_texts.extend([usa_gdp, india_gdp, chn_gdp, arrow_usa, multiple_text_usa, arrow_chn, multiple_text_chn])
+    multiple_texts.extend([usa_gdp, india_gdp, chn_gdp, arrow_usa, multiple_text_usa, arrow_chn_ind, multiple_text_chn])
 
-    # Add persistent text on ax2 for specific years (USA only, to avoid clutter)
+    # Add persistent text on ax2 for specific years (USA only)
     if current_year in persistent_years:
         ax2.text(
             current_year,
