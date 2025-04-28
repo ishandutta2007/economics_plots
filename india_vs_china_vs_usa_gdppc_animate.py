@@ -29,7 +29,7 @@ ax1.grid(True, which="both", ls="--")
 ax1.set_title("GDP per capita: India vs USA vs China (1973-2023)")
 ax1.set_ylabel("GDP per capita (USD)")
 
-ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_usa_chn"].max()) * 1.1)  # Exclude China/India
+ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_usa_chn"].max()) * 1.1)
 ax2.set_xlim(df.index.min(), df.index.max())
 ax2.grid(True)
 ax2.set_ylabel("Multiple")
@@ -70,19 +70,19 @@ def animate(i):
         current_multiple_chn_india = df["multiple_chn_india"].iloc[i]
         current_multiple_usa_chn = df["multiple_usa_chn"].iloc[i]
     else:
-        years = df.index[: len(df) - 1 + 1]
-        current_year = years[len(df) - 1]
-        line1.set_data(years, df["India"].iloc[: len(df) - 1 + 1])
-        line2.set_data(years, df["United States"].iloc[: len(df) - 1 + 1])
-        line3.set_data(years, df["China"].iloc[: len(df) - 1 + 1])
-        ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: len(df) - 1 + 1])
-        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: len(df) - 1 + 1])
-        y_india = df["India"].iloc[len(df) - 1]
-        y_usa = df["United States"].iloc[len(df) - 1]
-        y_chn = df["China"].iloc[len(df) - 1]
-        current_multiple_usa_india = df["multiple_usa_india"].iloc[len(df) - 1]
-        current_multiple_chn_india = df["multiple_chn_india"].iloc[len(df) - 1]
-        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[len(df) - 1]
+        years = df.index
+        current_year = df.index[-1]
+        line1.set_data(years, df["India"])
+        line2.set_data(years, df["United States"])
+        line3.set_data(years, df["China"])
+        ratio_line_usa.set_data(years, df["multiple_usa_india"])
+        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"])
+        y_india = df["India"].iloc[-1]
+        y_usa = df["United States"].iloc[-1]
+        y_chn = df["China"].iloc[-1]
+        current_multiple_usa_india = df["multiple_usa_india"].iloc[-1]
+        current_multiple_chn_india = df["multiple_chn_india"].iloc[-1]
+        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[-1]
 
     # Conditional arrow and text for USA based on year
     if current_year <= 1991:
