@@ -13,6 +13,7 @@ df = df.reset_index().pivot(index="year", columns="country", values=indicator)
 df.index = df.index.astype(int)
 df["multiple_usa_india"] = df["United States"] / df["India"]
 df["multiple_chn_india"] = df["China"] / df["India"]
+df["multiple_usa_chn"] = df["United States"] / df["China"]  # New column for USA/China ratio
 persistent_years = [1993, 2001, 2013, 2023]
 
 # Create figure and axes
@@ -65,8 +66,9 @@ def animate(i):
         y_india = df["India"].iloc[i]
         y_usa = df["United States"].iloc[i]
         y_chn = df["China"].iloc[i]
-        current_multiple_usa = df["multiple_usa_india"].iloc[i]
-        current_multiple_chn = df["multiple_chn_india"].iloc[i]
+        current_multiple_usa_india = df["multiple_usa_india"].iloc[i]
+        current_multiple_chn_india = df["multiple_chn_india"].iloc[i]
+        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[i]
     else:
         years = df.index[: len(df) - 1 + 1]
         current_year = years[len(df) - 1]
@@ -74,31 +76,51 @@ def animate(i):
         line2.set_data(years, df["United States"].iloc[: len(df) - 1 + 1])
         line3.set_data(years, df["China"].iloc[: len(df) - 1 + 1])
         ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: len(df) - 1 + 1])
-        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: len(df) - 1 + 1])  # Fixed typo
+        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: len(df) - 1 + 1])
         y_india = df["India"].iloc[len(df) - 1]
         y_usa = df["United States"].iloc[len(df) - 1]
         y_chn = df["China"].iloc[len(df) - 1]
-        current_multiple_usa = df["multiple_usa_india"].iloc[len(df) - 1]
-        current_multiple_chn = df["multiple_chn_india"].iloc[len(df) - 1]
+        current_multiple_usa_india = df["multiple_usa_india"].iloc[len(df) - 1]
+        current_multiple_chn_india = df["multiple_chn_india"].iloc[len(df) - 1]
+        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[len(df) - 1]
 
-    mid_y_usa = math.exp((math.log(y_india) + math.log(y_usa)) / 2)
-    mid_y_chn = math.exp((math.log(y_india) + math.log(y_chn)) / 2)
+    # Conditional arrow and text for USA based on year
+    if current_year <= 1991:
+        # Arrow and text for India vs USA
+        mid_y_usa = math.exp((math.log(y_india) + math.log(y_usa)) / 2)
+        arrow_usa = ax1.annotate(
+            "",
+            xy=(current_year, y_usa),
+            xytext=(current_year, y_india),
+            arrowprops=dict(arrowstyle="<->", color="red", lw=1.5),
+        )
+        multiple_text_usa = ax1.text(
+            current_year,
+            mid_y_usa,
+            f"{current_multiple_usa_india:.1f}x",
+            ha="center",
+            va="center",
+            backgroundcolor="white",
+        )
+    else:
+        # Arrow and text for China vs USA
+        mid_y_usa = math.exp((math.log(y_chn) + math.log(y_usa)) / 2)
+        arrow_usa = ax1.annotate(
+            "",
+            xy=(current_year, y_usa),
+            xytext=(current_year, y_chn),
+            arrowprops=dict(arrowstyle="<->", color="red", lw=1.5),
+        )
+        multiple_text_usa = ax1.text(
+            current_year,
+            mid_y_usa,
+            f"{current_multiple_usa_chn:.1f}x",
+            ha="center",
+            va="center",
+            backgroundcolor="white",
+        )
 
-    # Create arrows and text for USA
-    arrow_usa = ax1.annotate(
-        "",
-        xy=(current_year, y_usa),
-        xytext=(current_year, y_india),
-        arrowprops=dict(arrowstyle="<->", color="red", lw=1.5),
-    )
-    multiple_text_usa = ax1.text(
-        current_year,
-        mid_y_usa,
-        f"{current_multiple_usa:.1f}x",
-        ha="center",
-        va="center",
-        backgroundcolor="white",
-    )
+    # GDP labels for USA and India
     usa_gdp = ax1.text(
         current_year,
         y_usa,
@@ -116,8 +138,9 @@ def animate(i):
         backgroundcolor="white",
     )
 
-    # Create arrows and text for China
-    arrow_chn_ind = ax1.annotate(
+    # Arrow and text for China vs India (unchanged)
+    mid_y_chn = math.exp((math.log(y_india) + math.log(y_chn)) / 2)
+    arrow_chn = ax1.annotate(
         "",
         xy=(current_year, y_chn),
         xytext=(current_year, y_india),
@@ -126,7 +149,7 @@ def animate(i):
     multiple_text_chn = ax1.text(
         current_year + 1,
         mid_y_chn,
-        f"{current_multiple_chn:.1f}x",
+        f"{current_multiple_chn_india:.1f}x",
         ha="center",
         va="center",
         backgroundcolor="white",
@@ -140,14 +163,14 @@ def animate(i):
         backgroundcolor="white",
     )
 
-    multiple_texts.extend([usa_gdp, india_gdp, chn_gdp, arrow_usa, multiple_text_usa, arrow_chn_ind, multiple_text_chn])
+    multiple_texts.extend([usa_gdp, india_gdp, chn_gdp, arrow_usa, multiple_text_usa, arrow_chn, multiple_text_chn])
 
     # Add persistent text on ax2 for specific years (USA only)
     if current_year in persistent_years:
         ax2.text(
             current_year,
-            current_multiple_usa,
-            f"{current_multiple_usa:.1f}x",
+            current_multiple_usa_india,
+            f"{current_multiple_usa_india:.1f}x",
             ha="center",
             va="bottom",
             fontweight='bold',
