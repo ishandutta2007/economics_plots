@@ -8,7 +8,7 @@ from pandas_datareader import wb
 countries = ["IND", "CHN", "USA"]
 indicator = "NY.GDP.PCAP.CD"
 
-df = wb.download(indicator=indicator, country=countries, start=1973, end=2024)
+df = wb.download(indicator=indicator, country=countries, start=1973, end=2023)
 df = df.reset_index().pivot(index="year", columns="country", values=indicator)
 df.index = df.index.astype(int)
 df["multiple_usa_india"] = df["United States"] / df["India"]
@@ -43,6 +43,7 @@ ax2.set_xlabel("Year")
 (ratio_line_usa_chn,) = ax2.plot([], [], lw=2, color="blue", label="USA/China Multiple")
 year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
 multiple_texts = []
+cached_annotations = None  # Store 2023 annotation data
 
 def init():
     line1.set_data([], [])
@@ -54,14 +55,14 @@ def init():
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
 def animate(i):
-    global multiple_texts
+    global multiple_texts, cached_annotations
 
     # Clear previous annotations
     for txt in multiple_texts:
         txt.remove()
     multiple_texts = []
 
-    # Cap the index at the last year for pause frames
+    # Determine the frame's year and data
     current_idx = min(i, len(df) - 1)
     current_year = df.index[current_idx]
     years = df.index[: current_idx + 1]
@@ -73,13 +74,21 @@ def animate(i):
     ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: current_idx + 1])
     ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: current_idx + 1])
 
-    # Data for annotations
-    y_india = df["India"].iloc[current_idx]
-    y_usa = df["United States"].iloc[current_idx]
-    y_chn = df["China"].iloc[current_idx]
-    current_multiple_usa_india = df["multiple_usa_india"].iloc[current_idx]
-    current_multiple_chn_india = df["multiple_chn_india"].iloc[current_idx]
-    current_multiple_usa_chn = df["multiple_usa_chn"].iloc[current_idx]
+    # Use cached annotations for pause frames
+    if i >= len(df) and cached_annotations is not None:
+        y_usa, y_chn, y_india, current_multiple_usa_india, current_multiple_chn_india, current_multiple_usa_chn = cached_annotations
+    else:
+        # Data for annotations
+        y_india = df["India"].iloc[current_idx]
+        y_usa = df["United States"].iloc[current_idx]
+        y_chn = df["China"].iloc[current_idx]
+        current_multiple_usa_india = df["multiple_usa_india"].iloc[current_idx]
+        current_multiple_chn_india = df["multiple_chn_india"].iloc[current_idx]
+        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[current_idx]
+
+        # Cache annotations when reaching 2023
+        if current_year == 2023:
+            cached_annotations = (y_usa, y_chn, y_india, current_multiple_usa_india, current_multiple_chn_india, current_multiple_usa_chn)
 
     # Conditional arrow and text for USA based on year
     if current_year <= 1991:
