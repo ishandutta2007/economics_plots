@@ -176,6 +176,15 @@ def animate(i):
             fontweight='bold',
             color="darkred",
         )
+        ax2.text(
+            current_year,
+            current_multiple_chn_india,
+            f"{current_multiple_chn_india:.1f}x",
+            ha="center",
+            va="bottom",
+            fontweight='bold',
+            color="darkred",
+        )
 
     # Update year text
     year_text.set_text(f"{current_year}")
