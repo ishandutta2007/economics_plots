@@ -45,44 +45,41 @@ year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large'
 multiple_texts = []
 
 def init():
+    line1.set_data([], [])
+    line2.set_data([], [])
+    line3.set_data([], [])
+    ratio_line_usa.set_data([], [])
+    ratio_line_usa_chn.set_data([], [])
+    year_text.set_text("")
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
 def animate(i):
     global multiple_texts
 
-    # Clear previous elements
+    # Clear previous annotations
     for txt in multiple_texts:
         txt.remove()
     multiple_texts = []
 
-    if i < len(df):
-        years = df.index[: i + 1]
-        current_year = years[i]
-        line1.set_data(years, df["India"].iloc[: i + 1])
-        line2.set_data(years, df["United States"].iloc[: i + 1])
-        line3.set_data(years, df["China"].iloc[: i + 1])
-        ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: i + 1])
-        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: i + 1])
-        y_india = df["India"].iloc[i]
-        y_usa = df["United States"].iloc[i]
-        y_chn = df["China"].iloc[i]
-        current_multiple_usa_india = df["multiple_usa_india"].iloc[i]
-        current_multiple_chn_india = df["multiple_chn_india"].iloc[i]
-        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[i]
-    else:
-        years = df.index
-        current_year = df.index[-1]
-        line1.set_data(years, df["India"])
-        line2.set_data(years, df["United States"])
-        line3.set_data(years, df["China"])
-        ratio_line_usa.set_data(years, df["multiple_usa_india"])
-        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"])
-        y_india = df["India"].iloc[-1]
-        y_usa = df["United States"].iloc[-1]
-        y_chn = df["China"].iloc[-1]
-        current_multiple_usa_india = df["multiple_usa_india"].iloc[-1]
-        current_multiple_chn_india = df["multiple_chn_india"].iloc[-1]
-        current_multiple_usa_chn = df["multiple_usa_chn"].iloc[-1]
+    # Cap the index at the last year for pause frames
+    current_idx = min(i, len(df) - 1)
+    current_year = df.index[current_idx]
+    years = df.index[: current_idx + 1]
+
+    # Set line data
+    line1.set_data(years, df["India"].iloc[: current_idx + 1])
+    line2.set_data(years, df["United States"].iloc[: current_idx + 1])
+    line3.set_data(years, df["China"].iloc[: current_idx + 1])
+    ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: current_idx + 1])
+    ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: current_idx + 1])
+
+    # Data for annotations
+    y_india = df["India"].iloc[current_idx]
+    y_usa = df["United States"].iloc[current_idx]
+    y_chn = df["China"].iloc[current_idx]
+    current_multiple_usa_india = df["multiple_usa_india"].iloc[current_idx]
+    current_multiple_chn_india = df["multiple_chn_india"].iloc[current_idx]
+    current_multiple_usa_chn = df["multiple_usa_chn"].iloc[current_idx]
 
     # Conditional arrow and text for USA based on year
     if current_year <= 1991:
@@ -188,6 +185,10 @@ def animate(i):
 
     # Update year text
     year_text.set_text(f"{current_year}")
+
+    # Debug output for pause frames
+    if i >= len(df):
+        print(f"Pause frame {i - len(df) + 1}: year={current_year}, annotations={len(multiple_texts)}")
 
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
