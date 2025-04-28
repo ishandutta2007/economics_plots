@@ -16,9 +16,8 @@ df["multiple_chn_india"] = df["China"] / df["India"]
 df["multiple_usa_chn"] = df["United States"] / df["China"]
 persistent_years = [1993, 2001, 2013, 2023]
 
-# Create figure and axes
 fig, (ax1, ax2) = plt.subplots(
-    2, 1, figsize=(12, 8), gridspec_kw={"height_ratios": [2, 1]}
+    2, 1, figsize=(9, 16), gridspec_kw={"height_ratios": [2, 1]}
 )
 
 # Plot formatting
@@ -26,13 +25,13 @@ ax1.set_yscale("log")
 ax1.set_xlim(df.index.min(), df.index.max())
 ax1.set_ylim(800, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP per capita(PPP): India vs USA vs China (1990-2023)")
-ax1.set_ylabel("GDP per capita(PPP) (USD)")
+ax1.set_title("GDP per capita(PPP): USA vs China vs India (1990-2023)", fontsize=19, fontweight='bold')
+ax1.set_ylabel("GDP per capita(PPP) (USD)", fontsize=17, fontweight='bold')
 
 ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_usa_chn"].max()) * 1.1)
 ax2.set_xlim(df.index.min(), df.index.max())
 ax2.grid(True)
-ax2.set_ylabel("Multiple")
+ax2.set_ylabel("Multiple", fontsize=17, fontweight='bold')
 ax2.set_xlabel("Year")
 
 # Initialize elements
@@ -106,6 +105,8 @@ def animate(i):
             f"{current_multiple_usa_india:.1f}x",
             ha="center",
             va="center",
+            fontsize=17,
+            fontweight='bold',
             backgroundcolor="white",
         )
     else:
@@ -123,6 +124,8 @@ def animate(i):
             f"{current_multiple_usa_chn:.1f}x",
             ha="center",
             va="center",
+            fontsize=17,
+            fontweight='bold',
             backgroundcolor="white",
         )
 
@@ -158,6 +161,8 @@ def animate(i):
         f"{current_multiple_chn_india:.1f}x",
         ha="center",
         va="center",
+        fontsize=17,
+        fontweight='bold',
         backgroundcolor="white",
     )
     chn_gdp = ax1.text(
@@ -179,18 +184,21 @@ def animate(i):
             f"{current_multiple_usa_india:.1f}x",
             ha="center",
             va="bottom",
+            fontsize=17,
             fontweight='bold',
             color="darkred",
         )
-        ax2.text(
-            current_year,
-            current_multiple_usa_chn,
-            f"{current_multiple_usa_chn:.1f}x",
-            ha="center",
-            va="bottom",
-            fontweight='bold',
-            color="darkred",
-        )
+        if current_year!=1993:
+            ax2.text(
+                current_year,
+                current_multiple_usa_chn,
+                f"{current_multiple_usa_chn:.1f}x",
+                ha="center",
+                va="bottom",
+                fontsize=17,
+                fontweight='bold',
+                color="darkred",
+            )
 
     # Update year text
     year_text.set_text(f"{current_year}")
@@ -201,7 +209,7 @@ def animate(i):
 
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
-pause_frames = 20
+pause_frames = 5
 ani = animation.FuncAnimation(
     fig,
     animate,
@@ -212,8 +220,8 @@ ani = animation.FuncAnimation(
 )
 
 # Add legends
-ax1.legend()
-ax2.legend()
+ax1.legend(fontsize='xx-large', prop={'weight': 'bold'})
+ax2.legend(fontsize='xx-large', prop={'weight': 'bold'})
 
 # Save to MP4
 Writer = animation.writers["ffmpeg"]
