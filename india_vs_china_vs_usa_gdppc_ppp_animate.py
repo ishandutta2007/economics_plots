@@ -24,7 +24,7 @@ fig, (ax1, ax2) = plt.subplots(
 # Plot formatting
 ax1.set_yscale("log")
 ax1.set_xlim(df.index.min(), df.index.max())
-ax1.set_ylim(100, df.max().max() * 1.1)
+ax1.set_ylim(800, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
 ax1.set_title("GDP per capita(PPP): India vs USA vs China (1990-2023)")
 ax1.set_ylabel("GDP per capita(PPP) (USD)")
