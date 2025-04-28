@@ -29,7 +29,7 @@ ax1.grid(True, which="both", ls="--")
 ax1.set_title("GDP per capita: India vs USA vs China (1973-2023)")
 ax1.set_ylabel("GDP per capita (USD)")
 
-ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_chn_india"].max(), df["multiple_usa_chn"].max()) * 1.1)  # Include USA/China max
+ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_usa_chn"].max()) * 1.1)  # Exclude China/India
 ax2.set_xlim(df.index.min(), df.index.max())
 ax2.grid(True)
 ax2.set_ylabel("Multiple")
@@ -40,13 +40,12 @@ ax2.set_xlabel("Year")
 (line2,) = ax1.plot([], [], lw=2, label="USA")
 (line3,) = ax1.plot([], [], lw=2, label="China")
 (ratio_line_usa,) = ax2.plot([], [], lw=2, color="purple", label="USA/India Multiple")
-(ratio_line_chn,) = ax2.plot([], [], lw=2, color="green", label="China/India Multiple")
-(ratio_line_usa_chn,) = ax2.plot([], [], lw=2, color="blue", label="USA/China Multiple")  # New line for USA/China
+(ratio_line_usa_chn,) = ax2.plot([], [], lw=2, color="blue", label="USA/China Multiple")
 year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
 multiple_texts = []
 
 def init():
-    return line1, line2, line3, ratio_line_usa, ratio_line_chn, ratio_line_usa_chn, year_text
+    return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
 def animate(i):
     global multiple_texts
@@ -63,8 +62,7 @@ def animate(i):
         line2.set_data(years, df["United States"].iloc[: i + 1])
         line3.set_data(years, df["China"].iloc[: i + 1])
         ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: i + 1])
-        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: i + 1])
-        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: i + 1])  # Set data for USA/China
+        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: i + 1])
         y_india = df["India"].iloc[i]
         y_usa = df["United States"].iloc[i]
         y_chn = df["China"].iloc[i]
@@ -78,8 +76,7 @@ def animate(i):
         line2.set_data(years, df["United States"].iloc[: len(df) - 1 + 1])
         line3.set_data(years, df["China"].iloc[: len(df) - 1 + 1])
         ratio_line_usa.set_data(years, df["multiple_usa_india"].iloc[: len(df) - 1 + 1])
-        ratio_line_chn.set_data(years, df["multiple_chn_india"].iloc[: len(df) - 1 + 1])
-        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: len(df) - 1 + 1])  # Set data for USA/China
+        ratio_line_usa_chn.set_data(years, df["multiple_usa_chn"].iloc[: len(df) - 1 + 1])
         y_india = df["India"].iloc[len(df) - 1]
         y_usa = df["United States"].iloc[len(df) - 1]
         y_chn = df["China"].iloc[len(df) - 1]
@@ -181,15 +178,6 @@ def animate(i):
         )
         ax2.text(
             current_year,
-            current_multiple_chn_india,
-            f"{current_multiple_chn_india:.1f}x",
-            ha="center",
-            va="bottom",
-            fontweight='bold',
-            color="darkred",
-        )
-        ax2.text(
-            current_year,
             current_multiple_usa_chn,
             f"{current_multiple_usa_chn:.1f}x",
             ha="center",
@@ -201,7 +189,7 @@ def animate(i):
     # Update year text
     year_text.set_text(f"{current_year}")
 
-    return line1, line2, line3, ratio_line_usa, ratio_line_chn, ratio_line_usa_chn, year_text
+    return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
 
 pause_frames = 20
 ani = animation.FuncAnimation(
