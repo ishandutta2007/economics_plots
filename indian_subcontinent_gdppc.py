@@ -166,7 +166,7 @@ def animate_gdp_chart(year_index_in_animation):
         # Position label slightly to the right of the bar
         label_x_position = bar_width * 1.01 
         ax.text(label_x_position, bar.get_y() + bar.get_height() / 2., f'${bar_width:,.0f}', 
-                va='center', ha='left', fontsize=9, color='black')
+                va='center', ha='left', fontsize=16, fontweight='bold', color='black')
 
     # Dynamically adjust x-axis limits with some padding for labels
     max_gdp_in_frame = gdp_data_for_year.max()
