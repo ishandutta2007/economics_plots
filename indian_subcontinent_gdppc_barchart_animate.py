@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 import pandas as pd
-import calendar # For month names
+import calendar  # For month names
 
 # Helper function to ensure a scalar value is extracted from DataFrame .loc result
 def get_scalar_value(value_from_loc, country_name, year_val):
@@ -18,7 +18,7 @@ def get_scalar_value(value_from_loc, country_name, year_val):
         else:
             print(f"  Warning: Multiple values found for {country_name}, year {year_val} during scalar extraction. Check data uniqueness.")
             return np.nan  # Indicates an issue
-    return value_from_loc # Assumed to be scalar already
+    return value_from_loc  # Assumed to be scalar already
 
 # Helper function for annual data interpolation
 def interpolate_annual_gdp_data(key_points_dict, start_year=1990, end_year=2024):
@@ -43,14 +43,12 @@ data_key_points = {
 }
 
 countries = ['Sri Lanka', 'Bangladesh', 'Bhutan', 'India', 'Pakistan']
-country_flags_unicode = { # Unicode flag emojis
+country_flags_unicode = {  # Unicode flag emojis
     'Sri Lanka': '🇱🇰', 'Bangladesh': '🇧🇩', 'Bhutan': '🇧🇹',
     'India': '🇮🇳', 'Pakistan': '🇵🇰'
 }
 # Font to use for emojis. Change if flags don't render correctly.
-# Common options: 'Segoe UI Emoji' (Windows), 'Apple Color Emoji' (macOS), 'Noto Color Emoji' (Linux)
 EMOJI_FONT = 'Segoe UI Emoji'
-
 
 # Create annual historical data
 historical_gdp_data_annual = {}
@@ -64,7 +62,6 @@ df_historical_annual.index = pd.to_datetime(df_historical_annual.index, format='
 # Convert annual data to monthly data by linear interpolation
 df_historical_monthly = df_historical_annual.resample('MS').interpolate(method='linear')
 df_historical_monthly.index = df_historical_monthly.index.to_period('M')
-
 
 # 2. Extrapolation
 annual_growth_factors = {}
@@ -133,10 +130,6 @@ while current_projection_period < max_allowable_projection_period:
         print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Bhutan (GDP: ${bhutan_gdp_current:,.0f}) in {current_projection_period}")
         india_overtook_bhutan = True
 
-    # if india_overtook_sri_lanka and india_overtook_bangladesh and india_overtook_bhutan:
-    #     extrapolation_stop_period = current_projection_period
-    #     print(f"SUCCESS: India's GDP per capita projected to surpass all Sri Lanka's, Bangladesh's and Bhutan's in {extrapolation_stop_period}.")
-    #     break
 else:
     extrapolation_stop_period = max_allowable_projection_period
     print(f"WARNING: India did not surpass both Sri Lanka and Bhutan by {max_allowable_projection_period}. Animation runs until then.")
@@ -145,7 +138,7 @@ start_animation_period = pd.Period('1990-01', freq='M')
 periods_for_animation = df_extrapolated_monthly.loc[start_animation_period:extrapolation_stop_period].index.tolist()
 
 # 3. Animation Setup
-fig, ax = plt.subplots(figsize=(16, 10)) # Increased size slightly for clarity
+fig, ax = plt.subplots(figsize=(16, 10))  # Increased size slightly for clarity
 country_color_map = {
     'Sri Lanka': '#1f77b4', 'Bangladesh': '#ff7f0e', 'Bhutan': '#2ca02c',
     'India': '#d62728', 'Pakistan': '#9467bd'
@@ -155,10 +148,11 @@ projection_start_year_for_annotation = last_historical_period.year + 1
 projection_end_year_for_annotation = extrapolation_stop_period.year
 projected_data_text = f'Projected Data ({projection_start_year_for_annotation}-{projection_end_year_for_annotation})'
 
-
-def animate_gdp_chart(period_index_in_animation):
+def animate_gdp_chart(frame_number):
+    # Cap the period index at the last valid period for pause frames
+    period_index = min(frame_number, len(periods_for_animation) - 1)
+    current_period = periods_for_animation[period_index]
     ax.clear()
-    current_period = periods_for_animation[period_index_in_animation]
     # Get data for the current period and sort by GDP value
     gdp_data_for_period = df_extrapolated_monthly.loc[current_period, countries].sort_values(ascending=False)
     
@@ -172,12 +166,11 @@ def animate_gdp_chart(period_index_in_animation):
     ax.set_yticklabels(y_labels_plain, fontsize=16, fontweight='bold') 
     
     ax.set_title('GDP per Capita (PPP, Current Int\'l $)', fontsize=18, fontweight='bold', pad=20)
-    # ax.set_xlabel('GDP per Capita (PPP, Current International $)', fontsize=14)
-    ax.invert_yaxis() # Highest GDP at the top
+    ax.invert_yaxis()  # Highest GDP at the top
 
-    # Add value labels and flags
+    # Add value labels
     for i, bar in enumerate(bars):
-        country_name = y_labels_plain[i] # Get country name from sorted list
+        country_name = y_labels_plain[i]  # Get country name from sorted list
         bar_width = bar.get_width()
         
         # Value label (outside the bar, to the right)
@@ -185,28 +178,8 @@ def animate_gdp_chart(period_index_in_animation):
         ax.text(value_label_x_position, bar.get_y() + bar.get_height() / 2., f'${bar_width:,.0f}', 
                 va='center', ha='left', fontsize=18, fontweight='bold', color='black')
 
-        # Flag (inside the bar, towards the right end)
-        # Adjust flag_x_offset based on typical flag width and scale
-        # This might need tweaking depending on the overall GDP values and plot size
-        flag_x_offset_percentage = 0.05 # 5% from the end of the bar
-        flag_x_position = bar_width * (1 - flag_x_offset_percentage) 
-        
-        # Ensure flag position is not too far left for very small bars
-        if bar_width > 0 : # Only plot flag if bar exists
-             # Heuristic: if bar is very short, place flag closer to start, or make it smaller
-            min_bar_width_for_flag_offset = ax.get_xlim()[1] * 0.05 # e.g. 5% of total x-axis width
-            if bar_width < min_bar_width_for_flag_offset:
-                flag_x_position = bar_width * 0.5 # Center it for very short bars
-            
-            # ax.text(flag_x_position, bar.get_y() + bar.get_height() / 2., 
-            #         country_flags_unicode.get(country_name, ''), # Get flag emoji
-            #         va='center', ha='center', fontsize=16, # Adjust fontsize as needed for flags
-            #         fontname=EMOJI_FONT, # Attempt to use emoji-supporting font
-            #         color='black') # Color of the emoji text (usually not needed as emojis have their own color)
-
-
     max_gdp_in_frame = gdp_data_for_period.max()
-    ax.set_xlim(0, max_gdp_in_frame * 1.28) # Increased padding for value labels
+    ax.set_xlim(0, max_gdp_in_frame * 1.28)  # Increased padding for value labels
     ax.tick_params(axis='x', labelsize=11)
 
     # Date display (Month-Year)
@@ -226,14 +199,14 @@ def animate_gdp_chart(period_index_in_animation):
     ax.grid(axis='x', linestyle='--', alpha=0.7)
     ax.set_facecolor('#f0f0f0') 
     fig.patch.set_facecolor('#e0e0e0') 
-    plt.tight_layout(pad=3.0) # Increased padding slightly
+    plt.tight_layout(pad=3.0)  # Increased padding slightly
 
-pause_frames = 200
+pause_frames = 20
 animation_frames_count = len(periods_for_animation)
 ani = animation.FuncAnimation(fig, animate_gdp_chart, frames=animation_frames_count + pause_frames, 
                               interval=100, repeat=False)
 
-# --- Optional: Code to save the animation ---
+# Save the animation
 print("Attempting to save animation as 'gdp_per_capita_monthly_animation.mp4'...")
 try:
     Writer = animation.writers["ffmpeg"]
@@ -242,8 +215,5 @@ try:
     print("Animation successfully saved.")
 except RuntimeError as e:
     print(f"Error saving animation: {e}. Ensure ffmpeg is installed and in PATH.")
-    print(f"If flags (emojis) are not rendering in the video, it might be an ffmpeg/font issue.")
 except Exception as e:
     print(f"An unexpected error occurred during saving: {e}")
-
-# plt.show()
