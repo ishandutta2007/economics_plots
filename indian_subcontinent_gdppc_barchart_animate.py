@@ -85,7 +85,7 @@ for country in countries:
 
     if pd.isna(start_val) or pd.isna(end_val) or start_val <= 0 or end_val <= 0 or num_years_for_cagr <= 0:
         default_growth = 1.02
-        if country == 'India': default_growth = 1.055
+        if country == 'India': default_growth = 1.065
         annual_growth_factors[country] = default_growth
         print(f"  Warning: Could not calculate CAGR for {country} (start: {start_val}, end: {end_val}). Using default: {annual_growth_factors[country]:.4f}")
     else:
@@ -103,10 +103,11 @@ last_historical_period = df_historical_monthly.index.max()
 current_projection_period = last_historical_period
 extrapolation_stop_period = last_historical_period
 
-max_allowable_projection_year = 2070
+max_allowable_projection_year = 2047
 max_allowable_projection_period = pd.Period(f'{max_allowable_projection_year}-12', freq='M')
 
 india_overtook_sri_lanka = False
+india_overtook_bangladesh = False
 india_overtook_bhutan = False
 
 while current_projection_period < max_allowable_projection_period:
@@ -119,19 +120,23 @@ while current_projection_period < max_allowable_projection_period:
 
     india_gdp_current = df_extrapolated_monthly.loc[current_projection_period, 'India']
     sri_lanka_gdp_current = df_extrapolated_monthly.loc[current_projection_period, 'Sri Lanka']
+    bangladesh_gdp_current = df_extrapolated_monthly.loc[current_projection_period, 'Bangladesh']
     bhutan_gdp_current = df_extrapolated_monthly.loc[current_projection_period, 'Bhutan']
 
     if not india_overtook_sri_lanka and india_gdp_current > sri_lanka_gdp_current:
         print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Sri Lanka (GDP: ${sri_lanka_gdp_current:,.0f}) in {current_projection_period}")
         india_overtook_sri_lanka = True
+    if not india_overtook_bangladesh and india_gdp_current > bangladesh_gdp_current:
+        print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Bangladesh (GDP: ${bangladesh_gdp_current:,.0f}) in {current_projection_period}")
+        india_overtook_bangladesh = True
     if not india_overtook_bhutan and india_gdp_current > bhutan_gdp_current:
         print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Bhutan (GDP: ${bhutan_gdp_current:,.0f}) in {current_projection_period}")
         india_overtook_bhutan = True
 
-    if india_overtook_sri_lanka and india_overtook_bhutan:
-        extrapolation_stop_period = current_projection_period
-        print(f"SUCCESS: India's GDP per capita projected to surpass both Sri Lanka's and Bhutan's in {extrapolation_stop_period}.")
-        break
+    # if india_overtook_sri_lanka and india_overtook_bangladesh and india_overtook_bhutan:
+    #     extrapolation_stop_period = current_projection_period
+    #     print(f"SUCCESS: India's GDP per capita projected to surpass all Sri Lanka's, Bangladesh's and Bhutan's in {extrapolation_stop_period}.")
+    #     break
 else:
     extrapolation_stop_period = max_allowable_projection_period
     print(f"WARNING: India did not surpass both Sri Lanka and Bhutan by {max_allowable_projection_period}. Animation runs until then.")
@@ -164,10 +169,10 @@ def animate_gdp_chart(period_index_in_animation):
     # Create horizontal bars
     bars = ax.barh(y_labels_plain, gdp_data_for_period.values, color=bar_colors_sorted, height=0.8)
     ax.set_yticks(np.arange(len(y_labels_plain)))
-    ax.set_yticklabels(y_labels_plain, fontsize=12) 
+    ax.set_yticklabels(y_labels_plain, fontsize=16, fontweight='bold') 
     
     ax.set_title('GDP per Capita (PPP, Current Int\'l $)', fontsize=18, fontweight='bold', pad=20)
-    ax.set_xlabel('GDP per Capita (PPP, Current International $)', fontsize=14)
+    # ax.set_xlabel('GDP per Capita (PPP, Current International $)', fontsize=14)
     ax.invert_yaxis() # Highest GDP at the top
 
     # Add value labels and flags
@@ -193,11 +198,11 @@ def animate_gdp_chart(period_index_in_animation):
             if bar_width < min_bar_width_for_flag_offset:
                 flag_x_position = bar_width * 0.5 # Center it for very short bars
             
-            ax.text(flag_x_position, bar.get_y() + bar.get_height() / 2., 
-                    country_flags_unicode.get(country_name, ''), # Get flag emoji
-                    va='center', ha='center', fontsize=16, # Adjust fontsize as needed for flags
-                    fontname=EMOJI_FONT, # Attempt to use emoji-supporting font
-                    color='black') # Color of the emoji text (usually not needed as emojis have their own color)
+            # ax.text(flag_x_position, bar.get_y() + bar.get_height() / 2., 
+            #         country_flags_unicode.get(country_name, ''), # Get flag emoji
+            #         va='center', ha='center', fontsize=16, # Adjust fontsize as needed for flags
+            #         fontname=EMOJI_FONT, # Attempt to use emoji-supporting font
+            #         color='black') # Color of the emoji text (usually not needed as emojis have their own color)
 
 
     max_gdp_in_frame = gdp_data_for_period.max()
@@ -214,7 +219,7 @@ def animate_gdp_chart(period_index_in_animation):
 
     # Projected data annotation
     if current_period > last_historical_period:
-        ax.text(0.98, 0.12, projected_data_text, 
+        ax.text(0.98, 0.11, projected_data_text, 
                 transform=ax.transAxes, fontsize=16, color='darkblue', ha='right', va='bottom', alpha=0.8,
                 bbox=dict(boxstyle='round,pad=0.3', fc='lightyellow', alpha=0.6))
     
@@ -223,8 +228,9 @@ def animate_gdp_chart(period_index_in_animation):
     fig.patch.set_facecolor('#e0e0e0') 
     plt.tight_layout(pad=3.0) # Increased padding slightly
 
+pause_frames = 200
 animation_frames_count = len(periods_for_animation)
-ani = animation.FuncAnimation(fig, animate_gdp_chart, frames=animation_frames_count, 
+ani = animation.FuncAnimation(fig, animate_gdp_chart, frames=animation_frames_count + pause_frames, 
                               interval=100, repeat=False)
 
 # --- Optional: Code to save the animation ---
