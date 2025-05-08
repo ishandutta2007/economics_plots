@@ -178,7 +178,7 @@ def animate_gdp_chart(year_index_in_animation):
     
     # Add a text annotation for projected data years
     if current_year_to_plot > last_historical_year: # last_historical_year is 2024
-        ax.text(0.98, 0.02, 'Projected Data', 
+        ax.text(0.98, 0.02, 'Projected Data(2025-2057)', 
                 transform=ax.transAxes, # Position relative to axes
                 fontsize=10, color='darkred', ha='right', va='bottom', alpha=0.8,
                 bbox=dict(boxstyle='round,pad=0.3', fc='wheat', alpha=0.5)) # Add a background box
@@ -192,20 +192,22 @@ animation_frames_count = len(years_for_animation)
 ani = animation.FuncAnimation(fig, animate_gdp_chart, frames=animation_frames_count, 
                               interval=500, repeat=False)
 
-# Display the animation
-plt.show()
 
 # --- Optional: Code to save the animation ---
 # You need ffmpeg installed and configured in your system's PATH for this to work.
-# print("Attempting to save animation as 'gdp_per_capita_animation.mp4'...")
-# print("(This process can take some time depending on the animation length and system performance.)")
-# try:
-#     # fps (frames per second) can be adjusted. interval=500ms means 2 fps.
-#     ani.save('gdp_per_capita_animation.mp4', writer='ffmpeg', fps=2, dpi=150)
-#     print("Animation successfully saved as gdp_per_capita_animation.mp4")
-# except RuntimeError as e:
-#     print(f"Error saving animation: {e}")
-#     print("Please ensure ffmpeg is installed and accessible in your system's PATH.")
-# except Exception as e:
-#     print(f"An unexpected error occurred during saving: {e}")
+print("Attempting to save animation as 'gdp_per_capita_animation.mp4'...")
+print("(This process can take some time depending on the animation length and system performance.)")
+try:
+    # fps (frames per second) can be adjusted. interval=500ms means 2 fps.
+    Writer = animation.writers["ffmpeg"]
+    writer = Writer(fps=1, metadata=dict(artist="Me"), bitrate=1800)
+    ani.save('gdp_per_capita_animation.mp4', writer=writer)#, fps=2, dpi=150)
+    print("Animation successfully saved as gdp_per_capita_animation.mp4")
+except RuntimeError as e:
+    print(f"Error saving animation: {e}")
+    print("Please ensure ffmpeg is installed and accessible in your system's PATH.")
+except Exception as e:
+    print(f"An unexpected error occurred during saving: {e}")
 
+# Display the animation
+plt.show()
