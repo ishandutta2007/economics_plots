@@ -43,10 +43,14 @@ data_key_points = {
 }
 
 countries = ['Sri Lanka', 'Bangladesh', 'Bhutan', 'India', 'Pakistan']
-country_flags = { # Unicode flag emojis
+country_flags_unicode = { # Unicode flag emojis
     'Sri Lanka': '🇱🇰', 'Bangladesh': '🇧🇩', 'Bhutan': '🇧🇹',
     'India': '🇮🇳', 'Pakistan': '🇵🇰'
 }
+# Font to use for emojis. Change if flags don't render correctly.
+# Common options: 'Segoe UI Emoji' (Windows), 'Apple Color Emoji' (macOS), 'Noto Color Emoji' (Linux)
+EMOJI_FONT = 'Segoe UI Emoji'
+
 
 # Create annual historical data
 historical_gdp_data_annual = {}
@@ -55,7 +59,6 @@ for country in countries:
 
 df_historical_annual = pd.DataFrame(historical_gdp_data_annual)
 df_historical_annual.index.name = 'Year'
-# Convert index to DatetimeIndex for consistent indexing and resampling
 df_historical_annual.index = pd.to_datetime(df_historical_annual.index, format='%Y')
 
 # Convert annual data to monthly data by linear interpolation
@@ -64,47 +67,39 @@ df_historical_monthly.index = df_historical_monthly.index.to_period('M')
 
 
 # 2. Extrapolation
-# Calculate Annual Compound Annual Growth Rate (CAGR) for projection
 annual_growth_factors = {}
 cagr_calc_start_year = 2015
-cagr_calc_end_year = 2024 
+cagr_calc_end_year = 2024
 num_years_for_cagr = cagr_calc_end_year - cagr_calc_start_year
 
 print("Calculating annual growth factors for extrapolation (based on 2015-2024 data):")
 for country in countries:
     try:
-        # Retrieve raw values using .loc
         start_val_raw = df_historical_annual.loc[str(cagr_calc_start_year), country]
         end_val_raw = df_historical_annual.loc[str(cagr_calc_end_year), country]
-
-        # Ensure they are scalars
         start_val = get_scalar_value(start_val_raw, country, cagr_calc_start_year)
         end_val = get_scalar_value(end_val_raw, country, cagr_calc_end_year)
-
-    except KeyError: # Handle cases where the year might not be in the index
+    except KeyError:
         print(f"  Warning: Data for year {cagr_calc_start_year} or {cagr_calc_end_year} not found for {country}.")
-        start_val, end_val = np.nan, np.nan # Set to NaN to trigger default growth
+        start_val, end_val = np.nan, np.nan
 
-    # Check if values are valid for CAGR calculation
     if pd.isna(start_val) or pd.isna(end_val) or start_val <= 0 or end_val <= 0 or num_years_for_cagr <= 0:
-        default_growth = 1.02 
+        default_growth = 1.02
         if country == 'India': default_growth = 1.055
         annual_growth_factors[country] = default_growth
-        print(f"  Warning: Could not calculate CAGR for {country} (start: {start_val}, end: {end_val}). Using default annual growth: {annual_growth_factors[country]:.4f}")
+        print(f"  Warning: Could not calculate CAGR for {country} (start: {start_val}, end: {end_val}). Using default: {annual_growth_factors[country]:.4f}")
     else:
         cagr = (end_val / start_val)**(1 / num_years_for_cagr) - 1
         annual_growth_factors[country] = 1 + cagr
     print(f"  {country}: {annual_growth_factors[country]:.4f} ({(annual_growth_factors[country]-1)*100:.2f}% annual growth)")
 
-# Convert annual growth factors to monthly growth factors
 monthly_growth_factors = {country: factor**(1/12) for country, factor in annual_growth_factors.items()}
 print("\nMonthly growth factors for projection:")
 for country, factor in monthly_growth_factors.items():
     print(f"  {country}: {factor:.6f} ({(factor-1)*100:.4f}% monthly growth)")
 
-# Initialize DataFrame for extrapolated data (now monthly)
 df_extrapolated_monthly = df_historical_monthly.copy()
-last_historical_period = df_historical_monthly.index.max() 
+last_historical_period = df_historical_monthly.index.max()
 current_projection_period = last_historical_period
 extrapolation_stop_period = last_historical_period
 
@@ -114,14 +109,12 @@ max_allowable_projection_period = pd.Period(f'{max_allowable_projection_year}-12
 india_overtook_sri_lanka = False
 india_overtook_bhutan = False
 
-# Perform extrapolation month by month
 while current_projection_period < max_allowable_projection_period:
-    current_projection_period += 1 
+    current_projection_period += 1
     next_gdp_row = {}
     for country in countries:
         prev_period_gdp = df_extrapolated_monthly.loc[current_projection_period - 1, country]
         next_gdp_row[country] = prev_period_gdp * monthly_growth_factors[country]
-    
     df_extrapolated_monthly.loc[current_projection_period] = next_gdp_row
 
     india_gdp_current = df_extrapolated_monthly.loc[current_projection_period, 'India']
@@ -131,24 +124,23 @@ while current_projection_period < max_allowable_projection_period:
     if not india_overtook_sri_lanka and india_gdp_current > sri_lanka_gdp_current:
         print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Sri Lanka (GDP: ${sri_lanka_gdp_current:,.0f}) in {current_projection_period}")
         india_overtook_sri_lanka = True
-    
     if not india_overtook_bhutan and india_gdp_current > bhutan_gdp_current:
         print(f"INFO: India (GDP: ${india_gdp_current:,.0f}) surpassed Bhutan (GDP: ${bhutan_gdp_current:,.0f}) in {current_projection_period}")
         india_overtook_bhutan = True
 
     if india_overtook_sri_lanka and india_overtook_bhutan:
         extrapolation_stop_period = current_projection_period
-        print(f"SUCCESS: India's GDP per capita is projected to surpass both Sri Lanka's and Bhutan's in {extrapolation_stop_period}.")
+        print(f"SUCCESS: India's GDP per capita projected to surpass both Sri Lanka's and Bhutan's in {extrapolation_stop_period}.")
         break
-else: 
+else:
     extrapolation_stop_period = max_allowable_projection_period
-    print(f"WARNING: India did not surpass both Sri Lanka and Bhutan by {max_allowable_projection_period}. Animation will run until then.")
+    print(f"WARNING: India did not surpass both Sri Lanka and Bhutan by {max_allowable_projection_period}. Animation runs until then.")
 
 start_animation_period = pd.Period('1990-01', freq='M')
 periods_for_animation = df_extrapolated_monthly.loc[start_animation_period:extrapolation_stop_period].index.tolist()
 
 # 3. Animation Setup
-fig, ax = plt.subplots(figsize=(15, 9)) 
+fig, ax = plt.subplots(figsize=(16, 10)) # Increased size slightly for clarity
 country_color_map = {
     'Sri Lanka': '#1f77b4', 'Bangladesh': '#ff7f0e', 'Bhutan': '#2ca02c',
     'India': '#d62728', 'Pakistan': '#9467bd'
@@ -162,29 +154,57 @@ projected_data_text = f'Projected Data ({projection_start_year_for_annotation}-{
 def animate_gdp_chart(period_index_in_animation):
     ax.clear()
     current_period = periods_for_animation[period_index_in_animation]
+    # Get data for the current period and sort by GDP value
     gdp_data_for_period = df_extrapolated_monthly.loc[current_period, countries].sort_values(ascending=False)
     
-    y_labels_with_flags = [f"{country_flags.get(country, '')} {country}" for country in gdp_data_for_period.index]
-    bar_colors_sorted = [country_color_map[country] for country in gdp_data_for_period.index]
+    # Country names for y-axis labels (without flags here)
+    y_labels_plain = gdp_data_for_period.index.tolist()
+    bar_colors_sorted = [country_color_map[country] for country in y_labels_plain]
 
-    bars = ax.barh(gdp_data_for_period.index, gdp_data_for_period.values, color=bar_colors_sorted, height=0.8)
-    ax.set_yticks(np.arange(len(y_labels_with_flags))) # Use np.arange for y-ticks positions
-    ax.set_yticklabels(y_labels_with_flags, fontsize=12) 
+    # Create horizontal bars
+    bars = ax.barh(y_labels_plain, gdp_data_for_period.values, color=bar_colors_sorted, height=0.8)
+    ax.set_yticks(np.arange(len(y_labels_plain)))
+    ax.set_yticklabels(y_labels_plain, fontsize=12) 
     
     ax.set_title('GDP per Capita (PPP, Current Int\'l $)', fontsize=18, fontweight='bold', pad=20)
     ax.set_xlabel('GDP per Capita (PPP, Current International $)', fontsize=14)
-    ax.invert_yaxis()
+    ax.invert_yaxis() # Highest GDP at the top
 
+    # Add value labels and flags
     for i, bar in enumerate(bars):
+        country_name = y_labels_plain[i] # Get country name from sorted list
         bar_width = bar.get_width()
-        label_x_position = bar_width * 1.01
-        ax.text(label_x_position, bar.get_y() + bar.get_height() / 2., f'${bar_width:,.0f}', 
+        
+        # Value label (outside the bar, to the right)
+        value_label_x_position = bar_width * 1.01 
+        ax.text(value_label_x_position, bar.get_y() + bar.get_height() / 2., f'${bar_width:,.0f}', 
                 va='center', ha='left', fontsize=18, fontweight='bold', color='black')
 
+        # Flag (inside the bar, towards the right end)
+        # Adjust flag_x_offset based on typical flag width and scale
+        # This might need tweaking depending on the overall GDP values and plot size
+        flag_x_offset_percentage = 0.05 # 5% from the end of the bar
+        flag_x_position = bar_width * (1 - flag_x_offset_percentage) 
+        
+        # Ensure flag position is not too far left for very small bars
+        if bar_width > 0 : # Only plot flag if bar exists
+             # Heuristic: if bar is very short, place flag closer to start, or make it smaller
+            min_bar_width_for_flag_offset = ax.get_xlim()[1] * 0.05 # e.g. 5% of total x-axis width
+            if bar_width < min_bar_width_for_flag_offset:
+                flag_x_position = bar_width * 0.5 # Center it for very short bars
+            
+            ax.text(flag_x_position, bar.get_y() + bar.get_height() / 2., 
+                    country_flags_unicode.get(country_name, ''), # Get flag emoji
+                    va='center', ha='center', fontsize=16, # Adjust fontsize as needed for flags
+                    fontname=EMOJI_FONT, # Attempt to use emoji-supporting font
+                    color='black') # Color of the emoji text (usually not needed as emojis have their own color)
+
+
     max_gdp_in_frame = gdp_data_for_period.max()
-    ax.set_xlim(0, max_gdp_in_frame * 1.25) 
+    ax.set_xlim(0, max_gdp_in_frame * 1.28) # Increased padding for value labels
     ax.tick_params(axis='x', labelsize=11)
 
+    # Date display (Month-Year)
     month_name = calendar.month_abbr[current_period.month]
     date_display_text = f'{month_name}-{current_period.year}'
     ax.text(0.98, 0.03, date_display_text, 
@@ -192,6 +212,7 @@ def animate_gdp_chart(period_index_in_animation):
             ha='right', va='bottom', fontweight='bold',
             bbox=dict(boxstyle='round,pad=0.3', fc='white', alpha=0.7))
 
+    # Projected data annotation
     if current_period > last_historical_period:
         ax.text(0.98, 0.12, projected_data_text, 
                 transform=ax.transAxes, fontsize=16, color='darkblue', ha='right', va='bottom', alpha=0.8,
@@ -200,7 +221,7 @@ def animate_gdp_chart(period_index_in_animation):
     ax.grid(axis='x', linestyle='--', alpha=0.7)
     ax.set_facecolor('#f0f0f0') 
     fig.patch.set_facecolor('#e0e0e0') 
-    plt.tight_layout(pad=2.5)
+    plt.tight_layout(pad=3.0) # Increased padding slightly
 
 animation_frames_count = len(periods_for_animation)
 ani = animation.FuncAnimation(fig, animate_gdp_chart, frames=animation_frames_count, 
@@ -215,7 +236,8 @@ try:
     print("Animation successfully saved.")
 except RuntimeError as e:
     print(f"Error saving animation: {e}. Ensure ffmpeg is installed and in PATH.")
+    print(f"If flags (emojis) are not rendering in the video, it might be an ffmpeg/font issue.")
 except Exception as e:
     print(f"An unexpected error occurred during saving: {e}")
 
-plt.show()
+# plt.show()
