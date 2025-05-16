@@ -3,144 +3,203 @@ import matplotlib.animation as animation
 import numpy as np
 from scipy.optimize import curve_fit
 
-# --- Data ---
-years_historical = np.array([2020, 2021, 2022, 2023, 2024])
-years_full_range = np.arange(2020, 2051)
+# --- Data (2015-2024 Historical) ---
+years_historical = np.array([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024])
+years_full_range = np.arange(2015, 2051)
 
-# Historical AI Energy Consumption (TWh)
-ai_energy_hist_values = np.array([11.0, 15.9, 23.0, 33.3, 48.2])
-
-# Historical Total Electricity Generation (TWh)
-total_electricity_hist_values = np.array([26931, 28454, 28830, 29665, 30700])
+ai_energy_hist_values = np.array([
+    1.73, 2.51, 3.63, 5.25, 7.60, 11.0, 15.9, 23.0, 33.3, 48.2
+])
+total_electricity_hist_values = np.array([
+    24002, 24528, 25271, 26159, 26936, 26931, 28454, 28830, 29665, 30700
+])
 
 # --- Curve Fitting Function ---
 def exponential_func(x, a, b):
     return a * np.exp(b * x)
 
-# --- Fit AI Energy Consumption Data ---
-# Normalize x for fitting (years since 2020)
-x_fit_ai = years_historical - 2020
-popt_ai, pcov_ai = curve_fit(exponential_func, x_fit_ai, ai_energy_hist_values, p0=[10, 0.4])
+x_fit_common = years_historical - years_historical[0]
+popt_ai, pcov_ai = curve_fit(exponential_func, x_fit_common, ai_energy_hist_values, p0=[ai_energy_hist_values[0], 0.4], maxfev=5000)
 a_ai, b_ai = popt_ai
-print(f"AI Energy Fitted Parameters: a={a_ai:.2f}, b={b_ai:.4f}")
-print(f"Implied AI CAGR from fit: {(np.exp(b_ai) - 1)*100:.2f}%")
+print(f"AI Energy Fitted Parameters (10yr hist): a={a_ai:.2f}, b={b_ai:.4f}, CAGR: {(np.exp(b_ai) - 1)*100:.2f}%")
 
-
-# --- Fit Total Electricity Generation Data ---
-x_fit_total = years_historical - 2020
-popt_total, pcov_total = curve_fit(exponential_func, x_fit_total, total_electricity_hist_values, p0=[25000, 0.03])
+popt_total, pcov_total = curve_fit(exponential_func, x_fit_common, total_electricity_hist_values, p0=[total_electricity_hist_values[0], 0.03], maxfev=5000)
 a_total, b_total = popt_total
-print(f"Total Electricity Fitted Parameters: a={a_total:.2f}, b={b_total:.4f}")
-print(f"Implied Total Electricity CAGR from fit: {(np.exp(b_total) - 1)*100:.2f}%")
+print(f"Total Electricity Fitted Parameters (10yr hist): a={a_total:.2f}, b={b_total:.4f}, CAGR: {(np.exp(b_total) - 1)*100:.2f}%")
 
-# --- Generate Full Data Series (Historical + Projected) ---
 ai_energy_full = []
 total_electricity_full = []
-
 for year in years_full_range:
-    year_index = year - 2020
-    if year <= 2024:
-        # Find the index in historical years
+    year_index_from_start_hist = year - years_historical[0]
+    if year <= years_historical[-1]:
         hist_idx = np.where(years_historical == year)[0]
-        ai_energy_full.append(ai_energy_hist_values[hist_idx[0]] if len(hist_idx) > 0 else np.nan)
-        total_electricity_full.append(total_electricity_hist_values[hist_idx[0]] if len(hist_idx) > 0 else np.nan)
+        ai_val = ai_energy_hist_values[hist_idx[0]] if len(hist_idx) > 0 else np.nan
+        total_val = total_electricity_hist_values[hist_idx[0]] if len(hist_idx) > 0 else np.nan
     else:
-        ai_energy_full.append(exponential_func(year_index, a_ai, b_ai))
-        total_electricity_full.append(exponential_func(year_index, a_total, b_total))
+        ai_val = exponential_func(year_index_from_start_hist, a_ai, b_ai)
+        total_val = exponential_func(year_index_from_start_hist, a_total, b_total)
+    ai_energy_full.append(ai_val)
+    total_electricity_full.append(total_val)
 
-# Convert to numpy arrays
 ai_energy_full = np.array(ai_energy_full)
 total_electricity_full = np.array(total_electricity_full)
-
-# Print projected 2050 values to illustrate the extrapolation
-print(f"\nProjected AI Energy Consumption in 2050 (by pure extrapolation): {ai_energy_full[-1]:,.2f} TWh")
-print(f"Projected Total Electricity Generation in 2050 (by pure extrapolation): {total_electricity_full[-1]:,.2f} TWh")
-
+print(f"\nProjected AI Energy in 2050 (10yr hist extrap): {ai_energy_full[-1]:,.0f} TWh")
+print(f"Projected Total Electricity in 2050 (10yr hist extrap): {total_electricity_full[-1]:,.0f} TWh")
 
 # --- Plotting ---
-fig, ax1 = plt.subplots(figsize=(14, 8))
+fig, ax1 = plt.subplots(figsize=(16, 10)) # Increased figure size for clarity
 
-# Setup primary y-axis (Total Electricity)
 color_total = 'tab:blue'
-ax1.set_xlabel('Year', fontsize=12)
-ax1.set_ylabel('Global Total Electricity Generation (TWh)', color=color_total, fontsize=12)
-ax1.tick_params(axis='y', labelcolor=color_total, labelsize=10)
-ax1.tick_params(axis='x', labelsize=10)
-ax1.grid(True, linestyle='--', alpha=0.7, axis='y') # Grid for primary axis
-
-# Setup secondary y-axis (AI Consumption)
-ax2 = ax1.twinx()
 color_ai = 'tab:red'
-ax2.set_ylabel('Global AI Energy Consumption (TWh)', color=color_ai, fontsize=12)
-ax2.tick_params(axis='y', labelcolor=color_ai, labelsize=10)
-# No separate grid for ax2 to avoid clutter, or style differently if needed
 
-# Lines for the animation
-line_total, = ax1.plot([], [], lw=2.5, color=color_total, label='Total Electricity Generation')
-line_ai, = ax2.plot([], [], lw=2.5, color=color_ai, label='AI Energy Consumption (Extrapolated)', linestyle='--')
+ax1.set_xlabel('Year', fontsize=14)
+ax1.set_ylabel('Energy (TWh) [Log Scale]', color='black', fontsize=14) # Single Y-axis label
+ax1.tick_params(axis='y', labelcolor='black', labelsize=12)
+ax1.tick_params(axis='x', labelsize=12)
+ax1.set_yscale('log')
+ax1.grid(True, which="both", linestyle='--', alpha=0.6, axis='y')
 
-# Year text annotation
-year_text = ax1.text(0.5, 1.05, '', transform=ax1.transAxes, fontsize=14, fontweight='bold', ha='center')
+# Lines for the animation - both plotted on ax1
+line_total, = ax1.plot([], [], lw=2.5, color=color_total, label='Total Electricity Generation (Line)')
+line_ai, = ax1.plot([], [], lw=2.5, color=color_ai, label='AI Energy Consumption (Line - Extrap.)', linestyle='--')
 
-# Set y-limits: Use dynamic scaling for animation or pre-calculate max
-# For animation, it's often better to fix limits if the final scale is known and very large
-# Otherwise, the axes will rescale dramatically during animation.
-# Let's fix them to the projected 2050 values from this extrapolation.
-ax1.set_ylim(0, total_electricity_full[-1] * 1.1 if not np.isnan(total_electricity_full[-1]) else 60000)
-ax2.set_ylim(0, ai_energy_full[-1] * 1.1 if not np.isnan(ai_energy_full[-1]) else 1000) # This will be very large!
+# Scatter plots for markers every 5 years - both plotted on ax1
+scatter_total_markers = ax1.scatter([], [], s=80, facecolors=color_total, edgecolors='black', alpha=0.7, zorder=5, label='Total Elec. Points (5yr)')
+scatter_ai_markers = ax1.scatter([], [], s=80, facecolors=color_ai, edgecolors='black', alpha=0.7, zorder=5, label='AI Energy Points (5yr)')
+
+year_text = ax1.text(0.5, 1.05, '', transform=ax1.transAxes, fontsize=16, fontweight='bold', ha='center')
+
+# Set Y-axis limits for the single log scale
+min_val_overall = np.min(ai_energy_full[~np.isnan(ai_energy_full) & (ai_energy_full > 0)])
+max_val_overall = np.max(total_electricity_full[~np.isnan(total_electricity_full)])
+if min_val_overall > 0 and max_val_overall > 0 : # Ensure valid min/max for log
+    ax1.set_ylim(min_val_overall * 0.5, max_val_overall * 1.5) # Wider margin for text
+else: # Fallback
+    ax1.set_ylim(0.1, 1e8)
+
+
 ax1.set_xlim(years_full_range[0], years_full_range[-1])
 
+fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fontsize=10) # Combined legend
+plt.title('Global Energy Projection (Single Log Y-Axis) from 10-Year Extrapolation', fontsize=18, pad=45)
+fig.tight_layout(rect=[0, 0.05, 1, 0.88])
 
-# Add legend
-handles, labels = [], []
-for ax in [ax1, ax2]:
-    for handle, label in zip(*ax.get_legend_handles_labels()):
-        handles.append(handle)
-        labels.append(label)
-fig.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=2, fontsize=10)
-
-
-plt.title('Global Energy Projection via Extrapolation of 2020-2024 Trends', fontsize=16, pad=40)
-fig.tight_layout(rect=[0, 0, 1, 0.9]) # Adjust layout to make room for title and legend
-
-# Display a warning about the AI projection methodology on the plot
 plt.figtext(0.5, 0.01,
-            "Warning: AI energy projection is a direct exponential extrapolation of 5-year data (2020-2024)\n"
-            "and likely results in unrealistically high values for later years.",
-            ha="center", va="bottom", fontsize=8, color="red", style="italic")
+            "Warning: AI values (2015-19 est.). Projections are direct exponential extrapolations of 2015-2024 trends.\n"
+            "AI energy projection results in extremely high future values. Log scale used for visualization.",
+            ha="center", va="bottom", fontsize=9, color="darkred", style="italic")
 
+# Store marker data and text annotations
+marker_total_data = {'x': [], 'y': [], 'texts': []}
+marker_ai_data = {'x': [], 'y': [], 'texts': []}
 
-# Animation function
 def init():
     line_total.set_data([], [])
     line_ai.set_data([], [])
+    scatter_total_markers.set_offsets(np.empty((0, 2)))
+    scatter_ai_markers.set_offsets(np.empty((0, 2)))
     year_text.set_text('')
-    return line_total, line_ai, year_text
+    # Clear previous texts
+    for txt_list in [marker_total_data['texts'], marker_ai_data['texts']]:
+        for t in txt_list:
+            t.set_visible(False) # Hide old texts
+        txt_list.clear()
+    return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text # Text artists not returned for blit=False
 
 def animate(i):
-    current_year_index = i
+    current_year_anim = years_full_range[i]
     
-    x_data = years_full_range[:current_year_index+1]
-    y_total_data = total_electricity_full[:current_year_index+1]
-    y_ai_data = ai_energy_full[:current_year_index+1]
+    x_line_data = years_full_range[:i+1]
+    y_total_line_data = total_electricity_full[:i+1]
+    y_ai_line_data = ai_energy_full[:i+1]
     
-    line_total.set_data(x_data, y_total_data)
-    line_ai.set_data(x_data, y_ai_data)
+    valid_total_line = y_total_line_data > 0
+    line_total.set_data(x_line_data[valid_total_line], y_total_line_data[valid_total_line])
     
-    # Update Y-axis limits dynamically if not pre-set, or manage fixed limits carefully
-    # With fixed limits for the full range, this part is not needed for limits,
-    # but could be used if you wanted dynamic Y scaling (can be jarring).
+    valid_ai_line = y_ai_line_data > 0
+    line_ai.set_data(x_line_data[valid_ai_line], y_ai_line_data[valid_ai_line])
+    
+    # Clear previous texts for this frame to prevent overlap if not using blitting for texts
+    # Alternatively, make them invisible and reuse, but clearing is simpler with blit=False
+    for txt_list_key in ['texts_total_dynamic', 'texts_ai_dynamic']:
+        if hasattr(fig, txt_list_key):
+            for t_obj in getattr(fig, txt_list_key):
+                t_obj.remove()
+            delattr(fig, txt_list_key)
+    fig.texts_total_dynamic = []
+    fig.texts_ai_dynamic = []
 
-    year_text.set_text(f'Year: {years_full_range[current_year_index]}')
-    
-    return line_total, line_ai, year_text
 
-# Create animation
+    # Add markers and text if current year is a 5-year interval point
+    # Markers are managed by set_offsets, text needs to be added per frame if not blitted
+    # Or, manage text artists persistently like scatter points (more complex for blitting)
+    # For simplicity with blit=False, let's add text if it's a marker year
+    
+    current_marker_points_total_x = []
+    current_marker_points_total_y = []
+    current_marker_points_ai_x = []
+    current_marker_points_ai_y = []
+
+    # Rebuild all visible markers and texts up to current frame
+    # This part ensures that texts are only drawn for existing markers in the current frame
+    
+    temp_texts_total = []
+    temp_texts_ai = []
+
+    for frame_idx in range(i + 1):
+        year_at_frame = years_full_range[frame_idx]
+        if year_at_frame % 5 == 0:
+            val_total_at_frame = total_electricity_full[frame_idx]
+            val_ai_at_frame = ai_energy_full[frame_idx]
+
+            if not np.isnan(val_total_at_frame) and val_total_at_frame > 0:
+                current_marker_points_total_x.append(year_at_frame)
+                current_marker_points_total_y.append(val_total_at_frame)
+                # Add text next to the point for total electricity
+                txt = ax1.text(year_at_frame, val_total_at_frame, f" {val_total_at_frame:,.0f}",
+                               fontsize=7, color=color_total, va='center', ha='left', 
+                               path_effects=[plt.matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')])
+                temp_texts_total.append(txt)
+
+
+            if not np.isnan(val_ai_at_frame) and val_ai_at_frame > 0:
+                current_marker_points_ai_x.append(year_at_frame)
+                current_marker_points_ai_y.append(val_ai_at_frame)
+                # Add text next to the point for AI
+                txt = ax1.text(year_at_frame, val_ai_at_frame, f" {val_ai_at_frame:,.0f}",
+                               fontsize=7, color=color_ai, va='center', ha='left',
+                               path_effects=[plt.matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')])
+                temp_texts_ai.append(txt)
+    
+    # Update scatter plot offsets
+    if current_marker_points_total_x:
+        scatter_total_markers.set_offsets(np.c_[current_marker_points_total_x, current_marker_points_total_y])
+    else:
+        scatter_total_markers.set_offsets(np.empty((0, 2)))
+        
+    if current_marker_points_ai_x:
+        scatter_ai_markers.set_offsets(np.c_[current_marker_points_ai_x, current_marker_points_ai_y])
+    else:
+        scatter_ai_markers.set_offsets(np.empty((0, 2)))
+
+    # Store dynamic texts to remove them in the next frame to avoid clutter
+    # This is one way to handle text in animations without blitting them directly
+    if hasattr(fig, 'dynamic_texts_artists'):
+        for t in fig.dynamic_texts_artists:
+            t.remove()
+    fig.dynamic_texts_artists = temp_texts_total + temp_texts_ai
+            
+    year_text.set_text(f'Year: {current_year_anim}')
+    
+    # Return all artists that change or are created in animate if blit=True
+    # For blit=False, it's mainly for structure, system redraws everything
+    return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text, *fig.dynamic_texts_artists
+
+
 ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range),
-                              init_func=init, blit=True, interval=150, repeat=False)
+                              init_func=init, blit=False, interval=200, repeat=False) # blit=False chosen
 
-# To save the animation, you might need ffmpeg or another writer installed:
-# ani.save('energy_trends_extrapolation.gif', writer='pillow', fps=10)
-# ani.save('energy_trends_extrapolation.mp4', writer='ffmpeg', fps=10)
+# ani.save('energy_trends_single_yaxis_log_markers_values.gif', writer='pillow', fps=7)
+# ani.save('energy_trends_single_yaxis_log_markers_values.mp4', writer='ffmpeg', fps=7)
 
 plt.show()
