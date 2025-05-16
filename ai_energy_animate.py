@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 from scipy.optimize import curve_fit
+import matplotlib # <--- Explicitly importing base matplotlib
 
 # --- Data (2015-2024 Historical) ---
 years_historical = np.array([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024])
@@ -23,6 +24,7 @@ popt_ai, pcov_ai = curve_fit(exponential_func, x_fit_common, ai_energy_hist_valu
 a_ai, b_ai = popt_ai
 print(f"AI Energy Fitted Parameters (10yr hist): a={a_ai:.2f}, b={b_ai:.4f}, CAGR: {(np.exp(b_ai) - 1)*100:.2f}%")
 
+# Corrected line from previous error: Changed maxfeev to maxfev
 popt_total, pcov_total = curve_fit(exponential_func, x_fit_common, total_electricity_hist_values, p0=[total_electricity_hist_values[0], 0.03], maxfev=5000)
 a_total, b_total = popt_total
 print(f"Total Electricity Fitted Parameters (10yr hist): a={a_total:.2f}, b={b_total:.4f}, CAGR: {(np.exp(b_total) - 1)*100:.2f}%")
@@ -108,17 +110,17 @@ def init():
 
 def animate(i):
     current_year_anim = years_full_range[i]
-    
+
     x_line_data = years_full_range[:i+1]
     y_total_line_data = total_electricity_full[:i+1]
     y_ai_line_data = ai_energy_full[:i+1]
-    
+
     valid_total_line = y_total_line_data > 0
     line_total.set_data(x_line_data[valid_total_line], y_total_line_data[valid_total_line])
-    
+
     valid_ai_line = y_ai_line_data > 0
     line_ai.set_data(x_line_data[valid_ai_line], y_ai_line_data[valid_ai_line])
-    
+
     # Clear previous texts for this frame to prevent overlap if not using blitting for texts
     # Alternatively, make them invisible and reuse, but clearing is simpler with blit=False
     for txt_list_key in ['texts_total_dynamic', 'texts_ai_dynamic']:
@@ -134,7 +136,7 @@ def animate(i):
     # Markers are managed by set_offsets, text needs to be added per frame if not blitted
     # Or, manage text artists persistently like scatter points (more complex for blitting)
     # For simplicity with blit=False, let's add text if it's a marker year
-    
+
     current_marker_points_total_x = []
     current_marker_points_total_y = []
     current_marker_points_ai_x = []
@@ -142,7 +144,7 @@ def animate(i):
 
     # Rebuild all visible markers and texts up to current frame
     # This part ensures that texts are only drawn for existing markers in the current frame
-    
+
     temp_texts_total = []
     temp_texts_ai = []
 
@@ -157,8 +159,8 @@ def animate(i):
                 current_marker_points_total_y.append(val_total_at_frame)
                 # Add text next to the point for total electricity
                 txt = ax1.text(year_at_frame, val_total_at_frame, f" {val_total_at_frame:,.0f}",
-                               fontsize=7, color=color_total, va='center', ha='left', 
-                               path_effects=[plt.matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')])
+                               fontsize=7, color=color_total, va='center', ha='left',
+                               path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]) # Uses matplotlib.patheffects
                 temp_texts_total.append(txt)
 
 
@@ -168,15 +170,15 @@ def animate(i):
                 # Add text next to the point for AI
                 txt = ax1.text(year_at_frame, val_ai_at_frame, f" {val_ai_at_frame:,.0f}",
                                fontsize=7, color=color_ai, va='center', ha='left',
-                               path_effects=[plt.matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')])
+                               path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]) # Uses matplotlib.patheffects
                 temp_texts_ai.append(txt)
-    
+
     # Update scatter plot offsets
     if current_marker_points_total_x:
         scatter_total_markers.set_offsets(np.c_[current_marker_points_total_x, current_marker_points_total_y])
     else:
         scatter_total_markers.set_offsets(np.empty((0, 2)))
-        
+
     if current_marker_points_ai_x:
         scatter_ai_markers.set_offsets(np.c_[current_marker_points_ai_x, current_marker_points_ai_y])
     else:
@@ -188,9 +190,9 @@ def animate(i):
         for t in fig.dynamic_texts_artists:
             t.remove()
     fig.dynamic_texts_artists = temp_texts_total + temp_texts_ai
-            
+
     year_text.set_text(f'Year: {current_year_anim}')
-    
+
     # Return all artists that change or are created in animate if blit=True
     # For blit=False, it's mainly for structure, system redraws everything
     return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text, *fig.dynamic_texts_artists
@@ -200,6 +202,10 @@ ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range),
                               init_func=init, blit=False, interval=200, repeat=False) # blit=False chosen
 
 # ani.save('energy_trends_single_yaxis_log_markers_values.gif', writer='pillow', fps=7)
-# ani.save('energy_trends_single_yaxis_log_markers_values.mp4', writer='ffmpeg', fps=7)
+ani.save('energy_trends_single_yaxis_log_markers_values.mp4', writer='ffmpeg', fps=7)
+# Save to MP4
+# Writer = animation.writers["ffmpeg"]
+# writer = Writer(fps=1, metadata=dict(artist="Me"), bitrate=1800)
+# ani.save("energy_trends_single_yaxis_log_markers_values.mp4", writer=writer)
 
-plt.show()
+# plt.show()
