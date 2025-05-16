@@ -49,7 +49,7 @@ print(f"\nProjected AI Energy in 2050 (10yr hist extrap): {ai_energy_full[-1]:,.
 print(f"Projected Total Electricity in 2050 (10yr hist extrap): {total_electricity_full[-1]:,.0f} TWh")
 
 # --- Plotting ---
-fig, ax1 = plt.subplots(figsize=(16, 10)) # Increased figure size for clarity
+fig, ax1 = plt.subplots(figsize=(12, 8)) # Increased figure size for clarity
 
 color_total = 'tab:blue'
 color_ai = 'tab:red'
@@ -160,7 +160,7 @@ def animate(i):
                 current_marker_points_total_y.append(val_total_at_frame)
                 # Add text next to the point for total electricity
                 txt = ax1.text(year_at_frame, val_total_at_frame, f" {val_total_at_frame:,.0f}",
-                               fontsize=7, color=color_total, va='center', ha='left',
+                               fontsize=18, color=color_total, va='top', ha='left',
                                # path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]
                                ) # Uses matplotlib.patheffects
                 temp_texts_total.append(txt)
@@ -171,7 +171,7 @@ def animate(i):
                 current_marker_points_ai_y.append(val_ai_at_frame)
                 # Add text next to the point for AI
                 txt = ax1.text(year_at_frame, val_ai_at_frame, f" {val_ai_at_frame:,.0f}",
-                               fontsize=7, color=color_ai, va='center', ha='left',
+                               fontsize=18, color=color_ai, va='top', ha='left',
                                # path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]
                                ) # Uses matplotlib.patheffects
                 temp_texts_ai.append(txt)
