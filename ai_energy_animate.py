@@ -6,7 +6,7 @@ import matplotlib # <--- Explicitly importing base matplotlib
 
 # --- Data (2015-2024 Historical) ---
 years_historical = np.array([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024])
-years_full_range = np.arange(2015, 2051)
+years_full_range = np.arange(2015, 2045)
 
 ai_energy_hist_values = np.array([
     1.73, 2.51, 3.63, 5.25, 7.60, 11.0, 15.9, 23.0, 33.3, 48.2
@@ -49,7 +49,7 @@ print(f"\nProjected AI Energy in 2050 (10yr hist extrap): {ai_energy_full[-1]:,.
 print(f"Projected Total Electricity in 2050 (10yr hist extrap): {total_electricity_full[-1]:,.0f} TWh")
 
 # --- Plotting ---
-fig, ax1 = plt.subplots(figsize=(12, 8)) # Increased figure size for clarity
+fig, ax1 = plt.subplots(figsize=(9, 16)) # Increased figure size for clarity
 
 color_total = 'tab:blue'
 color_ai = 'tab:red'
@@ -70,7 +70,7 @@ line_ai, = ax1.plot([], [], lw=2.5, color=color_ai, label='AI Energy Consumption
 scatter_total_markers = ax1.scatter([], [], s=80, facecolors=color_total, edgecolors='black', alpha=0.7, zorder=5, label='Total Elec. Points (5yr)')
 scatter_ai_markers = ax1.scatter([], [], s=80, facecolors=color_ai, edgecolors='black', alpha=0.7, zorder=5, label='AI Energy Points (5yr)')
 
-year_text = ax1.text(0.5, 1.05, '', transform=ax1.transAxes, fontsize=16, fontweight='bold', ha='center')
+year_text = ax1.text(0.5, 1.01, '', transform=ax1.transAxes, fontsize=18, fontweight='bold', ha='center')
 
 # Set Y-axis limits for the single log scale
 min_val_overall = np.min(ai_energy_full[~np.isnan(ai_energy_full) & (ai_energy_full > 0)])
@@ -84,13 +84,13 @@ else: # Fallback
 ax1.set_xlim(years_full_range[0], years_full_range[-1])
 
 fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fontsize=10) # Combined legend
-plt.title('Global Energy Projection (Single Log Y-Axis) from 10-Year Extrapolation', fontsize=18, pad=45)
+plt.title('Global Energy Projection', fontsize=18, pad=45)
 fig.tight_layout(rect=[0, 0.05, 1, 0.88])
 
-plt.figtext(0.5, 0.01,
-            "Warning: AI values (2015-19 est.). Projections are direct exponential extrapolations of 2015-2024 trends.\n"
-            "AI energy projection results in extremely high future values. Log scale used for visualization.",
-            ha="center", va="bottom", fontsize=9, color="darkred", style="italic")
+# plt.figtext(0.5, 0.01,
+#             "Warning: AI values (2015-19 est.). Projections are direct exponential extrapolations of 2015-2024 trends.\n"
+#             "AI energy projection results in extremely high future values. Log scale used for visualization.",
+#             ha="center", va="bottom", fontsize=9, color="darkred", style="italic")
 
 # Store marker data and text annotations
 marker_total_data = {'x': [], 'y': [], 'texts': []}
@@ -200,8 +200,8 @@ def animate(i):
     # For blit=False, it's mainly for structure, system redraws everything
     return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text, *fig.dynamic_texts_artists
 
-
-ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range),
+pause_frames = 0
+ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range) + pause_frames,
                               init_func=init, blit=False, interval=200, repeat=False) # blit=False chosen
 
 # ani.save('energy_trends_single_yaxis_log_markers_values.gif', writer='pillow', fps=7)
