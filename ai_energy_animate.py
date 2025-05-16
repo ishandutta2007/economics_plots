@@ -55,6 +55,7 @@ color_total = 'tab:blue'
 color_ai = 'tab:red'
 
 ax1.set_xlabel('Year', fontsize=14)
+# ax1.set_ylabel('Energy (TWh)', color='black', fontsize=14) # Single Y-axis label
 ax1.set_ylabel('Energy (TWh) [Log Scale]', color='black', fontsize=14) # Single Y-axis label
 ax1.tick_params(axis='y', labelcolor='black', labelsize=12)
 ax1.tick_params(axis='x', labelsize=12)
@@ -160,7 +161,8 @@ def animate(i):
                 # Add text next to the point for total electricity
                 txt = ax1.text(year_at_frame, val_total_at_frame, f" {val_total_at_frame:,.0f}",
                                fontsize=7, color=color_total, va='center', ha='left',
-                               path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]) # Uses matplotlib.patheffects
+                               # path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]
+                               ) # Uses matplotlib.patheffects
                 temp_texts_total.append(txt)
 
 
@@ -170,7 +172,8 @@ def animate(i):
                 # Add text next to the point for AI
                 txt = ax1.text(year_at_frame, val_ai_at_frame, f" {val_ai_at_frame:,.0f}",
                                fontsize=7, color=color_ai, va='center', ha='left',
-                               path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]) # Uses matplotlib.patheffects
+                               # path_effects=[matplotlib.patheffects.withStroke(linewidth=0.5, foreground='w')]
+                               ) # Uses matplotlib.patheffects
                 temp_texts_ai.append(txt)
 
     # Update scatter plot offsets
@@ -202,10 +205,10 @@ ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range),
                               init_func=init, blit=False, interval=200, repeat=False) # blit=False chosen
 
 # ani.save('energy_trends_single_yaxis_log_markers_values.gif', writer='pillow', fps=7)
-ani.save('energy_trends_single_yaxis_log_markers_values.mp4', writer='ffmpeg', fps=7)
+# ani.save('energy_trends_single_yaxis_log_markers_values.mp4', writer='ffmpeg', fps=7)
 # Save to MP4
-# Writer = animation.writers["ffmpeg"]
-# writer = Writer(fps=1, metadata=dict(artist="Me"), bitrate=1800)
-# ani.save("energy_trends_single_yaxis_log_markers_values.mp4", writer=writer)
+Writer = animation.writers["ffmpeg"]
+writer = Writer(fps=1, metadata=dict(artist="Me"), bitrate=1800)
+ani.save("energy_trends_single_yaxis_log_markers_values.mp4", writer=writer)
 
 # plt.show()
