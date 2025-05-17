@@ -67,8 +67,8 @@ line_total, = ax1.plot([], [], lw=2.5, color=color_total, label='Total Electrici
 line_ai, = ax1.plot([], [], lw=2.5, color=color_ai, label='AI Energy Consumption (Line - Extrap.)', linestyle='--')
 
 # Scatter plots for markers every 5 years - both plotted on ax1
-scatter_total_markers = ax1.scatter([], [], s=80, facecolors=color_total, edgecolors='black', alpha=0.7, zorder=5, label='Total Elec. Points (5yr)')
-scatter_ai_markers = ax1.scatter([], [], s=80, facecolors=color_ai, edgecolors='black', alpha=0.7, zorder=5, label='AI Energy Points (5yr)')
+# scatter_total_markers = ax1.scatter([], [], s=80, facecolors=color_total, edgecolors='black', alpha=0.7, zorder=5, label='Total Elec. Points (5yr)')
+# scatter_ai_markers = ax1.scatter([], [], s=80, facecolors=color_ai, edgecolors='black', alpha=0.7, zorder=5, label='AI Energy Points (5yr)')
 
 year_text = ax1.text(0.5, 1.01, '', transform=ax1.transAxes, fontsize=18, fontweight='bold', ha='center')
 
@@ -98,16 +98,17 @@ marker_ai_data = {'x': [], 'y': [], 'texts': []}
 
 def init():
     line_total.set_data([], [])
-    line_ai.set_data([], [])
-    scatter_total_markers.set_offsets(np.empty((0, 2)))
-    scatter_ai_markers.set_offsets(np.empty((0, 2)))
+    # line_ai.set_data([], [])
+    # scatter_total_markers.set_offsets(np.empty((0, 2)))
+    # scatter_ai_markers.set_offsets(np.empty((0, 2)))
     year_text.set_text('')
     # Clear previous texts
     for txt_list in [marker_total_data['texts'], marker_ai_data['texts']]:
         for t in txt_list:
             t.set_visible(False) # Hide old texts
         txt_list.clear()
-    return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text # Text artists not returned for blit=False
+    # return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text # Text artists not returned for blit=False
+    return line_total, line_ai, year_text # Text artists not returned for blit=False
 
 def animate(i):
     current_year_anim = years_full_range[i]
@@ -177,15 +178,15 @@ def animate(i):
                 temp_texts_ai.append(txt)
 
     # Update scatter plot offsets
-    if current_marker_points_total_x:
-        scatter_total_markers.set_offsets(np.c_[current_marker_points_total_x, current_marker_points_total_y])
-    else:
-        scatter_total_markers.set_offsets(np.empty((0, 2)))
+    # if current_marker_points_total_x:
+    #     scatter_total_markers.set_offsets(np.c_[current_marker_points_total_x, current_marker_points_total_y])
+    # else:
+    #     scatter_total_markers.set_offsets(np.empty((0, 2)))
 
-    if current_marker_points_ai_x:
-        scatter_ai_markers.set_offsets(np.c_[current_marker_points_ai_x, current_marker_points_ai_y])
-    else:
-        scatter_ai_markers.set_offsets(np.empty((0, 2)))
+    # if current_marker_points_ai_x:
+    #     scatter_ai_markers.set_offsets(np.c_[current_marker_points_ai_x, current_marker_points_ai_y])
+    # else:
+    #     scatter_ai_markers.set_offsets(np.empty((0, 2)))
 
     # Store dynamic texts to remove them in the next frame to avoid clutter
     # This is one way to handle text in animations without blitting them directly
@@ -198,7 +199,8 @@ def animate(i):
 
     # Return all artists that change or are created in animate if blit=True
     # For blit=False, it's mainly for structure, system redraws everything
-    return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text, *fig.dynamic_texts_artists
+    # return line_total, line_ai, scatter_total_markers, scatter_ai_markers, year_text, *fig.dynamic_texts_artists
+    return line_total, line_ai, year_text, *fig.dynamic_texts_artists
 
 pause_frames = 0
 ani = animation.FuncAnimation(fig, animate, frames=len(years_full_range) + pause_frames,
