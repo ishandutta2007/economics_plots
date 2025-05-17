@@ -70,7 +70,7 @@ line_ai, = ax1.plot([], [], lw=2.5, color=color_ai, label='AI Energy Consumption
 # scatter_total_markers = ax1.scatter([], [], s=80, facecolors=color_total, edgecolors='black', alpha=0.7, zorder=5, label='Total Elec. Points (5yr)')
 # scatter_ai_markers = ax1.scatter([], [], s=80, facecolors=color_ai, edgecolors='black', alpha=0.7, zorder=5, label='AI Energy Points (5yr)')
 
-year_text = ax1.text(0.5, 1.01, '', transform=ax1.transAxes, fontsize=18, fontweight='bold', ha='center')
+year_text = ax1.text(0.5, 1.02, '', transform=ax1.transAxes, fontsize=20, fontweight='bold', ha='center')
 
 # Set Y-axis limits for the single log scale
 min_val_overall = np.min(ai_energy_full[~np.isnan(ai_energy_full) & (ai_energy_full > 0)])
@@ -84,7 +84,7 @@ else: # Fallback
 ax1.set_xlim(years_full_range[0], years_full_range[-1])
 
 fig.legend(loc='upper center', bbox_to_anchor=(0.65, 0.17), ncol=1, fontsize=18) # Combined legend
-plt.title('Global Energy Projection', fontsize=18, pad=45)
+plt.title('Global Energy vs AI Energy', fontsize=22, pad=45, color='darkred', fontweight='bold',)
 fig.tight_layout(rect=[0, 0.05, 1, 0.88])
 
 # plt.figtext(0.5, 0.01,
