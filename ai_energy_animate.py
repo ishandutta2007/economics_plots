@@ -83,7 +83,7 @@ else: # Fallback
 
 ax1.set_xlim(years_full_range[0], years_full_range[-1])
 
-fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fontsize=10) # Combined legend
+fig.legend(loc='upper center', bbox_to_anchor=(0.65, 0.17), ncol=1, fontsize=18) # Combined legend
 plt.title('Global Energy Projection', fontsize=18, pad=45)
 fig.tight_layout(rect=[0, 0.05, 1, 0.88])
 
