@@ -6,7 +6,7 @@ import matplotlib # <--- Explicitly importing base matplotlib
 
 # --- Data (2015-2024 Historical) ---
 years_historical = np.array([2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024])
-years_full_range = np.arange(2015, 2045)
+years_full_range = np.arange(2015, 2051)
 
 ai_energy_hist_values = np.array([
     1.73, 2.51, 3.63, 5.25, 7.60, 11.0, 15.9, 23.0, 33.3, 48.2
