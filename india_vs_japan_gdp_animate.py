@@ -12,7 +12,7 @@ df = wb.download(indicator=indicator, country=countries, start=1992, end=2023)
 df = df.reset_index().pivot(index="year", columns="country", values=indicator)
 df.loc[2024] = {'India': 3.567552e+12, 'Japan': 4.104495e+12}
 df.loc[2025] = {'India': 4.192345e+12, 'Japan': 4.191365e+12}
-df.loc[2026] = {'India': 4.613552e+12, 'Japan': 4.373495e+12}
+df.loc[2026] = {'India': 4.593552e+12, 'Japan': 4.373495e+12}
 
 print(df.tail())
 df.index = df.index.astype(int)
@@ -29,7 +29,7 @@ fig, (ax1, ax2) = plt.subplots(
 ax1.set_xlim(df.index.min(), df.index.max())
 ax1.set_ylim(10**11, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP: India vs Japan (1973-2025)")
+ax1.set_title("GDP: India vs Japan (1990-2025)", fontdict={'fontsize':20, 'fontweight':'bold'})
 ax1.set_ylabel("GDP (USD)")
 
 # ax2.set_ylim(0, max(df["multiple_japan_india"].max(), df["multiple_japan_chn"].max()) * 1.1)
@@ -106,17 +106,19 @@ def animate(i):
     japan_gdp = ax1.text(
         current_year,
         y_japan,
-        f"Japan=${(y_japan/10**12):.3f}T",
+        f"Japan: ${(y_japan/10**12):.3f}T",
         ha="left",
         va="bottom",
+        fontweight='bold',
         backgroundcolor="white",
     )
     india_gdp = ax1.text(
         current_year,
         y_india,
-        f"India=${(y_india/10**12):.3f}T",
+        f"India: ${(y_india/10**12):.3f}T",
         ha="left",
         va="top",
+        fontweight='bold',
         backgroundcolor="white",
     )
 
