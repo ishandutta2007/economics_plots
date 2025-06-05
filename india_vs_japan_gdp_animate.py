@@ -3,8 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pandas_datareader import wb
-COLOR = 'blue'
-plt.rcParams['text.color'] = COLOR
+COLOR = 'white'
+COLOR = 'white'
 plt.rcParams['axes.labelcolor'] = COLOR
 plt.rcParams['xtick.color'] = COLOR
 plt.rcParams['ytick.color'] = COLOR
@@ -37,7 +37,7 @@ ax2.set_facecolor('black')
 ax1.set_xlim(df.index.min(), df.index.max())
 ax1.set_ylim(10**11, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP: India vs Japan (1990-2025)", fontdict={'fontsize':20, 'fontweight':'bold'})
+ax1.set_title("GDP: India vs Japan (1990-2025)", fontdict={'fontsize':20, 'fontweight':'bold', 'color':"blue"})
 ax1.set_ylabel("GDP (USD)")
 
 # ax2.set_ylim(0, max(df["multiple_japan_india"].max(), df["multiple_japan_chn"].max()) * 1.1)
@@ -107,7 +107,8 @@ def animate(i):
         f"{current_multiple_japan_india:.1f}x",
         ha="center",
         va="center",
-        backgroundcolor="white",
+        color="white",
+        backgroundcolor="black",
     )
 
     # GDP labels for Japan and India
@@ -118,7 +119,8 @@ def animate(i):
         ha="left",
         va="bottom",
         fontweight='bold',
-        backgroundcolor="white",
+        color="white",
+        backgroundcolor="black",
     )
     india_gdp = ax1.text(
         current_year,
@@ -127,7 +129,8 @@ def animate(i):
         ha="left",
         va="top",
         fontweight='bold',
-        backgroundcolor="white",
+        color="white",
+        backgroundcolor="black",
     )
 
     multiple_texts.extend([japan_gdp, india_gdp, arrow_japan, multiple_text_japan])
