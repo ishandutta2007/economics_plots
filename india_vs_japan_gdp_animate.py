@@ -3,6 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pandas_datareader import wb
+COLOR = 'blue'
+plt.rcParams['text.color'] = COLOR
+plt.rcParams['axes.labelcolor'] = COLOR
+plt.rcParams['xtick.color'] = COLOR
+plt.rcParams['ytick.color'] = COLOR
 
 # Get GDP data
 countries = ["IND", "JP"]
@@ -23,6 +28,9 @@ persistent_years = [1993, 2000, 2008, 2014, 2019, 2025]
 fig, (ax1, ax2) = plt.subplots(
     2, 1, figsize=(12, 8), gridspec_kw={"height_ratios": [2, 1]}
 )
+fig.patch.set_facecolor('black')
+ax1.set_facecolor('black')
+ax2.set_facecolor('black')
 
 # Plot formatting
 # ax1.set_yscale("log")
@@ -43,7 +51,7 @@ ax2.set_xlabel("Year")
 (line1,) = ax1.plot([], [], lw=2, label="India")
 (line2,) = ax1.plot([], [], lw=2, label="Japan")
 (ratio_line_japan,) = ax2.plot([], [], lw=2, color="purple", label="Japan/India Multiple")
-year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
+year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="orange")
 multiple_texts = []
 cached_annotations = None  # Store 2025 annotation data
 
@@ -133,7 +141,7 @@ def animate(i):
             ha="center",
             va="bottom",
             fontweight='bold',
-            color="darkred",
+            color="orange",
         )
 
     # Update year text
