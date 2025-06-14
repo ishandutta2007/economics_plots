@@ -72,12 +72,13 @@ footnote_text = (
     "- China: National Bureau of Statistics of China (2023).\n\n"
     "*Note: Data for India is an estimate of household income. Data for China is per capita disposable income."
 )
-fig.text(0.5, -0.05, footnote_text, ha='center', fontsize=9, style='italic', color='gray')
+fig.text(0.5, -0.05, ha='center', fontsize=9, style='italic', color='gray', s=footnote_text)
 
 
 # Adjust layout to make room for labels and title
 plt.tight_layout()
-plt.subplots_adjust(bottom=0.2) # Adjust bottom margin for footnote
+# **MODIFIED LINE:** Increased the left margin to ensure y-axis labels fit properly.
+plt.subplots_adjust(left=0.15, bottom=0.2)
 
 # Show the plot
 plt.show()
