@@ -12,29 +12,17 @@ import matplotlib.ticker as mticker
 data = {
     'Category': [
         'Indian American',
-        'Taiwanese American',
         'Chinese American',
-        'Japanese American',
         'White American',
-        'Korean American',
-        'Japan',
-        'Taiwan',
-        'South Korea',
         'China',
         'India'
     ],
     'Median Income (USD)': [
         152341,  # Source: 2022 ACS
-        110000,  # Source: 2022 ACS
         101728,  # Source: 2022 ACS
-        95000,   # Source: 2022 ACS
         89050,   # Source: 2023 Current Population Survey
-        85000,   # Source: 2022 ACS
-        32300,   # Source: Est. from JP Statistics Bureau / OECD data (2022)
-        31500,   # Source: Est. from Taiwan DGBAS data (2022)
-        30900,   # Source: Est. from Statistics Korea / OECD data (2022)
-        12242,   # Source: Estimated from NBS 2023 per capita data
-        1961     # Source: Estimated from PLFS (2022-23)
+        4557,    # Source: NBS of China (2023), converted from 33,036 CNY
+        1961     # Source: Estimated from PLFS (2022-23), converted from ~162,732 INR
     ]
 }
 
@@ -56,7 +44,7 @@ bars = ax.barh(
 
 # --- Formatting and Styling ---
 # Set the title and labels
-ax.set_title('Median Household Income Comparison', fontsize=16, pad=20)
+ax.set_title('Median Household Income Comparison (Most Recent Data)', fontsize=16, pad=20)
 ax.set_xlabel('Median Income (USD)', fontsize=12)
 ax.set_ylabel('') # No label for y-axis as categories are clear
 
@@ -82,13 +70,15 @@ footnote_text = (
     "- US Groups: US Census Bureau (2022 ACS / 2023 CPS).\n"
     "- India: Estimation from Periodic Labour Force Survey (2022-23).\n"
     "- China: National Bureau of Statistics of China (2023).\n\n"
+    "*Note: Data for India is an estimate of household income. Data for China is per capita disposable income."
 )
+# **MODIFIED LINE:** Positioned the footnote inside the figure area.
 fig.text(0.5, 0.01, footnote_text, ha='center', fontsize=9, style='italic', color='gray')
 
 
 # Adjust layout to make room for labels and title
 plt.tight_layout()
-plt.subplots_adjust(left=0.14, bottom=0.3)
+plt.subplots_adjust(left=0.15, bottom=0.25)
 
 # Show the plot
 plt.show()
