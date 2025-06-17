@@ -46,6 +46,19 @@ data = {
         'green',  #'korea',
         'yellow', #china
         'blue'    #India
+    ],
+    'ArowPos': [
+        5,  #India
+        3,  #'Taiwan',
+        4,  #china,
+        2,  #Japan
+        0,   #whites
+        1,  #'korea',
+        2,  #Japan
+        3,  #'Taiwan',
+        1,  #'korea',
+        4,  #china
+        5   #India
     ]
 }
 
@@ -69,7 +82,7 @@ bars = ax.barh(
 )
 
 # --- Formatting and Styling ---
-ax.set_title('Median Household Income Comparison (Most Recent Data)', fontsize=16, pad=20)
+ax.set_title('Median Household Income Comparison (2024 Data)', fontsize=16, pad=5)
 ax.set_xlabel('Median Income (USD)', fontsize=12)
 ax.set_ylabel('')
 formatter = mticker.FuncFormatter(lambda x, p: f'${x:,.0f}')
@@ -87,18 +100,20 @@ for i, bar in enumerate(bars):
 pairs = [
     ('India', 'Indian American'),
     ('Taiwan', 'Taiwanese American'),
-    ('China (Household Est.)', 'Chinese American'),
+    ('China', 'Chinese American'),
     ('Japan', 'Japanese American'),
     ('South Korea', 'Korean American')
 ]
 
 # Define a consistent X-position for the annotation arrows
-anno_x_pos = 16000#175000
+anno_multiple = 27000
+anno_offset = 56543
 
 for low_cat, high_cat in pairs:
     # Get data for the pair
     low_data = df_sorted[df_sorted['Category'] == low_cat]
     high_data = df_sorted[df_sorted['Category'] == high_cat]
+    arrow_pos = high_data['ArowPos']
 
     if low_data.empty or high_data.empty:
         continue
@@ -115,21 +130,21 @@ for low_cat, high_cat in pairs:
     # Draw the arrow
     ax.annotate(
         '',
-        xy=(anno_x_pos*multiple + 2000, y_high),
-        xytext=(anno_x_pos*multiple + 2000, y_low),
+        xy=(anno_multiple*arrow_pos + anno_offset, y_high),
+        xytext=(anno_multiple*arrow_pos + anno_offset, y_low),
         arrowprops=dict(arrowstyle='<->', color='purple', shrinkA=5, shrinkB=5)
     )
 
     # Add the text label for the multiple
     ax.text(
-        anno_x_pos*multiple + 2000,
+        anno_multiple*arrow_pos + anno_offset + 200,
         (y_low + y_high) / 2,
-        f'{multiple:.1f}x',
+        f'{low_cat}={multiple:.1f}x',
         ha='left',
         va='center',
         fontweight='bold',
         color='purple',
-        fontsize=11
+        fontsize=10
     )
 
 
@@ -145,6 +160,6 @@ footnote_text = (
 )
 fig.text(0.5, 0.01, footnote_text, ha='center', fontsize=9, style='italic', color='gray')
 plt.tight_layout()
-plt.subplots_adjust(left=0.25, bottom=0.15)
+plt.subplots_adjust(left=0.16, bottom=0.19)
 plt.show()
 
