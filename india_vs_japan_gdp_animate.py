@@ -3,11 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pandas_datareader import wb
-COLOR = 'white'
-COLOR = 'white'
-plt.rcParams['axes.labelcolor'] = COLOR
-plt.rcParams['xtick.color'] = COLOR
-plt.rcParams['ytick.color'] = COLOR
+
+COLOR = "white"
+COLOR = "white"
+plt.rcParams["axes.labelcolor"] = COLOR
+plt.rcParams["xtick.color"] = COLOR
+plt.rcParams["ytick.color"] = COLOR
 
 # Get GDP data
 countries = ["IND", "JP"]
@@ -15,9 +16,9 @@ indicator = "NY.GDP.MKTP.CD"
 
 df = wb.download(indicator=indicator, country=countries, start=1992, end=2023)
 df = df.reset_index().pivot(index="year", columns="country", values=indicator)
-df.loc[2024] = {'India': 3.567552e+12, 'Japan': 4.104495e+12}
-df.loc[2025] = {'India': 4.192345e+12, 'Japan': 4.191365e+12}
-df.loc[2026] = {'India': 4.593552e+12, 'Japan': 4.373495e+12}
+df.loc[2024] = {"India": 3.567552e12, "Japan": 4.104495e12}
+df.loc[2025] = {"India": 4.192345e12, "Japan": 4.191365e12}
+df.loc[2026] = {"India": 4.593552e12, "Japan": 4.373495e12}
 
 print(df.tail())
 df.index = df.index.astype(int)
@@ -28,16 +29,19 @@ persistent_years = [1993, 2000, 2008, 2014, 2019, 2025]
 fig, (ax1, ax2) = plt.subplots(
     2, 1, figsize=(12, 8), gridspec_kw={"height_ratios": [2, 1]}
 )
-fig.patch.set_facecolor('black')
-ax1.set_facecolor('black')
-ax2.set_facecolor('black')
+fig.patch.set_facecolor("black")
+ax1.set_facecolor("black")
+ax2.set_facecolor("black")
 
 # Plot formatting
 # ax1.set_yscale("log")
 ax1.set_xlim(df.index.min(), df.index.max())
 ax1.set_ylim(10**11, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP: India vs Japan (1990-2025)", fontdict={'fontsize':20, 'fontweight':'bold', 'color':"blue"})
+ax1.set_title(
+    "GDP: India vs Japan (1990-2025)",
+    fontdict={"fontsize": 20, "fontweight": "bold", "color": "blue"},
+)
 ax1.set_ylabel("GDP (USD)")
 
 # ax2.set_ylim(0, max(df["multiple_japan_india"].max(), df["multiple_japan_chn"].max()) * 1.1)
@@ -50,10 +54,21 @@ ax2.set_xlabel("Year")
 # Initialize elements
 (line1,) = ax1.plot([], [], lw=2, label="India")
 (line2,) = ax1.plot([], [], lw=2, label="Japan")
-(ratio_line_japan,) = ax2.plot([], [], lw=2, color="purple", label="Japan/India Multiple")
-year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="orange")
+(ratio_line_japan,) = ax2.plot(
+    [], [], lw=2, color="purple", label="Japan/India Multiple"
+)
+year_text = ax1.text(
+    0.9,
+    0.05,
+    "",
+    transform=ax1.transAxes,
+    fontsize="xx-large",
+    fontweight="extra bold",
+    color="orange",
+)
 multiple_texts = []
 cached_annotations = None  # Store 2025 annotation data
+
 
 def init():
     line1.set_data([], [])
@@ -61,6 +76,7 @@ def init():
     ratio_line_japan.set_data([], [])
     year_text.set_text("")
     return line1, line2, ratio_line_japan, year_text
+
 
 def animate(i):
     global multiple_texts, cached_annotations
@@ -115,20 +131,20 @@ def animate(i):
     japan_gdp = ax1.text(
         current_year,
         y_japan,
-        f"Japan: ${(y_japan/10**12):.3f}T",
+        f"Japan: ${(y_japan / 10**12):.3f}T",
         ha="left",
         va="bottom",
-        fontweight='bold',
+        fontweight="bold",
         color="white",
         backgroundcolor="black",
     )
     india_gdp = ax1.text(
         current_year,
         y_india,
-        f"India: ${(y_india/10**12):.3f}T",
+        f"India: ${(y_india / 10**12):.3f}T",
         ha="left",
         va="top",
-        fontweight='bold',
+        fontweight="bold",
         color="white",
         backgroundcolor="black",
     )
@@ -143,7 +159,7 @@ def animate(i):
             f"{current_multiple_japan_india:.1f}x",
             ha="center",
             va="bottom",
-            fontweight='bold',
+            fontweight="bold",
             color="orange",
         )
 
@@ -152,9 +168,12 @@ def animate(i):
 
     # Debug output for pause frames
     if i >= len(df):
-        print(f"Pause frame {i - len(df) + 1}: year={current_year}, annotations={len(multiple_texts)}")
+        print(
+            f"Pause frame {i - len(df) + 1}: year={current_year}, annotations={len(multiple_texts)}"
+        )
 
     return line1, line2, ratio_line_japan, year_text
+
 
 pause_frames = 20
 ani = animation.FuncAnimation(

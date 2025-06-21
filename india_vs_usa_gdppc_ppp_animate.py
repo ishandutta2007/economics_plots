@@ -37,7 +37,15 @@ ax2.set_xlabel("Year")
 (line1,) = ax1.plot([], [], lw=2, label="China")
 (line2,) = ax1.plot([], [], lw=2, label="USA")
 (ratio_line,) = ax2.plot([], [], lw=2, color="purple", label="USA/China Multiple")
-year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
+year_text = ax1.text(
+    0.9,
+    0.05,
+    "",
+    transform=ax1.transAxes,
+    fontsize="xx-large",
+    fontweight="extra bold",
+    color="darkred",
+)
 multiple_texts = []
 
 
@@ -116,7 +124,7 @@ def animate(i):
             f"{current_multiple:.1f}x",
             ha="center",
             va="bottom",
-            fontweight='bold',
+            fontweight="bold",
             color="darkred",
         )
         # Do not append to multiple_texts

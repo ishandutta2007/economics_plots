@@ -25,13 +25,17 @@ ax1.set_yscale("log")
 ax1.set_xlim(df.index.min(), df.index.max())
 ax1.set_ylim(800, df.max().max() * 1.1)
 ax1.grid(True, which="both", ls="--")
-ax1.set_title("GDP per capita(PPP): USA vs China vs India (1990-2023)", fontsize=19, fontweight='bold')
-ax1.set_ylabel("GDP per capita(PPP) (USD)", fontsize=17, fontweight='bold')
+ax1.set_title(
+    "GDP per capita(PPP): USA vs China vs India (1990-2023)",
+    fontsize=19,
+    fontweight="bold",
+)
+ax1.set_ylabel("GDP per capita(PPP) (USD)", fontsize=17, fontweight="bold")
 
 ax2.set_ylim(0, max(df["multiple_usa_india"].max(), df["multiple_usa_chn"].max()) * 1.1)
 ax2.set_xlim(df.index.min(), df.index.max())
 ax2.grid(True)
-ax2.set_ylabel("Multiple", fontsize=17, fontweight='bold')
+ax2.set_ylabel("Multiple", fontsize=17, fontweight="bold")
 ax2.set_xlabel("Year")
 
 # Initialize elements
@@ -40,9 +44,18 @@ ax2.set_xlabel("Year")
 (line3,) = ax1.plot([], [], lw=2, label="China")
 (ratio_line_usa,) = ax2.plot([], [], lw=2, color="purple", label="USA/India Multiple")
 (ratio_line_usa_chn,) = ax2.plot([], [], lw=2, color="blue", label="USA/China Multiple")
-year_text = ax1.text(0.9, 0.05, "", transform=ax1.transAxes, fontsize='xx-large', fontweight='extra bold', color="darkred")
+year_text = ax1.text(
+    0.9,
+    0.05,
+    "",
+    transform=ax1.transAxes,
+    fontsize="xx-large",
+    fontweight="extra bold",
+    color="darkred",
+)
 multiple_texts = []
 cached_annotations = None  # Store 2023 annotation data
+
 
 def init():
     line1.set_data([], [])
@@ -52,6 +65,7 @@ def init():
     ratio_line_usa_chn.set_data([], [])
     year_text.set_text("")
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
+
 
 def animate(i):
     global multiple_texts, cached_annotations
@@ -75,7 +89,14 @@ def animate(i):
 
     # Use cached annotations for pause frames
     if i >= len(df) and cached_annotations is not None:
-        y_usa, y_chn, y_india, current_multiple_usa_india, current_multiple_chn_india, current_multiple_usa_chn = cached_annotations
+        (
+            y_usa,
+            y_chn,
+            y_india,
+            current_multiple_usa_india,
+            current_multiple_chn_india,
+            current_multiple_usa_chn,
+        ) = cached_annotations
     else:
         # Data for annotations
         y_india = df["India"].iloc[current_idx]
@@ -87,7 +108,14 @@ def animate(i):
 
         # Cache annotations when reaching 2023
         if current_year == 2023:
-            cached_annotations = (y_usa, y_chn, y_india, current_multiple_usa_india, current_multiple_chn_india, current_multiple_usa_chn)
+            cached_annotations = (
+                y_usa,
+                y_chn,
+                y_india,
+                current_multiple_usa_india,
+                current_multiple_chn_india,
+                current_multiple_usa_chn,
+            )
 
     # Conditional arrow and text for USA based on year
     if current_year <= 1991:
@@ -106,7 +134,7 @@ def animate(i):
             ha="center",
             va="center",
             fontsize=17,
-            fontweight='bold',
+            fontweight="bold",
             backgroundcolor="white",
         )
     else:
@@ -125,7 +153,7 @@ def animate(i):
             ha="center",
             va="center",
             fontsize=17,
-            fontweight='bold',
+            fontweight="bold",
             backgroundcolor="white",
         )
 
@@ -162,7 +190,7 @@ def animate(i):
         ha="center",
         va="center",
         fontsize=17,
-        fontweight='bold',
+        fontweight="bold",
         backgroundcolor="white",
     )
     chn_gdp = ax1.text(
@@ -174,7 +202,17 @@ def animate(i):
         backgroundcolor="white",
     )
 
-    multiple_texts.extend([usa_gdp, india_gdp, chn_gdp, arrow_usa, multiple_text_usa, arrow_chn, multiple_text_chn])
+    multiple_texts.extend(
+        [
+            usa_gdp,
+            india_gdp,
+            chn_gdp,
+            arrow_usa,
+            multiple_text_usa,
+            arrow_chn,
+            multiple_text_chn,
+        ]
+    )
 
     # Add persistent text on ax2 for specific years
     if current_year in persistent_years:
@@ -185,10 +223,10 @@ def animate(i):
             ha="center",
             va="bottom",
             fontsize=17,
-            fontweight='bold',
+            fontweight="bold",
             color="darkred",
         )
-        if current_year!=1993:
+        if current_year != 1993:
             ax2.text(
                 current_year,
                 current_multiple_usa_chn,
@@ -196,7 +234,7 @@ def animate(i):
                 ha="center",
                 va="bottom",
                 fontsize=17,
-                fontweight='bold',
+                fontweight="bold",
                 color="darkred",
             )
 
@@ -205,9 +243,12 @@ def animate(i):
 
     # Debug output for pause frames
     if i >= len(df):
-        print(f"Pause frame {i - len(df) + 1}: year={current_year}, annotations={len(multiple_texts)}")
+        print(
+            f"Pause frame {i - len(df) + 1}: year={current_year}, annotations={len(multiple_texts)}"
+        )
 
     return line1, line2, line3, ratio_line_usa, ratio_line_usa_chn, year_text
+
 
 pause_frames = 5
 ani = animation.FuncAnimation(
@@ -220,8 +261,8 @@ ani = animation.FuncAnimation(
 )
 
 # Add legends
-ax1.legend(fontsize='xx-large', prop={'weight': 'bold'})
-ax2.legend(fontsize='xx-large', prop={'weight': 'bold'})
+ax1.legend(fontsize="xx-large", prop={"weight": "bold"})
+ax2.legend(fontsize="xx-large", prop={"weight": "bold"})
 
 # Save to MP4
 Writer = animation.writers["ffmpeg"]
