@@ -82,7 +82,7 @@ bars = ax.barh(
 )
 
 # --- Formatting and Styling ---
-ax.set_title('Median Household Income Comparison (2024 Data)', fontsize=16, pad=5)
+ax.set_title('Median Household Income Comparison (2024 Data)', fontsize=16, pad=1)
 ax.set_xlabel('Median Income (USD)', fontsize=12)
 ax.set_ylabel('')
 formatter = mticker.FuncFormatter(lambda x, p: f'${x:,.0f}')
