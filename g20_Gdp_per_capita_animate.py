@@ -87,7 +87,15 @@ def create_gdp_animation(df_animated):
             else:
                 colors.append('steelblue')
                 
-        ax.bar(data_for_year.index, data_for_year.values, color=colors)
+        # Create bar plot
+        bars = ax.bar(data_for_year.index, data_for_year.values, color=colors)
+        
+        # Add value labels on top of each bar
+        for bar in bars:
+            yval = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2, yval + 500,  # Add 500 to position text above bar
+                    f'{int(yval/1000):,}K',  # Format as integer with commas
+                    ha='center', va='bottom', fontsize=10, rotation=0)
         
         ax.set_title(f'G20 Nominal GDP Per Capita in {year}', fontsize=20, pad=20)
         ax.set_ylabel('Nominal GDP Per Capita (Current US$)', fontsize=14)
