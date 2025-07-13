@@ -11,27 +11,27 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 def get_hardcoded_g20_data():
     """Provides a DataFrame with hardcoded historical GDP per capita data for G20 countries."""
     data = {
-        'Argentina':    [11795, 8579, 13622],
-        'Australia':    [59907, 53696, 64491],
-        'Brazil':       [9257, 7011, 8918],
-        'Canada':       [46831, 43278, 52722],
-        'China':        [9977, 10409, 12720],
-        'France':       [43493, 40581, 42330],
-        'Germany':      [48011, 47101, 51384],
-        'India':        [2008, 1933, 2411],
-        'Indonesia':    [3894, 3912, 4798],
-        'Italy':        [35058, 32172, 37146],
-        'Japan':        [40049, 40033, 33854],
-        'South Korea':  [33543, 31762, 32423],
-        'Mexico':       [9931, 8561, 11497],
-        'Russia':       [11453, 10255, 15444],
-        'Saudi Arabia': [23625, 20349, 30448],
-        'South Africa': [6442, 5236, 6766],
-        'Türkiye':      [9683, 8645, 10616],
-        'United Kingdom':[43632, 41059, 45850],
-        'United States':[63234, 63683, 80412]
+        'Argentina':    [11795, 8579, 13622, 15502],
+        'Australia':    [59907, 53696, 64491, 74886],
+        'Brazil':       [9257, 7011, 8918, 12530],
+        'Canada':       [46831, 43278, 52722, 65516],
+        'China':        [9977, 10409, 12720, 18634],
+        'France':       [43493, 40581, 42330, 53814],
+        'Germany':      [48011, 47101, 51384, 65516],
+        'India':        [2008, 1933, 2411, 4475],
+        'Indonesia':    [3894, 3912, 4798, 6972],
+        'Italy':        [35058, 32172, 37146, 47470],
+        'Japan':        [40049, 40033, 33854, 41669],
+        'Mexico':       [9931, 8561, 11497, 15517],
+        'Russia':       [11453, 10255, 15444, 16601],
+        'Saudi Arabia': [23625, 20349, 30448, 34705],
+        'South Africa': [6442, 5236, 6766, 7066],
+        'South Korea':  [33543, 31762, 32423, 41857],
+        'Türkiye':      [9683, 8645, 10616, 20149],
+        'United Kingdom':[43632, 41059, 45850, 68659],
+        'United States':[63234, 63683, 80412, 105692]
     }
-    years = [2018, 2020, 2022]
+    years = [2018, 2020, 2022, 2030]
     df = pd.DataFrame(data, index=years)
     df.index.name = 'Year'
     return df
@@ -67,11 +67,27 @@ def create_gdp_animation(df_animated):
     animation_years = list(range(df_animated.index.min(), 2051))
     fig, ax = plt.subplots(figsize=(16, 9))
     
+    # Define colors for specific countries
+    country_colors = {
+        'India': 'blue',
+        'China': 'red',
+        'Russia': 'brown',
+        'United States': 'orange'
+    }
+    
     def animate(year):
         ax.clear()
         data_for_year = df_animated.loc[year].dropna().sort_values()
         
-        ax.bar(data_for_year.index, data_for_year.values, color='steelblue')
+        # Create colors array for all countries
+        colors = []
+        for country in data_for_year.index:
+            if country in country_colors:
+                colors.append(country_colors[country])
+            else:
+                colors.append('steelblue')
+                
+        ax.bar(data_for_year.index, data_for_year.values, color=colors)
         
         ax.set_title(f'G20 Nominal GDP Per Capita in {year}', fontsize=20, pad=20)
         ax.set_ylabel('Nominal GDP Per Capita (Current US$)', fontsize=14)
@@ -87,7 +103,7 @@ def create_gdp_animation(df_animated):
     
     try:
         output_filename = 'g20_gdp_per_capita_animation.mp4'
-        ani.save(output_filename, writer='ffmpeg', fps=5, dpi=150)
+        ani.save(output_filename, writer='ffmpeg', fps=1, dpi=150)
         print(f"✅ Animation successfully saved as '{output_filename}'")
     except FileNotFoundError:
         print("❌ Error: 'ffmpeg' not found.")
@@ -109,5 +125,5 @@ if __name__ == "__main__":
     g20_final_data = g20_extrapolated_data.reindex(full_index)
     g20_final_data.interpolate(method='linear', inplace=True)
     
-    print("\nCreating animated bar chart... 🎥")
+    print("\nCreating animated bar chart...")
     create_gdp_animation(g20_final_data)
