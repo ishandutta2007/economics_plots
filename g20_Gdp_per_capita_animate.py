@@ -27,9 +27,9 @@ def get_hardcoded_g20_data():
         'Saudi Arabia': [23625, 20349, 30448, 34705],
         'South Africa': [6442, 5236, 6766, 7066],
         'South Korea':  [33543, 31762, 32423, 41857],
-        'Türkiye':      [9683, 8645, 10616, 20149],
+        'Türkiye':      [9883, 8645, 10616, 20149],
         'United Kingdom':[43632, 41059, 45850, 68659],
-        'United States':[63234, 63683, 80412, 105692]
+        'United States':[63184, 64483, 77412, 105692]
     }
     years = [2018, 2020, 2022, 2030]
     df = pd.DataFrame(data, index=years)
