@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Actual data points (in millions) based on provided information
-years_historical = [2023, 2024, 2025]  # Example years with available data/estimates
-gcc_jobs_historical = [1.6, 1.9, 2.1]  # GCC jobs (using estimates from various reports)
-it_services_jobs_historical = [5.4, 5.4, 5.5]  # IT services jobs (reflecting slow growth/stagnation)
+years_historical = [2010, 2012, 2015, 2018, 2020, 2023, 2024, 2025]  # Example years with available data/estimates
+gcc_jobs_historical = [0.50, 0.76, 1.25, 1.75, 1.30, 1.6, 1.9, 2.1]  # GCC jobs (using estimates from various reports)
+it_services_jobs_historical = [5.0, 5.1, 4.8, 4.9, 5.0, 5.4, 5.4, 5.5]  # IT services jobs (reflecting slow growth/stagnation) 
 
 # Future projection years
-extrapolation_years = np.arange(2026, 2035)  # Extending projection to potentially see the crossover
+extrapolation_years = np.arange(2026, 2040)  # Extending projection to potentially see the crossover
 
 # Growth rate assumptions (based on reports and projections suggesting a crossover)
 # GCCs are showing strong growth, while IT services hiring has slowed.
@@ -73,7 +73,7 @@ plt.xlabel('Year')
 plt.ylabel('Number of Jobs (in millions)')
 plt.grid(True)
 plt.legend()
-plt.xticks(all_years)
-plt.ylim(bottom=1, top=7) # Adjust y-axis limits for better visualization
+plt.xticks(all_years, rotation=45)
+plt.ylim(bottom=0, top=6.5) # Adjust y-axis limits for better visualization
 plt.tight_layout()
 plt.show()
