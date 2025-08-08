@@ -37,9 +37,9 @@ def get_hardcoded_g20_data():
     return df
 
 def extrapolate_gdp_data(df_historic):
-    """Extrapolates GDP data to 2050 using a log-linear regression model."""
+    """Extrapolates GDP data to 2070 using a log-linear regression model."""
     last_historical_year = df_historic.index.max()
-    future_years = np.array(range(last_historical_year + 1, 2051))
+    future_years = np.array(range(last_historical_year + 1, 2071))
     all_country_series = []
     
     for country in df_historic.columns:
@@ -64,7 +64,7 @@ def extrapolate_gdp_data(df_historic):
 
 def create_gdp_animation(df_animated):
     """Creates and saves an animated bar chart of GDP per capita."""
-    animation_years = list(range(df_animated.index.min(), 2051))
+    animation_years = list(range(df_animated.index.min(), 2071))
     fig, ax = plt.subplots(figsize=(16, 9))
     
     # Define colors for specific countries
@@ -122,14 +122,14 @@ if __name__ == "__main__":
     print("Loading hardcoded G20 historical GDP data...")
     g20_historical_data = get_hardcoded_g20_data()
     
-    print("Extrapolating data to 2050...")
+    print("Extrapolating data to 2070...")
     g20_extrapolated_data = extrapolate_gdp_data(g20_historical_data)
     
     # **FIX**: Reindex the DataFrame to include all years and interpolate missing values.
-    # This creates a complete index from 2018 to 2050, preventing the KeyError.
+    # This creates a complete index from 2018 to 2070, preventing the KeyError.
     print("Interpolating missing years for a smooth animation...")
     start_year = g20_extrapolated_data.index.min()
-    full_index = range(start_year, 2051)
+    full_index = range(start_year, 2071)
     g20_final_data = g20_extrapolated_data.reindex(full_index)
     g20_final_data.interpolate(method='linear', inplace=True)
     
