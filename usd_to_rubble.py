@@ -48,4 +48,4 @@ plt.tight_layout()
 
 # Save the plot to a file
 plt.show()
-plt.savefig('usd_exchange_rates_2000_2025_corrected.png')
+# plt.savefig('usd_exchange_rates_2000_2025_corrected.png')
