@@ -28,6 +28,30 @@ plt.plot(years, software_engineer_jobs, marker='o', linestyle='-', color='b', la
 # Plot the ML Engineer job growth line
 plt.plot(years, ml_engineer_jobs, marker='o', linestyle='-', color='r', label='ML/AI Engineers/Scientists/Researchers at FAANG')
 
+# Add value annotations for Software Engineers endpoints
+for i, (year, value) in enumerate(zip(years, software_engineer_jobs)):
+    plt.annotate(f'{value:,}', 
+                xy=(year, value), 
+                xytext=(10, 10), 
+                textcoords='offset points',
+                ha='left', 
+                va='bottom',
+                fontsize=9,
+                color='blue',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+
+# Add value annotations for ML Engineers endpoints
+for i, (year, value) in enumerate(zip(years, ml_engineer_jobs)):
+    plt.annotate(f'{value:,}', 
+                xy=(year, value), 
+                xytext=(10, -15), 
+                textcoords='offset points',
+                ha='left', 
+                va='top',
+                fontsize=9,
+                color='red',
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+
 # Add labels and a title to the plot
 plt.title('Projected Job Growth: 2023 to 2035', fontsize=16)
 plt.xlabel('Year', fontsize=12)
