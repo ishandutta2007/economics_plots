@@ -16,6 +16,8 @@ data = {
     'JAPAN':          [1,   2,    3,    4,    5,    6,    5,    2,    3,    4,    5,    3,    5.5,  6.5,  7.8,  8.8,  6.7,  4.9,  4.3,  3.2,  2.8],
     'INDIA':          [40,  37,   32,   28,   28,   18,   16,   14,   12,   10,   8,    6,    4,    3,    2.7,  3.4,  4,    5.3,  6.7,  8.5,  9.9],
     'CHINA':          [30,  33,   34,   37,   32,   40,   30,   24,   16,   11,   9,    7,    6,    4,    3.1,  5.4,  6.7,  12.7, 16.7, 19.7, 22],
+    'AUSTRALIA':      [0,   0,    0,    0,    0,    0.1,  0.1,  0.4,  0.6,  0.7,  0.8,  0.8,  0.9,   1,    1.1,  1.1,  1.1,  1.0,  1.0,  0.95,  0.9],
+    'CANADA':         [0,   0,    0,    0.1,  0.1,  0.2,  0.3,  0.9,  1.3,  1.4,  1.5,   2,   2.1,  2.2,  2.2,  2.1,  1.8,  1.5,  1.4,  1.3,  1.2],
     'UNITED STATES':  [1,   1,    1,    1,    1,    1,    4,    9,    13,   14,   19,   27,   26,   24,   21.7, 21.6, 20.4, 17,   15.7, 15.5, 14]
 }
 # fmt: on
@@ -28,6 +30,8 @@ df = df.set_index("Year")
 # This order must match the legend from bottom to top
 columns = [
     "UNITED STATES",
+    "CANADA",
+    "AUSTRALIA",
     "FRANCE",
     "UNITED KINGDOM",
     "SPAIN",
@@ -43,6 +47,8 @@ columns = [
 # Approximate colors from the chart
 colors = [
     "#000080",  # US (Navy)
+    "#800080",  # CANADA (Purple)
+    "#FFD700",  # Australia (Gold)
     "#4169E1",  # FRANCE (RoyalBlue)
     "#800080",  # UK (Purple)
     "#006400",  # SPAIN (DarkGreen)
