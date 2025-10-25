@@ -19,6 +19,11 @@ bars_2025 = ax.barh(y_pos + bar_width/2, gdp_2025, bar_width,
 bars_2050 = ax.barh(y_pos - bar_width/2, gdp_2050, bar_width, 
                    label='2050', color='#ff7f0e', alpha=0.8)
 
+# Add shaded background regions for income categories
+ax.axvspan(0, 20000, alpha=0.2, color='red', label='2050s Poor levels(0-$20K)')
+ax.axvspan(20000, 60000, alpha=0.2, color='orange', label='2050s Middle Income levels($20K-$60K)')
+ax.axvspan(60000, max(gdp_2050) + 25000, alpha=0.2, color='green', label='2050s Developed levels($60K+)')
+
 # Add labels and title
 ax.set_xlabel('Nominal GDP per Capita (USD)', fontsize=12)
 ax.set_ylabel('Region', fontsize=12)
