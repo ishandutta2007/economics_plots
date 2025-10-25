@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Data
-regions = ['US', 'Australia', 'UK', 'Canada', 'EU', 'China']
-gdp_per_capita = [89000, 65000, 57000, 54000, 45000, 13000]
+regions = ['US', 'Australia', 'UK', 'Canada', 'EU', 'China', 'Latin America', 'ASEAN', 'India', 'Africa']
+gdp_per_capita = [89000, 65000, 57000, 54000, 45000, 13000, 10710, 5904, 2820, 2080]
 
 # Create a horizontal bar chart
 plt.figure(figsize=(10, 6))

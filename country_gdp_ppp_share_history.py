@@ -78,6 +78,9 @@ ax.set_ylim(0, 100)
 ax.set_yticks(range(0, 101, 10))
 ax.set_yticklabels([f"{y}%" for y in range(0, 101, 10)])
 
+# Add y-axis labels on both left and right sides
+ax.tick_params(axis='y', which='both', labelleft=True, labelright=True)
+
 # Set X-axis limits and ticks to match the index positions
 ax.set_xlim(0, len(df.index) - 1)
 ax.set_xticks(x_positions)
@@ -90,7 +93,7 @@ ax.legend(
     handles[::-1],
     labels[::-1],
     loc="center left",
-    bbox_to_anchor=(1.0, 0.5),
+    bbox_to_anchor=(1.15, 0.5),
     fontsize=11,
 )
 
