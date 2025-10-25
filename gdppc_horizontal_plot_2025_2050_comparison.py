@@ -36,11 +36,11 @@ for i, (val_2025, val_2050) in enumerate(zip(gdp_2025, gdp_2050)):
             va='center', fontweight='bold', fontsize=10)
 
 # Add legend
-ax.legend(loc='lower right')
+ax.legend(loc='upper right')
 
 # Adjust plot to fit labels
 max_value = max(max(gdp_2025), max(gdp_2050))
-ax.set_xlim(0, max_value + 35000)
+ax.set_xlim(0, max_value + 20000)
 
 # Add grid for better readability
 ax.grid(True, axis='x', alpha=0.3)
