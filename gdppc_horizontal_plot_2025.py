@@ -12,7 +12,7 @@ plt.barh(regions, gdp_per_capita, color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d627
 # Add labels and title
 plt.xlabel('Nominal GDP per Capita (USD)')
 plt.ylabel('Region')
-plt.title('Nominal GDP per Capita Forecast (2025)')
+plt.title('Nominal GDP per Capita (2025)')
 
 # Add value labels to the bars
 for index, value in enumerate(gdp_per_capita):
