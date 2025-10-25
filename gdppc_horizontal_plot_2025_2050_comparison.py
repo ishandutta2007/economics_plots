@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Data
-regions = ['US', 'Australia', 'UK', 'Canada', 'EU', 'China', 'Latin America', 'ASEAN', 'India', 'Africa']
-gdp_2025 = [89000, 65000, 57000, 54000, 45000, 13000, 10710, 5904, 2820, 2080]
-gdp_2050 = [190000, 190000, 100000, 120000, 90000, 60000, 30000, 25000, 20000, 10000]
+regions = ['US', 'Australia', 'UK', 'Canada', 'EU', 'Japan', 'China', 'Latin America', 'ASEAN', 'India', 'Africa']
+gdp_2025 = [89000, 65000, 57000, 54000, 45000, 35000, 13000, 10710, 5904, 2820, 2080]
+gdp_2050 = [190000, 160000, 120000, 120000, 90000, 60000, 60000, 30000, 25000, 20000, 10000]
 
 # Create a horizontal bar chart with grouped bars
 fig, ax = plt.subplots(figsize=(12, 8))
