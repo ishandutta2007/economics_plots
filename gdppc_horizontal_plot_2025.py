@@ -16,7 +16,7 @@ ax.axvspan(10000, 30000, alpha=0.2, color='orange', label='Middle Income ($10K-$
 ax.axvspan(30000, max(gdp_per_capita) + 15000, alpha=0.2, color='green', label='Developed ($30K+)')
 
 # Create the horizontal bar chart
-ax.barh(regions, gdp_per_capita, color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'])
+ax.barh(regions, gdp_per_capita, color=['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd'], alpha=0.9)
 
 # Add labels and title
 ax.set_xlabel('Nominal GDP per Capita (USD)')
