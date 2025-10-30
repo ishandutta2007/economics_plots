@@ -27,6 +27,18 @@ major_economies = [
     "United States",
 ]
 
+tax_heaven_economies = [
+    "Netherlands",
+    "Ireland",
+    "Switzerland",
+    "Luxembourg",
+    "Liechtenstein",
+    "Monaco",
+    "Singapore",
+    "Hong Kong",
+    "Macao",
+    "UAE",
+]
 
 print("Major Economies:", major_economies)
 
@@ -175,9 +187,9 @@ try:
     merged_imm.dropna(subset=["FDI_pct_GDP", "Immigrant_pct_Pop"], inplace=True)
 
     print(f"\nMerged {len(merged_imm)} countries for Immigrant plot.")
-    print("Immigrant Data Head:\n", merged_imm.head())
 
-    merged_imm = merged_imm[merged_imm["Country"].isin(major_economies)]
+    merged_imm = merged_imm[merged_imm["Country"].isin(major_economies + tax_heaven_economies)]
+    print("Immigrant Data Head:\n", merged_imm.head(30))
 
     if not merged_imm.empty:
         plt.figure(figsize=(10, 6))
@@ -191,7 +203,7 @@ try:
                 (row["Immigrant_pct_Pop"], row["FDI_pct_GDP"]),
                 fontsize=8,
                 xytext=(3, 3),
-                textcoords="offset points"
+                textcoords="offset points",
             )
         plt.xlabel("Immigrant % of Population")
         plt.ylabel("FDI % of GDP (2023)")
