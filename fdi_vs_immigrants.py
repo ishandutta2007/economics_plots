@@ -24,7 +24,6 @@ major_economies = [
     "South Korea",
     "Turkey",
     "United Kingdom",
-    "United Kingdom",
     "United States",
 ]
 
@@ -185,6 +184,15 @@ try:
         plt.scatter(
             merged_imm["Immigrant_pct_Pop"], merged_imm["FDI_pct_GDP"], alpha=0.7
         )
+        # Annotate each point with its country name
+        for i, row in merged_imm.iterrows():
+            plt.annotate(
+                row["Country"],
+                (row["Immigrant_pct_Pop"], row["FDI_pct_GDP"]),
+                fontsize=8,
+                xytext=(3, 3),
+                textcoords="offset points"
+            )
         plt.xlabel("Immigrant % of Population")
         plt.ylabel("FDI % of GDP (2023)")
         plt.xscale("log")
