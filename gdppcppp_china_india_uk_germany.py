@@ -12,9 +12,9 @@ uk_2025 = 63760
 
 # Define the growth rates
 india_growth_rate_till_2040 = 0.065  # 6.50%
-india_growth_rate_2040_2060 = 0.045  # 5.50%
-india_growth_rate_2060_2080 = 0.03  # 4.50%
-india_growth_rate_2080_2100 = 0.02  # 3%
+india_growth_rate_2040_2060 = 0.045  # 4.50%
+india_growth_rate_2060_2080 = 0.03  # 3%
+india_growth_rate_2080_2100 = 0.02  # 2%
 
 china_growth_rate_till_2040 = 0.045  # 4.5%
 china_growth_rate_2040_2060 = 0.03  # 3%
