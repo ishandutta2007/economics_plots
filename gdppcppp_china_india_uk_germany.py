@@ -69,15 +69,15 @@ plt.plot(years, uk_gdp_ppp, label='UK', marker='o', markersize=2)
 # Annotate the points
 for i, year in enumerate(years):
     if year%5==0:
-        plt.annotate(f'{int(india_gdp_ppp[i])}', (year, india_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
-        plt.annotate(f'{int(china_gdp_ppp[i])}', (year, china_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
+        plt.annotate(f'{int(india_gdp_ppp[i])}', (year, india_gdp_ppp[i]), textcoords="offset points", xytext=(0,-10), ha='center', fontsize=8)
+        plt.annotate(f'{int(china_gdp_ppp[i])}', (year, china_gdp_ppp[i]), textcoords="offset points", xytext=(0,-10), ha='center', fontsize=8)
         plt.annotate(f'{int(germany_gdp_ppp[i])}', (year, germany_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
         plt.annotate(f'{int(uk_gdp_ppp[i])}', (year, uk_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
 
 # Add labels and title
 plt.xlabel('Year')
 plt.ylabel('GDP per Capita (PPP) in USD')
-plt.title('Projected GDP per Capita (PPP) until 2050')
+plt.title('Projected GDP per Capita (PPP) until 2100')
 plt.legend()
 plt.grid(True)
 
