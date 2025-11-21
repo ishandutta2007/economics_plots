@@ -61,10 +61,16 @@ uk_gdp_ppp = [uk_2025 * ((1 + uk_growth_rate) ** ((year - 2025))) for year in ye
 
 # Plot the data
 plt.figure(figsize=(10, 6))
-plt.plot(years, india_gdp_ppp, label='India', marker='o', markersize=2)
-plt.plot(years, china_gdp_ppp, label='China', marker='o', markersize=2)
-plt.plot(years, germany_gdp_ppp, label='Germany', marker='o', markersize=2)
-plt.plot(years, uk_gdp_ppp, label='UK', marker='o', markersize=2)
+
+india_label = f"India ({india_growth_rate_till_2040*100:.1f}%(2025-2040)/{india_growth_rate_2040_2060*100:.1f}%(2040-2060)/{india_growth_rate_2060_2080*100:.1f}%(2060-2080)/{india_growth_rate_2080_2100*100:.1f}%(2080-2100))"
+china_label = f"China ({china_growth_rate_till_2040*100:.1f}%(2025-2040)/{china_growth_rate_2040_2060*100:.1f}%(2040-2060)/{china_growth_rate_2060_2100*100:.1f}%(2060-2100))"
+germany_label = f"Germany ({germany_growth_rate*100:.1f}%)"
+uk_label = f"UK ({uk_growth_rate*100:.1f}%)"
+
+plt.plot(years, india_gdp_ppp, label=india_label, marker='o', markersize=2)
+plt.plot(years, china_gdp_ppp, label=china_label, marker='o', markersize=2)
+plt.plot(years, germany_gdp_ppp, label=germany_label, marker='o', markersize=2)
+plt.plot(years, uk_gdp_ppp, label=uk_label, marker='o', markersize=2)
 
 # Annotate the points
 for i, year in enumerate(years):
@@ -77,7 +83,7 @@ for i, year in enumerate(years):
 # Add labels and title
 plt.xlabel('Year')
 plt.ylabel('GDP per Capita (PPP) in USD')
-plt.title('Projected GDP per Capita (PPP) until 2100')
+plt.title('Projected GDP per Capita (PPP) till 2100')
 plt.legend()
 plt.grid(True)
 
