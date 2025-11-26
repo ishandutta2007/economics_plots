@@ -6,12 +6,12 @@ import numpy as np
 # Values are in USD
 g7_data_2025 = {
     'Country': ['United States', 'Japan', 'Germany', 'United Kingdom', 'France', 'Italy', 'Canada'],
-    'GDP_per_Capita_USD': [89105, 33955, 55911, 54949, 46792, 41091, 53558]
+    'GDP_per_Capita_PPP_USD': [89105, 33955, 55911, 54949, 46792, 41091, 53558]
 }
 
 brics_data_2025 = {
-    'Country': ['Brazil', 'Russia', 'India', 'China', 'South Africa', 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
-    'GDP_per_Capita_USD': [10234, 14260, 2934, 13657, 6400, 3170, 1500, 3900, 30100, 48000, 5030]
+    'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'],#, 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
+    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   na,          ]#   21760,    4420,       21470,   74668,         48000,  17630]
 }
 
 # Create Pandas DataFrames
@@ -19,8 +19,8 @@ df_g7 = pd.DataFrame(g7_data_2025)
 df_brics = pd.DataFrame(brics_data_2025)
 
 # Calculate initial 2025 averages
-g7_avg_2025 = df_g7['GDP_per_Capita_USD'].mean()
-brics_avg_2025 = df_brics['GDP_per_Capita_USD'].mean()
+g7_avg_2025 = df_g7['GDP_per_Capita_PPP_USD'].mean()
+brics_avg_2025 = df_brics['GDP_per_Capita_PPP_USD'].mean()
 
 # Assumed average annual real GDP per capita growth rates (illustrative, based on reports)
 # BRICS emerging economies generally have higher growth rates than developed G7 economies
