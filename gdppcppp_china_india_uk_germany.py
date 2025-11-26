@@ -36,7 +36,7 @@ for year in years[1:]:
         growth_rate = india_growth_rate_2060_2080
     else:
         growth_rate = india_growth_rate_2080_2100
-    
+
     current_gdp = current_gdp * (1 + growth_rate)
     india_gdp_ppp.append(current_gdp)
 
@@ -52,38 +52,68 @@ for year in years[1:]:
         growth_rate = china_growth_rate_2060_2100
     else:
         growth_rate = china_growth_rate_2060_2100
-    
+
     current_gdp = current_gdp * (1 + growth_rate)
     china_gdp_ppp.append(current_gdp)
 
-germany_gdp_ppp = [germany_2025 * ((1 + germany_growth_rate) ** ((year - 2025))) for year in years]
-uk_gdp_ppp = [uk_2025 * ((1 + uk_growth_rate) ** ((year - 2025))) for year in years]
+germany_gdp_ppp = [
+    germany_2025 * ((1 + germany_growth_rate) ** (year - 2025)) for year in years
+]
+uk_gdp_ppp = [uk_2025 * ((1 + uk_growth_rate) ** (year - 2025)) for year in years]
 
 # Plot the data
 plt.figure(figsize=(10, 6))
 
-india_label = f"India ({india_growth_rate_till_2040*100:.1f}%(2025-2040)/{india_growth_rate_2040_2060*100:.1f}%(2040-2060)/{india_growth_rate_2060_2080*100:.1f}%(2060-2080)/{india_growth_rate_2080_2100*100:.1f}%(2080-2100))"
-china_label = f"China ({china_growth_rate_till_2040*100:.1f}%(2025-2040)/{china_growth_rate_2040_2060*100:.1f}%(2040-2060)/{china_growth_rate_2060_2100*100:.1f}%(2060-2100))"
-germany_label = f"Germany ({germany_growth_rate*100:.1f}%)"
-uk_label = f"UK ({uk_growth_rate*100:.1f}%)"
+india_label = f"India ({india_growth_rate_till_2040 * 100:.1f}%(2025-2040)/{india_growth_rate_2040_2060 * 100:.1f}%(2040-2060)/{india_growth_rate_2060_2080 * 100:.1f}%(2060-2080)/{india_growth_rate_2080_2100 * 100:.1f}%(2080-2100))"
+china_label = f"China ({china_growth_rate_till_2040 * 100:.1f}%(2025-2040)/{china_growth_rate_2040_2060 * 100:.1f}%(2040-2060)/{china_growth_rate_2060_2100 * 100:.1f}%(2060-2100))"
+germany_label = f"Germany ({germany_growth_rate * 100:.1f}%)"
+uk_label = f"UK ({uk_growth_rate * 100:.1f}%)"
 
-plt.plot(years, india_gdp_ppp, label=india_label, marker='o', markersize=2)
-plt.plot(years, china_gdp_ppp, label=china_label, marker='o', markersize=2)
-plt.plot(years, germany_gdp_ppp, label=germany_label, marker='o', markersize=2)
-plt.plot(years, uk_gdp_ppp, label=uk_label, marker='o', markersize=2)
+plt.plot(years, india_gdp_ppp, label=india_label, marker="o", markersize=2)
+plt.plot(years, china_gdp_ppp, label=china_label, marker="o", markersize=2)
+plt.plot(years, germany_gdp_ppp, label=germany_label, marker="o", markersize=2)
+plt.plot(years, uk_gdp_ppp, label=uk_label, marker="o", markersize=2)
 
 # Annotate the points
 for i, year in enumerate(years):
-    if year%5==0:
-        plt.annotate(f'{int(india_gdp_ppp[i])}', (year, india_gdp_ppp[i]), textcoords="offset points", xytext=(0,-10), ha='center', fontsize=8)
-        plt.annotate(f'{int(china_gdp_ppp[i])}', (year, china_gdp_ppp[i]), textcoords="offset points", xytext=(0,-10), ha='center', fontsize=8)
-        plt.annotate(f'{int(germany_gdp_ppp[i])}', (year, germany_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
-        plt.annotate(f'{int(uk_gdp_ppp[i])}', (year, uk_gdp_ppp[i]), textcoords="offset points", xytext=(0,10), ha='center', fontsize=8)
+    if year % 5 == 0:
+        plt.annotate(
+            f"{int(india_gdp_ppp[i])}",
+            (year, india_gdp_ppp[i]),
+            textcoords="offset points",
+            xytext=(0, -10),
+            ha="center",
+            fontsize=8,
+        )
+        plt.annotate(
+            f"{int(china_gdp_ppp[i])}",
+            (year, china_gdp_ppp[i]),
+            textcoords="offset points",
+            xytext=(0, -10),
+            ha="center",
+            fontsize=8,
+        )
+        plt.annotate(
+            f"{int(germany_gdp_ppp[i])}",
+            (year, germany_gdp_ppp[i]),
+            textcoords="offset points",
+            xytext=(0, 10),
+            ha="center",
+            fontsize=8,
+        )
+        plt.annotate(
+            f"{int(uk_gdp_ppp[i])}",
+            (year, uk_gdp_ppp[i]),
+            textcoords="offset points",
+            xytext=(0, 10),
+            ha="center",
+            fontsize=8,
+        )
 
 # Add labels and title
-plt.xlabel('Year')
-plt.ylabel('GDP per Capita (PPP) in USD')
-plt.title('Projected GDP per Capita (PPP) till 2100')
+plt.xlabel("Year")
+plt.ylabel("GDP per Capita (PPP) in USD")
+plt.title("Projected GDP per Capita (PPP) till 2100")
 plt.legend()
 plt.grid(True)
 

@@ -79,7 +79,7 @@ ax.set_yticks(range(0, 101, 10))
 ax.set_yticklabels([f"{y}%" for y in range(0, 101, 10)])
 
 # Add y-axis labels on both left and right sides
-ax.tick_params(axis='y', which='both', labelleft=True, labelright=True)
+ax.tick_params(axis="y", which="both", labelleft=True, labelright=True)
 
 # Set X-axis limits and ticks to match the index positions
 ax.set_xlim(0, len(df.index) - 1)

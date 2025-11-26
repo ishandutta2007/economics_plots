@@ -19,73 +19,88 @@ se_growth_factor = se_jobs_2035 / se_jobs_2023
 ml_growth_factor = ml_jobs_2035 / ml_jobs_2023
 
 # Create the plot
-plt.style.use('seaborn-v0_8-whitegrid') # A clean style with a grid
-plt.figure(figsize=(10, 6)) # Set the figure size for better viewing
+plt.style.use("seaborn-v0_8-whitegrid")  # A clean style with a grid
+plt.figure(figsize=(10, 6))  # Set the figure size for better viewing
 
 # Plot the Software Engineer job growth line
-plt.plot(years, software_engineer_jobs, marker='o', linestyle='-', color='b', label='Traditional Software Engineers at FAANG')
+plt.plot(
+    years,
+    software_engineer_jobs,
+    marker="o",
+    linestyle="-",
+    color="b",
+    label="Traditional Software Engineers at FAANG",
+)
 
 # Plot the ML Engineer job growth line
-plt.plot(years, ml_engineer_jobs, marker='o', linestyle='-', color='r', label='ML/AI Engineers/Scientists/Researchers at FAANG')
+plt.plot(
+    years,
+    ml_engineer_jobs,
+    marker="o",
+    linestyle="-",
+    color="r",
+    label="ML/AI Engineers/Scientists/Researchers at FAANG",
+)
 
 # Add value annotations for Software Engineers endpoints
 for i, (year, value) in enumerate(zip(years, software_engineer_jobs)):
-    plt.annotate(f'{value:,}', 
-                xy=(year, value), 
-                xytext=(10, 10), 
-                textcoords='offset points',
-                ha='left', 
-                va='bottom',
-                fontsize=9,
-                color='blue',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+    plt.annotate(
+        f"{value:,}",
+        xy=(year, value),
+        xytext=(10, 10),
+        textcoords="offset points",
+        ha="left",
+        va="bottom",
+        fontsize=9,
+        color="blue",
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8),
+    )
 
 # Add value annotations for ML Engineers endpoints
 for i, (year, value) in enumerate(zip(years, ml_engineer_jobs)):
-    plt.annotate(f'{value:,}', 
-                xy=(year, value), 
-                xytext=(10, -15), 
-                textcoords='offset points',
-                ha='left', 
-                va='top',
-                fontsize=9,
-                color='red',
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+    plt.annotate(
+        f"{value:,}",
+        xy=(year, value),
+        xytext=(10, -15),
+        textcoords="offset points",
+        ha="left",
+        va="top",
+        fontsize=9,
+        color="red",
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8),
+    )
 
 # Add labels and a title to the plot
-plt.title('Projected Job Growth: 2023 to 2035', fontsize=16)
-plt.xlabel('Year', fontsize=12)
-plt.ylabel('Number of Jobs', fontsize=12)
+plt.title("Projected Job Growth: 2023 to 2035", fontsize=16)
+plt.xlabel("Year", fontsize=12)
+plt.ylabel("Number of Jobs", fontsize=12)
 
 # Customize the y-axis to be in millions
 # This makes the large numbers easier to read
 # We'll also set a consistent limit for better comparison
-plt.ticklabel_format(style='plain')
-plt.yticks(
-    [0, 500_000, 1_000_000, 1_500_000],
-    ['0', '0.5M', '1.0M', '1.5M']
-)
+plt.ticklabel_format(style="plain")
+plt.yticks([0, 500_000, 1_000_000, 1_500_000], ["0", "0.5M", "1.0M", "1.5M"])
 # plt.xlim(0, 2040)
 plt.ylim(0, 1_600_000)
 
 # Add vertical arrows and text annotations for Software Engineers
 plt.annotate(
-    f'{se_growth_factor:.0f}x',
-    xy=(years[1]-0.5, se_jobs_2023),
-    xytext=(years[1]-0.5, se_jobs_2035),
-    arrowprops=dict(arrowstyle="<|-", color='blue', lw=2, mutation_scale=20),
+    f"{se_growth_factor:.0f}x",
+    xy=(years[1] - 0.5, se_jobs_2023),
+    xytext=(years[1] - 0.5, se_jobs_2035),
+    arrowprops=dict(arrowstyle="<|-", color="blue", lw=2, mutation_scale=20),
     fontsize=10,
-    ha='center'
+    ha="center",
 )
 
 # Add vertical arrows and text annotations for ML Engineers
 plt.annotate(
-    f'{ml_growth_factor:.0f}x',
-    xy=(years[1]+0.5, ml_jobs_2023),
-    xytext=(years[1]+0.5, ml_jobs_2035),
-    arrowprops=dict(arrowstyle="<|-", color='red', lw=2, mutation_scale=20),
+    f"{ml_growth_factor:.0f}x",
+    xy=(years[1] + 0.5, ml_jobs_2023),
+    xytext=(years[1] + 0.5, ml_jobs_2035),
+    arrowprops=dict(arrowstyle="<|-", color="red", lw=2, mutation_scale=20),
     fontsize=10,
-    ha='center'
+    ha="center",
 )
 
 
@@ -97,4 +112,3 @@ plt.xticks(years)
 
 # Display the plot
 plt.show()
-

@@ -188,7 +188,9 @@ try:
 
     print(f"\nMerged {len(merged_imm)} countries for Immigrant plot.")
 
-    merged_imm = merged_imm[merged_imm["Country"].isin(major_economies + tax_heaven_economies)]
+    merged_imm = merged_imm[
+        merged_imm["Country"].isin(major_economies + tax_heaven_economies)
+    ]
     print("Immigrant Data Head:\n", merged_imm.head(30))
 
     if not merged_imm.empty:
