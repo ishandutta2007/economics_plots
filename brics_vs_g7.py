@@ -4,13 +4,16 @@ import numpy as np
 
 # 2025 GDP per capita data (nominal USD) as of late 2025 based on IMF WEO projections
 # Values are in USD
+
 g7_data_2025 = {
     'Country': ['United States',      'Japan', 'Germany', 'United Kingdom', 'France', 'Italy', 'Canada'],
-    'GDP_per_Capita_PPP_USD': [89105, 54820,    73550,    63760,             66060,    63130,   63170]
+    'GDP_per_Capita_PPP_USD': [89105, 54820,    73550,    63760,             66060,    63130,   63170],
+    'Population':             [347,   123,      84,       70,                68,       59,      40]
 }
 brics_data_2025 = {
     'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'   ], #, 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
-    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   16050,          ] #   21760,    4420,       21470,   74668,         48000,  17630]
+    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   16050,          ], #   21760,    4420,       21470,   74668,         48000,  17630]
+    'Population':             [212,       144,      1460,    1420,    65,             ]
 }
 
 # Create Pandas DataFrames
@@ -46,7 +49,7 @@ for i, (x, y) in enumerate(zip(years, g7_projections)):
                     ha='center',
                     fontsize=8,
                     color=g7_line.get_color())
-brics_line, = plt.plot(years, brics_projections, label=f'BRICS+ (Avg Growth {BRICS_AVG_GROWTH_RATE*100:.1f}%)', marker='s', linestyle='--', markersize=4)
+brics_line, = plt.plot(years, brics_projections, label=f'BRICS(original) (Avg Growth {BRICS_AVG_GROWTH_RATE*100:.1f}%)', marker='s', linestyle='--', markersize=4)
 
 # Annotate BRICS points
 for i, (x, y) in enumerate(zip(years, brics_projections)):
@@ -61,8 +64,8 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 
 # Customizing the plot
 plt.xlabel('Year', fontsize=12)
-plt.ylabel('Projected Average GDP per Capita (USD, Nominal)', fontsize=12)
-plt.title('G7 vs BRICS+ GDP per Capita Projections (2025-2050)')
+plt.ylabel('Projected Average GDP per Capita (USD, PPP)', fontsize=12)
+plt.title('G7 vs BRICS GDP per Capita Projections (2025-2050)')
 plt.legend(fontsize=10)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.xticks(years[::5])  # Show x-ticks every 5 years for better readability
