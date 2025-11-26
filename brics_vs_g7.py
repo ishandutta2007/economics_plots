@@ -5,13 +5,12 @@ import numpy as np
 # 2025 GDP per capita data (nominal USD) as of late 2025 based on IMF WEO projections
 # Values are in USD
 g7_data_2025 = {
-    'Country': ['United States', 'Japan', 'Germany', 'United Kingdom', 'France', 'Italy', 'Canada'],
-    'GDP_per_Capita_PPP_USD': [89105, 33955, 55911, 54949, 46792, 41091, 53558]
+    'Country': ['United States',      'Japan', 'Germany', 'United Kingdom', 'France', 'Italy', 'Canada'],
+    'GDP_per_Capita_PPP_USD': [89105, 54820,    73550,    63760,             66060,    63130,   63170]
 }
-
 brics_data_2025 = {
-    'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'],#, 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
-    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   na,          ]#   21760,    4420,       21470,   74668,         48000,  17630]
+    'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'   ], #, 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
+    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   16050,          ] #   21760,    4420,       21470,   74668,         48000,  17630]
 }
 
 # Create Pandas DataFrames
