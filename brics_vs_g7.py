@@ -37,7 +37,7 @@ BRICS_AVG_GROWTH_RATE_2060_2080 = 0.03  # 4.5%
 BRICS_AVG_GROWTH_RATE_2080_2100 = 0.02  # 4.5%
 
 # Generate projected data points from 2025 to 2100
-years = np.arange(2025, 2101)
+years = np.arange(2025, 2081)
 g7_projections = [g7_avg_2025 * (1 + G7_AVG_GROWTH_RATE) ** (y - 2025) for y in years]
 
 brics_projections = []
@@ -88,8 +88,7 @@ for i, (x, y) in enumerate(zip(years, g7_projections)):
     brics_projections,
     label=f"BRICS(original) (Growth: {BRICS_AVG_GROWTH_RATE_2025_2040 * 100:.1f}%(2025-2040);\
     {BRICS_AVG_GROWTH_RATE_2040_2060 * 100:.1f}%(2040-2060);\
-    {BRICS_AVG_GROWTH_RATE_2060_2080 * 100:.1f}%(2060-2080);\
-    {BRICS_AVG_GROWTH_RATE_2080_2100 * 100:.1f}%(2080-2100))",
+    {BRICS_AVG_GROWTH_RATE_2060_2080 * 100:.1f}%(2060-2080)",
     marker="s",
     linestyle="--",
     markersize=4,
@@ -113,7 +112,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 # Customizing the plot
 plt.xlabel("Year", fontsize=12)
 plt.ylabel("Projected Average GDP per Capita (USD, PPP)", fontsize=12)
-plt.title("G7 vs BRICS GDP per Capita(PPP) Projections (2025-2100)")
+plt.title("G7 vs BRICS GDP per Capita(PPP) Projections (2025-2080)")
 plt.legend(fontsize=10)
 plt.grid(True, linestyle="--", alpha=0.7)
 plt.xticks(years[::5])  # Show x-ticks every 5 years for better readability
