@@ -20,9 +20,9 @@ brics_data_2025 = {
 df_g7 = pd.DataFrame(g7_data_2025)
 df_brics = pd.DataFrame(brics_data_2025)
 
-# Calculate initial 2025 averages
-g7_avg_2025 = df_g7['GDP_per_Capita_PPP_USD'].mean()
-brics_avg_2025 = df_brics['GDP_per_Capita_PPP_USD'].mean()
+# Calculate initial 2025 population-weighted averages
+g7_avg_2025 = (df_g7['GDP_per_Capita_PPP_USD'] * df_g7['Population']).sum() / df_g7['Population'].sum()
+brics_avg_2025 = (df_brics['GDP_per_Capita_PPP_USD'] * df_brics['Population']).sum() / df_brics['Population'].sum()
 
 # Assumed average annual real GDP per capita growth rates (illustrative, based on reports)
 # BRICS emerging economies generally have higher growth rates than developed G7 economies
