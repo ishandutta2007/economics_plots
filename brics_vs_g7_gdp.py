@@ -33,7 +33,7 @@ BRICS_AVG_GROWTH_RATE_2060_2080 = 0.03  # 4.5%
 BRICS_AVG_GROWTH_RATE_2080_2100 = 0.02  # 4.5%
 
 # Generate projected data points from 2025 to 2100
-years = np.arange(2025, 2061)
+years = np.arange(2025, 2051)
 g7_projections = [g7_tot_2025 * (1 + G7_AVG_GROWTH_RATE) ** (y - 2025) for y in years]
 
 brics_projections = []
@@ -107,7 +107,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 # Customizing the plot
 plt.xlabel("Year", fontsize=12)
 plt.ylabel("Projected Average GDP (USD, Nominal)", fontsize=12)
-plt.title("G7 vs BRICS GDP (Nominal) Projections (2025-2060)")
+plt.title("G7 vs BRICS GDP (Nominal) Projections (2025-2050)")
 
 plt.legend(fontsize=10)
 plt.grid(True, linestyle="--", alpha=0.7)
