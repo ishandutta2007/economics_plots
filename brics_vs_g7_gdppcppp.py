@@ -111,7 +111,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 
 # Customizing the plot
 plt.xlabel("Year", fontsize=12)
-plt.ylabel("Projected Average GDP per Capita (USD, PPP)", fontsize=12)
+plt.ylabel("Projected Average GDP per Capita (at 2025 USD, PPP)", fontsize=12)
 plt.title("G7 vs BRICS GDP per Capita(PPP) Projections (2025-2080)")
 plt.legend(fontsize=10)
 plt.grid(True, linestyle="--", alpha=0.7)

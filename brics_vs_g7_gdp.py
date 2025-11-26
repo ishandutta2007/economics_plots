@@ -106,7 +106,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 
 # Customizing the plot
 plt.xlabel("Year", fontsize=12)
-plt.ylabel("Projected Average GDP (USD, Nominal)", fontsize=12)
+plt.ylabel("Projected Average GDP (at 2025 USD, Nominal)", fontsize=12)
 plt.title("G7 vs BRICS GDP (Nominal) Projections (2025-2050)")
 
 plt.legend(fontsize=10)
