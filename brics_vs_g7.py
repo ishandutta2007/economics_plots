@@ -31,13 +31,13 @@ brics_avg_2025 = (
 # Assumed average annual real GDP per capita growth rates (illustrative, based on reports)
 # BRICS emerging economies generally have higher growth rates than developed G7 economies
 G7_AVG_GROWTH_RATE = 0.015  # 1.5%
-BRICS_AVG_GROWTH_RATE_2025_2040 = 0.055  # 4.5%
-BRICS_AVG_GROWTH_RATE_2040_2060 = 0.045  # 4.5%
+BRICS_AVG_GROWTH_RATE_2025_2040 = 0.05  # 5.0%
+BRICS_AVG_GROWTH_RATE_2040_2060 = 0.04  # 4.0%
 BRICS_AVG_GROWTH_RATE_2060_2080 = 0.03  # 4.5%
-BRICS_AVG_GROWTH_RATE_2080_2160 = 0.02  # 4.5%
+BRICS_AVG_GROWTH_RATE_2080_2100 = 0.02  # 4.5%
 
-# Generate projected data points from 2025 to 2160
-years = np.arange(2025, 2161)
+# Generate projected data points from 2025 to 2100
+years = np.arange(2025, 2101)
 g7_projections = [g7_avg_2025 * (1 + G7_AVG_GROWTH_RATE) ** (y - 2025) for y in years]
 
 brics_projections = []
@@ -51,7 +51,7 @@ for year in years[1:]:
     elif year <= 2080:
         growth_rate = BRICS_AVG_GROWTH_RATE_2060_2080
     else:
-        growth_rate = BRICS_AVG_GROWTH_RATE_2080_2160
+        growth_rate = BRICS_AVG_GROWTH_RATE_2080_2100
 
     current_gdppc_ppp = current_gdppc_ppp * (1 + growth_rate)
     brics_projections.append(current_gdppc_ppp)
@@ -89,7 +89,7 @@ for i, (x, y) in enumerate(zip(years, g7_projections)):
     label=f"BRICS(original) (Growth: {BRICS_AVG_GROWTH_RATE_2025_2040 * 100:.1f}%(2025-2040);\
     {BRICS_AVG_GROWTH_RATE_2040_2060 * 100:.1f}%(2040-2060);\
     {BRICS_AVG_GROWTH_RATE_2060_2080 * 100:.1f}%(2060-2080);\
-    {BRICS_AVG_GROWTH_RATE_2080_2160 * 100:.1f}%(2080-2160))",
+    {BRICS_AVG_GROWTH_RATE_2080_2100 * 100:.1f}%(2080-2100))",
     marker="s",
     linestyle="--",
     markersize=4,
@@ -113,7 +113,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 # Customizing the plot
 plt.xlabel("Year", fontsize=12)
 plt.ylabel("Projected Average GDP per Capita (USD, PPP)", fontsize=12)
-plt.title("G7 vs BRICS GDP per Capita(PPP) Projections (2025-2160)")
+plt.title("G7 vs BRICS GDP per Capita(PPP) Projections (2025-2100)")
 plt.legend(fontsize=10)
 plt.grid(True, linestyle="--", alpha=0.7)
 plt.xticks(years[::5])  # Show x-ticks every 5 years for better readability
