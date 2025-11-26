@@ -11,8 +11,8 @@ g7_data_2025 = {
     'Population':             [347,   123,      84,       70,                68,       59,      40]
 }
 brics_data_2025 = {
-    'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'   ], #, 'Egypt', 'Ethiopia', 'Iran', 'Saudi Arabia', 'UAE', 'Indonesia'],
-    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   16050,          ], #   21760,    4420,       21470,   74668,         48000,  17630]
+    'Country':                ['Brazil', 'Russia', 'India', 'China', 'South Africa'   ],
+    'GDP_per_Capita_PPP_USD': [23310,     49049,    12100,   29190,   16050,          ],
     'Population':             [212,       144,      1460,    1420,    65,             ]
 }
 
@@ -29,10 +29,10 @@ brics_avg_2025 = (df_brics['GDP_per_Capita_PPP_USD'] * df_brics['Population']).s
 G7_AVG_GROWTH_RATE = 0.015  # 1.5%
 BRICS_AVG_GROWTH_RATE_2025_2040 = 0.045 # 4.5%
 BRICS_AVG_GROWTH_RATE_2040_2060 = 0.03 # 4.5%
-BRICS_AVG_GROWTH_RATE_2060_2100 = 0.02 # 4.5%
+BRICS_AVG_GROWTH_RATE_2060_2160 = 0.02 # 4.5%
 
-# Generate projected data points from 2025 to 2100
-years = np.arange(2025, 2101)
+# Generate projected data points from 2025 to 2160
+years = np.arange(2025, 2161)
 g7_projections = [g7_avg_2025 * (1 + G7_AVG_GROWTH_RATE)**(y - 2025) for y in years]
 # brics_projections = [brics_avg_2025 * (1 + BRICS_AVG_GROWTH_RATE)**(y - 2025) for y in years]
 
@@ -46,7 +46,7 @@ for year in years[1:]:
     elif year <= 2060:
         growth_rate = BRICS_AVG_GROWTH_RATE_2040_2060
     else:
-        growth_rate = BRICS_AVG_GROWTH_RATE_2060_2100
+        growth_rate = BRICS_AVG_GROWTH_RATE_2060_2160
     
     current_gdppc_ppp = current_gdppc_ppp * (1 + growth_rate)
     brics_projections.append(current_gdppc_ppp)
@@ -67,7 +67,7 @@ for i, (x, y) in enumerate(zip(years, g7_projections)):
                     ha='center',
                     fontsize=8,
                     color=g7_line.get_color())
-brics_line, = plt.plot(years, brics_projections, label=f'BRICS(original) (Growth: {BRICS_AVG_GROWTH_RATE_2025_2040*100:.1f}%(2025-2040);{BRICS_AVG_GROWTH_RATE_2040_2060*100:.1f}%(2040-2060);{BRICS_AVG_GROWTH_RATE_2060_2100*100:.1f}%(2060-2100))', marker='s', linestyle='--', markersize=4)
+brics_line, = plt.plot(years, brics_projections, label=f'BRICS(original) (Growth: {BRICS_AVG_GROWTH_RATE_2025_2040*100:.1f}%(2025-2040);{BRICS_AVG_GROWTH_RATE_2040_2060*100:.1f}%(2040-2060);{BRICS_AVG_GROWTH_RATE_2060_2160*100:.1f}%(2060-2160))', marker='s', linestyle='--', markersize=4)
 
 # Annotate BRICS points
 for i, (x, y) in enumerate(zip(years, brics_projections)):
@@ -83,7 +83,7 @@ for i, (x, y) in enumerate(zip(years, brics_projections)):
 # Customizing the plot
 plt.xlabel('Year', fontsize=12)
 plt.ylabel('Projected Average GDP per Capita (USD, PPP)', fontsize=12)
-plt.title('G7 vs BRICS GDP per Capita Projections (2025-2100)')
+plt.title('G7 vs BRICS GDP per Capita Projections (2025-2160)')
 plt.legend(fontsize=10)
 plt.grid(True, linestyle='--', alpha=0.7)
 plt.xticks(years[::5])  # Show x-ticks every 5 years for better readability
