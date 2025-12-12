@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Population and area data for G20 countries (most recent available).
 # The European Union and African Union are excluded as they are regional bodies.
 # All listed countries have populations well over 10 million.
-g20_data = [
+g20_data = [#("Country", "Population", "Area_km2")
     ("Argentina", 47070000, 2780085),
     ("Australia", 27880000, 7688287),
     ("Brazil", 212000000, 8515767),
