@@ -9,9 +9,9 @@ def generate_gdp_plot():
     current_gdp_india_ppp = 12100.0
     current_gdp_uk_ppp = 63760.0
     india_growth_rate = 0.048  # 4.8% annually
-    uk_growth_rate = 0.008     # 0.8% annually
+    uk_growth_rate = 0.009     # 0.9% annually
     start_year = 2025
-    convergence_year = 2068
+    convergence_year = 2069
     total_years = convergence_year - start_year + 5 # Extend plot a bit past convergence
 
     years = np.arange(start_year, start_year + total_years)
