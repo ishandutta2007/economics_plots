@@ -22,10 +22,10 @@ medical_years_numeric = [int(y.split('-')[0]) for y in medical_years_str]
 last_known_year_numeric = 2024
 projection_end_year = 2047
 
-# --- Engineering Projection ---
-# Use trend from last 10 years (2015-2024)
-eng_recent_years = years_eng_numeric[-10:]
-eng_recent_seats = seats_eng[-10:]
+# --- Engineering Projection (Linear) ---
+# Use trend from last 4 years (2021-2024)
+eng_recent_years = years_eng_numeric[-4:]
+eng_recent_seats = seats_eng[-4:]
 eng_fit_coeffs = np.polyfit(eng_recent_years, eng_recent_seats, 1)
 eng_growth_rate = eng_fit_coeffs[0]
 
@@ -34,14 +34,16 @@ projected_seats_eng = [seats_eng[-1]]
 for i in range(1, len(projected_years_numeric)):
     projected_seats_eng.append(projected_seats_eng[-1] + eng_growth_rate)
 
-# --- Medical Projection ---
-# Use linear regression on all available points
-med_fit_coeffs = np.polyfit(medical_years_numeric, seats_med, 1)
-med_growth_rate = med_fit_coeffs[0]
+# --- Medical Projection (Exponential) ---
+# Log-linear regression for exponential growth on all available points
+log_seats_med = np.log(seats_med)
+med_log_fit_coeffs = np.polyfit(medical_years_numeric, log_seats_med, 1)
+med_log_growth_rate = med_log_fit_coeffs[0]
+med_growth_factor = np.exp(med_log_growth_rate)
 
 projected_seats_med = [seats_med[-1]]
 for i in range(1, len(projected_years_numeric)):
-    projected_seats_med.append(projected_seats_med[-1] + med_growth_rate)
+    projected_seats_med.append(projected_seats_med[-1] * med_growth_factor)
 
 # --- Prepare for Plotting ---
 projected_years_str = [f"{y}-{y+1-2000}" for y in projected_years_numeric]
@@ -74,7 +76,7 @@ plt.annotate(f'{projected_seats_med[-1]:.2f}L', (projected_years_str[-1], projec
 plt.title('Engineering vs Medical Seats in India (with Projections to 2047)', fontsize=16, fontweight='bold', pad=20)
 plt.xlabel('Academic Year', fontsize=12)
 plt.ylabel('Seats (in Lakhs)', fontsize=12)
-# plt.yscale('log')
+plt.yscale('log')
 
 # Create a combined list of x-axis labels for proper ticking
 all_years_str = sorted(list(set(years_eng_str + projected_years_str)))
