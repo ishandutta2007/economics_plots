@@ -1,6 +1,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.polynomial.polynomial import polyfit, polyval
 
 # SaaS Market Size Data from Precedence Research
 saas_years = np.arange(2024, 2035)
@@ -19,11 +20,23 @@ gdp_2023 = 105  # in trillion USD
 gdp_growth_2024_2025 = 0.032
 gdp_growth_2026_onwards = 0.030
 
-world_gdp = [gdp_2023 * (1 + gdp_growth_2024_2025)] # GDP for 2024
-world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2024_2025)) # GDP for 2025
+world_gdp = [gdp_2023 * (1 + gdp_growth_2024_2025)]  # GDP for 2024
+world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2024_2025))  # GDP for 2025
 
 for year in range(2026, 2035):
     world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2026_onwards))
+
+# --- Extrapolation ---
+projection_years = np.arange(2034, 2055)
+
+# SaaS projection
+saas_coeffs = polyfit(saas_years, saas_market_size, 2)
+saas_projection = polyval(projection_years, saas_coeffs)
+
+# GDP projection
+gdp_coeffs = polyfit(gdp_years, world_gdp, 2)
+gdp_projection = polyval(projection_years, gdp_coeffs)
+
 
 # Create the plot
 fig, ax1 = plt.subplots(figsize=(12, 7))
@@ -33,6 +46,7 @@ color = 'tab:blue'
 ax1.set_xlabel('Year')
 ax1.set_ylabel('SaaS Market Size (Billion USD)', color=color)
 ax1.plot(saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size')
+ax1.plot(projection_years, saas_projection, linestyle='--', color=color)
 ax1.tick_params(axis='y', labelcolor=color)
 ax1.grid(True)
 
@@ -41,15 +55,15 @@ ax2 = ax1.twinx()
 color = 'tab:red'
 ax2.set_ylabel('World GDP (Trillion USD)', color=color)
 ax2.plot(gdp_years, world_gdp, marker='o', linestyle='-', color=color, label='World GDP')
+ax2.plot(projection_years, gdp_projection, linestyle='--', color=color)
 ax2.tick_params(axis='y', labelcolor=color)
 
 # Add titles and legend
-plt.title('SaaS Market Size vs. World GDP (2024-2034)')
+plt.title('SaaS Market Size vs. World GDP with 20-Year Projection (2024-2054)')
 fig.tight_layout()
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
 
-plt.show()
 # Save the plot
-# plt.savefig('saas_vs_world_gdp.png')
+plt.savefig('saas_vs_world_gdp_projection.png')
 
-print("Plot saved as saas_vs_world_gdp.png")
+print("Plot saved as saas_vs_world_gdp_projection.png")
