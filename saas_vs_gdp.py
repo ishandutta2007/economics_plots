@@ -27,7 +27,7 @@ for year in range(2026, 2035):
     world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2026_onwards))
 
 # --- Extrapolation ---
-projection_years = np.arange(2034, 2055)
+projection_years = np.arange(2034, 2101)
 
 # SaaS projection
 saas_coeffs = polyfit(saas_years, saas_market_size, 2)
@@ -37,6 +37,12 @@ saas_projection = polyval(projection_years, saas_coeffs)
 gdp_coeffs = polyfit(gdp_years, world_gdp, 2)
 gdp_projection = polyval(projection_years, gdp_coeffs)
 
+# --- Scaling ---
+# Convert GDP from trillions to billions and scale it to be on a similar range as SaaS
+gdp_scaling_factor = 100# / (world_gdp[0] / saas_market_size[0])
+scaled_world_gdp = [x * gdp_scaling_factor for x in world_gdp]
+scaled_gdp_projection = [x * gdp_scaling_factor for x in gdp_projection]
+
 
 # Create the plot
 fig, ax1 = plt.subplots(figsize=(12, 7))
@@ -44,26 +50,24 @@ fig, ax1 = plt.subplots(figsize=(12, 7))
 # Plot SaaS Market Size
 color = 'tab:blue'
 ax1.set_xlabel('Year')
-ax1.set_ylabel('SaaS Market Size (Billion USD)', color=color)
-ax1.plot(saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size')
+ax1.set_ylabel('Scaled Value')
+ax1.plot(saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size (Billions USD)')
 ax1.plot(projection_years, saas_projection, linestyle='--', color=color)
-ax1.tick_params(axis='y', labelcolor=color)
+ax1.tick_params(axis='y')
 ax1.grid(True)
 
-# Create a second y-axis for World GDP
-ax2 = ax1.twinx()
+# Plot scaled World GDP
 color = 'tab:red'
-ax2.set_ylabel('World GDP (Trillion USD)', color=color)
-ax2.plot(gdp_years, world_gdp, marker='o', linestyle='-', color=color, label='World GDP')
-ax2.plot(projection_years, gdp_projection, linestyle='--', color=color)
-ax2.tick_params(axis='y', labelcolor=color)
+ax1.plot(gdp_years, scaled_world_gdp, marker='o', linestyle='-', color=color, label=f'World GDP (Scaled by {gdp_scaling_factor:.2f})')
+ax1.plot(projection_years, scaled_gdp_projection, linestyle='--', color=color)
+
 
 # Add titles and legend
-plt.title('SaaS Market Size vs. World GDP with 20-Year Projection (2024-2054)')
+plt.title('SaaS Market Size vs. World GDP with Projection to 2100')
 fig.tight_layout()
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
 
 # Save the plot
-plt.savefig('saas_vs_world_gdp_projection.png')
+plt.savefig('saas_vs_world_gdp_scaled.png')
 
-print("Plot saved as saas_vs_world_gdp_projection.png")
+print("Plot saved as saas_vs_world_gdp_scaled.png")
