@@ -57,6 +57,7 @@ color = 'tab:blue'
 ax1.set_xlabel('Year')
 ax1.set_xscale("log")
 ax1.set_ylabel('Trillions(USD)')
+ax1.set_yscale("log")
 ax1.plot(x_saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size')
 ax1.plot(x_projection_years, saas_projection, linestyle='--', color=color)
 ax1.tick_params(axis='y')
