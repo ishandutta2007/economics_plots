@@ -65,7 +65,7 @@ ax1.grid(True)
 
 # Plot scaled World GDP
 color = 'tab:red'
-ax1.plot(x_gdp_years, scaled_world_gdp, marker='o', linestyle='-', color=color, label=f'World GDP (Scaled by {gdp_scaling_factor:.2f})')
+ax1.plot(x_gdp_years, scaled_world_gdp, marker='o', linestyle='-', color=color, label=f'World GDP')
 ax1.plot(x_projection_years, scaled_gdp_projection, linestyle='--', color=color)
 
 
@@ -73,19 +73,20 @@ ax1.plot(x_projection_years, scaled_gdp_projection, linestyle='--', color=color)
 years_to_annotate = [2024, 2030, 2034, 2050, 2100, 2200]
 for year in years_to_annotate:
     x_year = year - 2023
-    # SaaS annotation
-    if year <= saas_years[-1]:
-        saas_val = saas_market_size[np.where(saas_years == year)[0][0]]
-    else:
-        saas_val = saas_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{saas_val:.2f}', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), va="bottom", ha='center', color='tab:blue')
 
     # GDP annotation
     if year <= gdp_years[-1]:
         gdp_val = scaled_world_gdp[np.where(gdp_years == year)[0][0]]
     else:
         gdp_val = scaled_gdp_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{gdp_val:.0f}', (x_year, gdp_val), textcoords="offset points", xytext=(0,10), va="top", ha='center', color='tab:red')
+    ax1.annotate(f'{gdp_val:.0f}', (x_year, gdp_val), textcoords="offset points", xytext=(0,10), fontweight='bold', va="top", ha='center', color='tab:red')
+
+    # SaaS annotation
+    if year <= saas_years[-1]:
+        saas_val = saas_market_size[np.where(saas_years == year)[0][0]]
+    else:
+        saas_val = saas_projection[np.where(projection_years == year)[0][0]]
+    ax1.annotate(f'{saas_val:.2f}({(100*saas_val/gdp_val):.2f}%)', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), fontweight='bold', va="bottom", ha='center', color='tab:blue')
 
 # --- X-axis Ticks ---
 tick_years = [2024, 2030, 2040, 2050, 2075, 2100, 2150, 2200]
@@ -95,7 +96,7 @@ ax1.set_xticklabels(tick_years, rotation=45)
 
 
 # Add titles and legend
-plt.title('SaaS Market Size vs. World GDP with Projection to 2200 (Log Scale X-axis)')
+plt.title('SaaS Market Size vs. World GDP with Projection to 2200')
 fig.tight_layout()
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
 # Save the plot
