@@ -40,16 +40,16 @@ for year in range(2026, 2035):
 # --- Extrapolation ---
 projection_years = np.arange(2034, 2201)
 
-# SaaS projection
-saas_coeffs = polyfit(saas_years, saas_market_size, 2)
-saas_projection = polyval(projection_years, saas_coeffs)
-
 # GDP projection
 gdp_coeffs = polyfit(gdp_years, world_gdp, 2)
 gdp_projection = polyval(projection_years, gdp_coeffs)
 
+# SaaS projection
+saas_coeffs = polyfit(saas_years, saas_market_size, 3)
+saas_projection = polyval(projection_years, saas_coeffs)
+
 # AI projection
-ai_coeffs = polyfit(ai_years, ai_market_size, 2)
+ai_coeffs = polyfit(ai_years, ai_market_size, 4)
 ai_projection = polyval(projection_years, ai_coeffs)
 
 # --- Scaling ---
@@ -91,7 +91,7 @@ ax1.plot(x_projection_years, ai_projection, linestyle='--', color=color)
 
 
 # --- Annotations ---
-years_to_annotate = [2024, 2030, 2034, 2050, 2100, 2200]
+years_to_annotate = [2024, 2030, 2034, 2040, 2050, 2100, 2200]
 for year in years_to_annotate:
     x_year = year - 2023
 
@@ -107,14 +107,14 @@ for year in years_to_annotate:
         saas_val = saas_market_size[np.where(saas_years == year)[0][0]]
     else:
         saas_val = saas_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{saas_val:.2f}({(100*saas_val/gdp_val):.2f}%)', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), fontweight='bold', va="bottom", ha='center', color='tab:blue')
+    ax1.annotate(f'{saas_val:.2f}({(100*saas_val/gdp_val):.1f}%)', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), fontweight='bold', va="bottom", ha='center', color='tab:blue')
 
     # AI annotation
     if year <= ai_years[-1]:
         ai_val = ai_market_size[np.where(ai_years == year)[0][0]]
     else:
         ai_val = ai_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{ai_val:.2f}({(100*ai_val/gdp_val):.2f}%)', (x_year, ai_val), textcoords="offset points", xytext=(0,25), fontweight='bold', va="top", ha='center', color='tab:green')
+    ax1.annotate(f'{ai_val:.2f}({(100*ai_val/gdp_val):.1f}%)', (x_year, ai_val), textcoords="offset points", xytext=(0,25), fontweight='bold', va="top", ha='center', color='tab:green')
 
 # --- X-axis Ticks ---
 tick_years = [2024, 2030, 2040, 2050, 2075, 2100, 2150, 2200]
