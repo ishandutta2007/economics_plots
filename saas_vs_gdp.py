@@ -26,6 +26,17 @@ world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2024_2025))  # GDP for 2025
 for year in range(2026, 2035):
     world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2026_onwards))
 
+# AI Market Size Data from MarketsandMarkets
+ai_years = np.arange(2024, 2035)
+ai_market_size_2025 = 0.37171  # in trillion USD
+ai_cagr = 0.306
+
+# Calculate AI market size for the forecast period
+ai_market_size = [ai_market_size_2025 / (1 + ai_cagr)] # 2024
+ai_market_size.append(ai_market_size_2025)
+for year in range(2026, 2035):
+    ai_market_size.append(ai_market_size[-1] * (1 + ai_cagr))
+
 # --- Extrapolation ---
 projection_years = np.arange(2034, 2201)
 
@@ -36,6 +47,10 @@ saas_projection = polyval(projection_years, saas_coeffs)
 # GDP projection
 gdp_coeffs = polyfit(gdp_years, world_gdp, 2)
 gdp_projection = polyval(projection_years, gdp_coeffs)
+
+# AI projection
+ai_coeffs = polyfit(ai_years, ai_market_size, 2)
+ai_projection = polyval(projection_years, ai_coeffs)
 
 # --- Scaling ---
 # Convert GDP from trillions to trillions and scale it to be on a similar range as SaaS
@@ -48,6 +63,7 @@ scaled_gdp_projection = [x * gdp_scaling_factor for x in gdp_projection]
 x_saas_years = saas_years - 2023
 x_projection_years = projection_years - 2023
 x_gdp_years = gdp_years - 2023
+x_ai_years = ai_years - 2023
 
 # Create the plot
 fig, ax1 = plt.subplots(figsize=(12, 7))
@@ -67,6 +83,11 @@ ax1.grid(True)
 color = 'tab:red'
 ax1.plot(x_gdp_years, scaled_world_gdp, marker='o', linestyle='-', color=color, label=f'World GDP')
 ax1.plot(x_projection_years, scaled_gdp_projection, linestyle='--', color=color)
+
+# Plot AI Market Size
+color = 'tab:green'
+ax1.plot(x_ai_years, ai_market_size, marker='o', linestyle='-', color=color, label='AI Market Size')
+ax1.plot(x_projection_years, ai_projection, linestyle='--', color=color)
 
 
 # --- Annotations ---
@@ -88,6 +109,13 @@ for year in years_to_annotate:
         saas_val = saas_projection[np.where(projection_years == year)[0][0]]
     ax1.annotate(f'{saas_val:.2f}({(100*saas_val/gdp_val):.2f}%)', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), fontweight='bold', va="bottom", ha='center', color='tab:blue')
 
+    # AI annotation
+    if year <= ai_years[-1]:
+        ai_val = ai_market_size[np.where(ai_years == year)[0][0]]
+    else:
+        ai_val = ai_projection[np.where(projection_years == year)[0][0]]
+    ax1.annotate(f'{ai_val:.2f}({(100*ai_val/gdp_val):.2f}%)', (x_year, ai_val), textcoords="offset points", xytext=(0,25), fontweight='bold', va="top", ha='center', color='tab:green')
+
 # --- X-axis Ticks ---
 tick_years = [2024, 2030, 2040, 2050, 2075, 2100, 2150, 2200]
 tick_x_values = [year - 2023 for year in tick_years]
@@ -96,11 +124,11 @@ ax1.set_xticklabels(tick_years, rotation=45)
 
 
 # Add titles and legend
-plt.title('SaaS Market Size vs. World GDP with Projection to 2200')
+plt.title('SaaS & AI Market Size vs. World GDP with Projection to 2200')
 fig.tight_layout()
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
 # Save the plot
 # plt.savefig('saas_vs_world_gdp_scaled_annotated.png')
 plt.show()
 
-print("Plot saved as saas_vs_world_gdp_scaled_annotated.png")
+print("Plot saved as saas_ai_vs_world_gdp_scaled_annotated.png")
