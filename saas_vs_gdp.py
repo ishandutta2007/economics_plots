@@ -69,7 +69,7 @@ ax1.plot(x_projection_years, scaled_gdp_projection, linestyle='--', color=color)
 
 
 # --- Annotations ---
-years_to_annotate = [2024, 2034, 2050, 2100, 2200]
+years_to_annotate = [2024, 2030, 2034, 2050, 2100, 2200]
 for year in years_to_annotate:
     x_year = year - 2023
     # SaaS annotation
