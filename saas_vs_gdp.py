@@ -77,14 +77,14 @@ for year in years_to_annotate:
         saas_val = saas_market_size[np.where(saas_years == year)[0][0]]
     else:
         saas_val = saas_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{saas_val:.2f}', (x_year, saas_val), textcoords="offset points", xytext=(0,10), ha='center', color='tab:blue')
+    ax1.annotate(f'{saas_val:.2f}', (x_year, saas_val), textcoords="offset points", xytext=(0,-15), va="bottom", ha='center', color='tab:blue')
 
     # GDP annotation
     if year <= gdp_years[-1]:
         gdp_val = scaled_world_gdp[np.where(gdp_years == year)[0][0]]
     else:
         gdp_val = scaled_gdp_projection[np.where(projection_years == year)[0][0]]
-    ax1.annotate(f'{gdp_val:.0f}', (x_year, gdp_val), textcoords="offset points", xytext=(0,-15), ha='center', color='tab:red')
+    ax1.annotate(f'{gdp_val:.0f}', (x_year, gdp_val), textcoords="offset points", xytext=(0,10), va="top", ha='center', color='tab:red')
 
 # --- X-axis Ticks ---
 tick_years = [2024, 2030, 2040, 2050, 2075, 2100, 2150, 2200]
