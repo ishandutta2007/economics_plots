@@ -27,7 +27,7 @@ for year in range(2026, 2035):
     world_gdp.append(world_gdp[-1] * (1 + gdp_growth_2026_onwards))
 
 # --- Extrapolation ---
-projection_years = np.arange(2034, 2101)
+projection_years = np.arange(2034, 2201)
 
 # SaaS projection
 saas_coeffs = polyfit(saas_years, saas_market_size, 2)
@@ -50,8 +50,9 @@ fig, ax1 = plt.subplots(figsize=(12, 7))
 # Plot SaaS Market Size
 color = 'tab:blue'
 ax1.set_xlabel('Year')
-ax1.set_ylabel('Scaled Value')
-ax1.plot(saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size (Trillions USD)')
+# ax1.set_xscale("log")
+ax1.set_ylabel('Trillions(USD)')
+ax1.plot(saas_years, saas_market_size, marker='o', linestyle='-', color=color, label='SaaS Market Size')
 ax1.plot(projection_years, saas_projection, linestyle='--', color=color)
 ax1.tick_params(axis='y')
 ax1.grid(True)
@@ -63,7 +64,7 @@ ax1.plot(projection_years, scaled_gdp_projection, linestyle='--', color=color)
 
 
 # --- Annotations ---
-years_to_annotate = [2024, 2034, 2050, 2100]
+years_to_annotate = [2024, 2034, 2050, 2100, 2200]
 for year in years_to_annotate:
     # SaaS annotation
     if year <= saas_years[-1]:
@@ -81,10 +82,9 @@ for year in years_to_annotate:
 
 
 # Add titles and legend
-plt.title('SaaS Market Size vs. World GDP with Projection to 2100')
+plt.title('SaaS Market Size vs. World GDP with Projection to 2200')
 fig.tight_layout()
 fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
-
 # Save the plot
 # plt.savefig('saas_vs_world_gdp_scaled_annotated.png')
 plt.show()
