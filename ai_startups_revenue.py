@@ -43,7 +43,7 @@ for company in colors.keys():
     # Annotate points
     for x, y in zip(subset["Year"], subset[company]):
         # Format label: $B for Billions, $M for Millions
-        label = f"${y / 1000:.1g}B" if y >= 1000 else f"${int(y)}M"
+        label = f"${y / 1000:g}B" if y >= 1000 else f"${int(y)}M"
         plt.annotate(
             label,
             (x, y),
