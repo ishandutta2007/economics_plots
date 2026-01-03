@@ -86,5 +86,5 @@ plt.figtext(
 )
 
 plt.tight_layout()
-plt.savefig("ai_revenue_comparison.png")
+# plt.savefig("ai_revenue_comparison.png")
 plt.show()
