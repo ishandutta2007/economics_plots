@@ -9,6 +9,7 @@ data = {
     "Perplexity": [None, None, 10, 80, 148],  # Growth in AI-native search
     "xAI (Grok)": [None, None, None, 100, 500],  # Standalone estimated revenue
     "DeepSeek": [None, None, None, 50, 460],  # Rise in 2025 via API efficiency
+    "MoonshotAI": [None, None, None, 20, 240],  # Rise in 2025 via API efficiency
 }
 
 df = pd.DataFrame(data)
@@ -20,11 +21,14 @@ colors = {
     "Perplexity": "#20B2AA",
     "xAI (Grok)": "#333333",
     "DeepSeek": "#4169E1",
+    "MoonshotAI": "#2969AA",
 }
+
+print(colors.keys())
 
 plt.figure(figsize=(14, 8))
 
-for company in ["OpenAI", "Anthropic", "Perplexity", "xAI (Grok)", "DeepSeek"]:
+for company in colors.keys():
     # Drop None values for plotting each individual curve
     subset = df[["Year", company]].dropna()
     plt.plot(
