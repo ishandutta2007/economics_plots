@@ -11,14 +11,7 @@ data = {
     "Apple": [147000, 154000, 164000, 161000, 164000, 166100],
     "Meta": [58604, 71970, 86482, 67317, 70799, 72000],
 }
-company_list = [
-    # "Amazon",
-    "AmazonTech",
-    "Microsoft",
-    "Alphabet",
-    "Apple",
-    "Meta",
-]
+company_list = list(data.keys())[1:]
 
 df = pd.DataFrame(data)
 
