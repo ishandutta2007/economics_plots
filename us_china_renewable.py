@@ -66,5 +66,5 @@ plt.xlim(2014, 2036)
 plt.ylim(0, 4500)
 
 plt.tight_layout()
-plt.savefig('renewable_capacity_comparison.png')
+# plt.savefig('renewable_capacity_comparison.png')
 plt.show()
