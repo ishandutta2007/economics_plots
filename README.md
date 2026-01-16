@@ -88,6 +88,25 @@ python FAANG_headcount.py
 
 The output (e.g., `.png` images or `.mp4` videos) will be saved in the root directory.
 
+### ✨ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ishandutta2007/economics_plots&type=date&legend=top-left)](https://www.star-history.com/#ishandutta2007/economics_plots&type=date&legend=top-left)
+
+
+### 💬 Community & Support
+
+-   **💬 [Discord](https://discord.com/invite/jc4xtF58Ve):** Chat with us on Discord for real-time support and discussions.
+-   **🐦 [Twitter](https://twitter.com/ishandutta2007):** Follow us on Twitter for the latest news and updates.
+-   **🐦 [Github](https://github.com/ishandutta2007):** Follow me on Github for the latest commits and updates.
+
+## 💖 Support & Sponsorship
+
+If you find this project helpful or if it has saved you time and resources, please consider sponsoring the development. Your support helps maintain the project, develop new features, and keep the initiative open-source.
+
+**[Sponsor @ishandutta2007 on GitHub](https://github.com/sponsors/ishandutta2007)**
+
+Every contribution, no matter how small, makes a huge difference!
+
 ## 🤝 Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
