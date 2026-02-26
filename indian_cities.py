@@ -56,7 +56,7 @@ for year, gdp in zip(years, bengaluru_gdp):
     plt.annotate(
         f"${gdp}B",
         xy=(year, gdp),
-        xytext=(0, -12),
+        xytext=(0, 8),
         textcoords="offset points",
         ha="center",
         fontsize=8,
