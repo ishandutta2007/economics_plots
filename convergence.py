@@ -27,7 +27,7 @@ while True:
     years_log.append(current_year)
 
     for region in data:
-        current_values[region] *= (1 + current_rates[region])
+        current_values[region] *= 1 + current_rates[region]
         trajectories[region].append(current_values[region])
 
     # Decrease growth rates by 0.5% every decade (every 10 years)
@@ -46,7 +46,7 @@ while True:
     if current_values["India"] >= current_values["United States"]:
         convergence_year = current_year
         break
-    
+
     # Safety break to prevent infinite loops
     if current_year > 2200:
         convergence_year = current_year
@@ -61,32 +61,37 @@ traj_arr = {k: np.array(v) for k, v in trajectories.items()}
 # ---------------------------------------------------------
 intersections = []
 
+
 def find_first_crossing(r1, r2, label, align):
     # Find indices where r1 crosses r2
     # We assume r1 starts lower than r2 and overtakes it
     for i in range(1, len(years_arr)):
-        if traj_arr[r1][i] >= traj_arr[r2][i] and traj_arr[r1][i-1] < traj_arr[r2][i-1]:
+        if (
+            traj_arr[r1][i] >= traj_arr[r2][i]
+            and traj_arr[r1][i - 1] < traj_arr[r2][i - 1]
+        ):
             # Linear interpolation for precise visual crossover
-            y1_prev, y1_curr = traj_arr[r1][i-1], traj_arr[r1][i]
-            y2_prev, y2_curr = traj_arr[r2][i-1], traj_arr[r2][i]
-            
+            y1_prev, y1_curr = traj_arr[r1][i - 1], traj_arr[r1][i]
+            y2_prev, y2_curr = traj_arr[r2][i - 1], traj_arr[r2][i]
+
             denom = (y1_curr - y1_prev) - (y2_curr - y2_prev)
             if denom == 0:
                 fractional_year = 0
             else:
                 fractional_year = (y2_prev - y1_prev) / denom
-                
-            exact_year = years_arr[i-1] + fractional_year
+
+            exact_year = years_arr[i - 1] + fractional_year
             exact_y_val = y1_prev + fractional_year * (y1_curr - y1_prev)
-            
+
             return {
                 "year": exact_year,
                 "y_val": exact_y_val,
                 "label": label,
                 "align": align,
-                "display_year": int(np.round(exact_year))
+                "display_year": int(np.round(exact_year)),
             }
     return None
+
 
 # Mapping relevant intersection points
 crossing_configs = [
