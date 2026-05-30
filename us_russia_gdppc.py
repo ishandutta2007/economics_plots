@@ -12,9 +12,7 @@ df["United States"] = pd.to_numeric(df["United States"], errors="coerce")
 df_clean = df.dropna(subset=["Russia"]).copy()
 
 # ---- Calculate USA : Russia Ratio ----
-df_clean["USA_Russia_Ratio"] = (
-    df_clean["United States"] / df_clean["Russia"]
-)
+df_clean["USA_Russia_Ratio"] = df_clean["United States"] / df_clean["Russia"]
 
 # # ==========================
 # # Plot GDP per Capita
@@ -42,9 +40,7 @@ df_clean["USA_Russia_Ratio"] = (
 # ==========================
 plt.figure()
 
-plt.plot(df_clean["Year"],
-         df_clean["USA_Russia_Ratio"],
-         label="USA : Russia Ratio")
+plt.plot(df_clean["Year"], df_clean["USA_Russia_Ratio"], label="USA : Russia Ratio")
 
 plt.xlabel("Year")
 plt.ylabel("Ratio")
