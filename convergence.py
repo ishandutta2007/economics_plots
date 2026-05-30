@@ -47,7 +47,7 @@ while True:
         convergence_year = current_year
         break
     
-    # Safety break to prevent infinite loops if rates go negative and never converge
+    # Safety break to prevent infinite loops
     if current_year > 2200:
         convergence_year = current_year
         break
@@ -57,21 +57,35 @@ years_arr = np.array(years_log)
 traj_arr = {k: np.array(v) for k, v in trajectories.items()}
 
 # ---------------------------------------------------------
-# 3. Intersection Mapping Matrix (Dynamic)
+# 3. Intersection Mapping Matrix (Dynamic with Interpolation)
 # ---------------------------------------------------------
 intersections = []
 
 def find_first_crossing(r1, r2, label, align):
-    # Find indices where r1 becomes greater than or equal to r2
-    crossings = np.where(traj_arr[r1] >= traj_arr[r2])[0]
-    if len(crossings) > 0:
-        idx = crossings[0]
-        return {
-            "year": years_arr[idx],
-            "y_val": traj_arr[r1][idx],
-            "label": label,
-            "align": align,
-        }
+    # Find indices where r1 crosses r2
+    # We assume r1 starts lower than r2 and overtakes it
+    for i in range(1, len(years_arr)):
+        if traj_arr[r1][i] >= traj_arr[r2][i] and traj_arr[r1][i-1] < traj_arr[r2][i-1]:
+            # Linear interpolation for precise visual crossover
+            y1_prev, y1_curr = traj_arr[r1][i-1], traj_arr[r1][i]
+            y2_prev, y2_curr = traj_arr[r2][i-1], traj_arr[r2][i]
+            
+            denom = (y1_curr - y1_prev) - (y2_curr - y2_prev)
+            if denom == 0:
+                fractional_year = 0
+            else:
+                fractional_year = (y2_prev - y1_prev) / denom
+                
+            exact_year = years_arr[i-1] + fractional_year
+            exact_y_val = y1_prev + fractional_year * (y1_curr - y1_prev)
+            
+            return {
+                "year": exact_year,
+                "y_val": exact_y_val,
+                "label": label,
+                "align": align,
+                "display_year": int(np.round(exact_year))
+            }
     return None
 
 # Mapping relevant intersection points
@@ -149,7 +163,7 @@ for pt in intersections:
     ha_dir = pt["align"] if pt["align"] != "center" else "center"
 
     plt.annotate(
-        f"{pt['label']}\nYear: {pt['year']}\n${pt['y_val']:,.0f}",
+        f"{pt['label']}\nYear: {pt['display_year']}\n${pt['y_val']:,.0f}",
         xy=(pt["year"], pt["y_val"]),
         xytext=(pt["year"] + x_offset, y_offset),
         arrowprops=dict(
