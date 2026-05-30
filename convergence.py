@@ -19,20 +19,36 @@ data = {
 current_year = start_year
 years_log = [start_year]
 trajectories = {region: [val[0]] for region, val in data.items()}
+current_rates = {region: val[1] for region, val in data.items()}
+current_values = {region: val[0] for region, val in data.items()}
 
 while True:
     current_year += 1
     years_log.append(current_year)
 
-    current_values = {}
-    for region, (initial, rate) in data.items():
-        t = current_year - start_year
-        val = initial * ((1 + rate) ** t)
-        trajectories[region].append(val)
-        current_values[region] = val
+    for region in data:
+        current_values[region] *= (1 + current_rates[region])
+        trajectories[region].append(current_values[region])
 
-    # Stop execution when the trailing country (India) intercepts the leader (US)
+    # Decrease growth rates by 0.5% every decade (every 10 years)
+    if (current_year - start_year) % 10 == 0:
+        for region in current_rates:
+            if current_rates[region] >= 4:
+                current_rates[region] -= 1.5
+            elif current_rates[region] >= 2:
+                current_rates[region] -= 1
+            elif current_rates[region] >= 1:
+                current_rates[region] -= 0.5
+            elif current_rates[region] >= 0.5:
+                current_rates[region] -= 0.25
+
+    # Stop execution when India intercepts the US
     if current_values["India"] >= current_values["United States"]:
+        convergence_year = current_year
+        break
+    
+    # Safety break to prevent infinite loops if rates go negative and never converge
+    if current_year > 2200:
         convergence_year = current_year
         break
 
@@ -41,34 +57,35 @@ years_arr = np.array(years_log)
 traj_arr = {k: np.array(v) for k, v in trajectories.items()}
 
 # ---------------------------------------------------------
-# 3. Intersection Mapping Matrix
+# 3. Intersection Mapping Matrix (Dynamic)
 # ---------------------------------------------------------
-intersections = [
-    {
-        "year": 2051,
-        "y_val": traj_arr["China"][years_arr == 2051][0],
-        "label": "China crosses EU",
-        "align": "center",
-    },
-    {
-        "year": 2059,
-        "y_val": traj_arr["India"][years_arr == 2059][0],
-        "label": "India crosses EU",
-        "align": "left",
-    },
-    {
-        "year": 2072,
-        "y_val": traj_arr["India"][years_arr == 2072][0],
-        "label": "India crosses China",
-        "align": "left",
-    },
-    {
-        "year": 2076,
-        "y_val": traj_arr["India"][years_arr == 2076][0],
-        "label": "Full Convergence\n(India crosses US)",
-        "align": "center",
-    },
+intersections = []
+
+def find_first_crossing(r1, r2, label, align):
+    # Find indices where r1 becomes greater than or equal to r2
+    crossings = np.where(traj_arr[r1] >= traj_arr[r2])[0]
+    if len(crossings) > 0:
+        idx = crossings[0]
+        return {
+            "year": years_arr[idx],
+            "y_val": traj_arr[r1][idx],
+            "label": label,
+            "align": align,
+        }
+    return None
+
+# Mapping relevant intersection points
+crossing_configs = [
+    ("China", "European Union", "China crosses EU", "center"),
+    ("India", "European Union", "India crosses EU", "left"),
+    ("India", "China", "India crosses China", "left"),
+    ("India", "United States", "Full Convergence\n(India crosses US)", "center"),
 ]
+
+for r1, r2, lbl, aln in crossing_configs:
+    crossing = find_first_crossing(r1, r2, lbl, aln)
+    if crossing:
+        intersections.append(crossing)
 
 # ---------------------------------------------------------
 # 4. Custom Visualization Canvas Pipeline
