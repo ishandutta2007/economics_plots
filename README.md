@@ -54,26 +54,25 @@ Explore the scripts based on your area of interest:
 ### 🌍 Macroeconomics & Geopolitics
 | Topic | Scripts |
 | :--- | :--- |
-| **GDP & Convergence** | `scripts/macroeconomics/brics_vs_g7_gdp.py`, `scripts/macroeconomics/china_vs_usa_gdppc_ppp_animate.py`, `scripts/macroeconomics/EU_China_convergence.py`, `scripts/macroeconomics/india_vs_china_vs_usa_gdppc_animate.py`, `scripts/macroeconomics/southasiagdppc.py` |
-| **Trade & FDI** | `scripts/macroeconomics/chinas_crude_imports.py`, `scripts/macroeconomics/fdi.py`, `scripts/macroeconomics/fdi_vs_immigrants.py`, `scripts/macroeconomics/india_crude_import.py` |
-| **Energy & Resources** | `scripts/macroeconomics/china_vs_usa_energy_price.py`, `scripts/macroeconomics/cheapest_renewable_energy.py`, `scripts/macroeconomics/natural_resopurce_per_capita.py`, `scripts/macroeconomics/us_china_renewable.py`, `scripts/macroeconomics/rare_earth_metals_per_capita.py` |
-| **Infrastructure** | `scripts/macroeconomics/China_high_speed_rail.py`, `scripts/macroeconomics/indian_highway_construction_rate.py` |
+| **GDP & Convergence** | [`brics_vs_g7_gdp.py`](scripts/macroeconomics/brics_vs_g7_gdp.py), [`brics_vs_g7_gdppcppp.py`](scripts/macroeconomics/brics_vs_g7_gdppcppp.py), [`china_vs_usa_gdppc_ppp_animate.py`](scripts/macroeconomics/china_vs_usa_gdppc_ppp_animate.py), [`EU_China_convergence.py`](scripts/macroeconomics/EU_China_convergence.py), [`india_vs_china_vs_usa_gdppc_animate.py`](scripts/macroeconomics/india_vs_china_vs_usa_gdppc_animate.py), [`india_vs_china_vs_usa_gdppc_ppp_animate.py`](scripts/macroeconomics/india_vs_china_vs_usa_gdppc_ppp_animate.py), [`india_vs_japan_gdp_animate.py`](scripts/macroeconomics/india_vs_japan_gdp_animate.py), [`india_vs_usa_gdppc_animate.py`](scripts/macroeconomics/india_vs_usa_gdppc_animate.py), [`india_vs_usa_gdppc_ppp_animate.py`](scripts/macroeconomics/india_vs_usa_gdppc_ppp_animate.py), [`southasiagdppc.py`](scripts/macroeconomics/southasiagdppc.py), [`usa_gdp_animate.py`](scripts/macroeconomics/usa_gdp_animate.py), [`USA_GDP_components.py`](scripts/macroeconomics/USA_GDP_components.py), [`west_europe_vs_east_europe_gdppc.py`](scripts/macroeconomics/west_europe_vs_east_europe_gdppc.py) |
+| **Regional Analysis** | [`Auto_China_vs_Germany.py`](scripts/macroeconomics/Auto_China_vs_Germany.py), [`china_vs_uk_americalview.py`](scripts/macroeconomics/china_vs_uk_americalview.py), [`india_vs_uk_americalview.py`](scripts/macroeconomics/india_vs_uk_americalview.py), [`indian_cities_gdp.py`](scripts/macroeconomics/indian_cities_gdp.py), [`us_russia_gdppc.py`](scripts/macroeconomics/us_russia_gdppc.py) |
+| **Trade & FDI** | [`chinas_crude_imports.py`](scripts/macroeconomics/chinas_crude_imports.py), [`fdi.py`](scripts/macroeconomics/fdi.py), [`fdi_vs_immigrants.py`](scripts/macroeconomics/fdi_vs_immigrants.py), [`india_crude_import.py`](scripts/macroeconomics/india_crude_import.py), [`usd_to_rubble.py`](scripts/macroeconomics/usd_to_rubble.py) |
+| **Energy & Resources** | [`china_vs_usa_energy_price.py`](scripts/macroeconomics/china_vs_usa_energy_price.py), [`cheapest_renewable_energy.py`](scripts/macroeconomics/cheapest_renewable_energy.py), [`country_cheapest_energy.py`](scripts/macroeconomics/country_cheapest_energy.py), [`country_expensive_energy.py`](scripts/macroeconomics/country_expensive_energy.py), [`energy_as_percent_of_gdp.py`](scripts/macroeconomics/energy_as_percent_of_gdp.py), [`natural_resopurce_per_capita.py`](scripts/macroeconomics/natural_resopurce_per_capita.py), [`us_china_renewable.py`](scripts/macroeconomics/us_china_renewable.py), [`rare_earth_metals_per_capita.py`](scripts/macroeconomics/rare_earth_metals_per_capita.py) |
+| **Industry & Infra** | [`China_high_speed_rail.py`](scripts/macroeconomics/China_high_speed_rail.py), [`china_manufactoring.py`](scripts/macroeconomics/china_manufactoring.py), [`indian_highway_construction_rate.py`](scripts/macroeconomics/indian_highway_construction_rate.py), [`us_industries_breakdown.py`](scripts/macroeconomics/us_industries_breakdown.py) |
 
 ### 💻 Technology & Industry
 | Topic | Scripts |
 | :--- | :--- |
-| **Artificial Intelligence** | `scripts/technology/ai_company_valuations.py`, `scripts/technology/ai_startups_revenue.py`, `scripts/technology/swe_vs_ai_jobs.py`, `scripts/technology/ai_energy_animate.py` |
-| **Big Tech** | `scripts/technology/FAANG_headcount.py`, `scripts/technology/bigtech_employee_count_by_year.py`, `scripts/technology/bigsemiconductor_employee_count_by_year.py` |
-| **Digital Platforms** | `scripts/technology/You_vs_Tik.py`, `scripts/technology/youtube_cpm.py` |
-| **SaaS** | `scripts/technology/saas_vs_gdp.py` |
+| **Artificial Intelligence** | [`ai_company_valuations.py`](scripts/technology/ai_company_valuations.py), [`ai_startups_revenue.py`](scripts/technology/ai_startups_revenue.py), [`swe_vs_ai_jobs.py`](scripts/technology/swe_vs_ai_jobs.py), [`ai_energy_animate.py`](scripts/technology/ai_energy_animate.py) |
+| **Big Tech** | [`FAANG_headcount.py`](scripts/technology/FAANG_headcount.py), [`FAANG_b4_MS.py`](scripts/technology/FAANG_b4_MS.py), [`bigtech_employee_count_by_year.py`](scripts/technology/bigtech_employee_count_by_year.py), [`bigsemiconductor_employee_count_by_year.py`](scripts/technology/bigsemiconductor_employee_count_by_year.py) |
+| **Services & Platforms** | [`You_vs_Tik.py`](scripts/technology/You_vs_Tik.py), [`youtube_cpm.py`](scripts/technology/youtube_cpm.py), [`saas_vs_gdp.py`](scripts/technology/saas_vs_gdp.py), [`gcc_vs_it_services.py`](scripts/technology/gcc_vs_it_services.py) |
 
 ### 👥 Society & Environment
 | Topic | Scripts |
 | :--- | :--- |
-| **Population** | `scripts/society/population_density.py`, `scripts/society/population_india_similar_sized.py`, `scripts/society/population_density_major_economies.py` |
-| **Incomes & Labor** | `scripts/society/US_vs_India_median_wage.py`, `scripts/society/houshold_incomes_indians_vs_chinese.py`, `scripts/society/women_participation_workforce_gdp_per_capita_corelation.py` |
-| **Environment** | `scripts/society/southasiaAQI.py`, `scripts/society/datacenter_power_share.py` |
-| **Education** | `scripts/society/india_engg_vs_med_seats.py` |
+| **Population** | [`population_density.py`](scripts/society/population_density.py), [`population_india_similar_sized.py`](scripts/society/population_india_similar_sized.py), [`population_density_major_economies.py`](scripts/society/population_density_major_economies.py), [`population_density_vs_gdp_per_capita.py`](scripts/society/population_density_vs_gdp_per_capita.py) |
+| **Incomes & Labor** | [`US_vs_India_median_wage.py`](scripts/society/US_vs_India_median_wage.py), [`houshold_incomes_indians_vs_chinese.py`](scripts/society/houshold_incomes_indians_vs_chinese.py), [`houshold_incomes_asian_in_US_with_arrow.py`](scripts/society/houshold_incomes_asian_in_US_with_arrow.py), [`women_participation_workforce_gdp_per_capita_corelation.py`](scripts/society/women_participation_workforce_gdp_per_capita_corelation.py) |
+| **Environment & Social** | [`southasiaAQI.py`](scripts/society/southasiaAQI.py), [`datacenter_power_share.py`](scripts/society/datacenter_power_share.py), [`summer_olympics_gold.py`](scripts/society/summer_olympics_gold.py), [`indian_cities_real_estate.py`](scripts/society/indian_cities_real_estate.py), [`india_engg_vs_med_seats.py`](scripts/society/india_engg_vs_med_seats.py) |
 
 ---
 
