@@ -1,2 +1,3 @@
 *.mp4
 *.bak
+.ruff_cache/*
