@@ -1,3 +1,11 @@
-*.mp4
-*.bak
-.ruff_cache
+# Ignore video animations and backups at any depth
+**/*.mp4
+**/*.bak
+
+# Python/Tooling
+.ruff_cache/
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
