@@ -9,13 +9,14 @@ Transforming complex global datasets into insightful, animated, and interactive 
 
 ---
 
-## 🌟 Key Features
+## 🌟 Core Capabilities
 
-- **Animated Comparisons:** Dynamic time-series animations showing economic convergence and divergence (e.g., China vs. USA).
-- **Macroeconomic Insights:** Visualizations of GDP (PPP), FDI, Trade, and Energy costs across G20, BRICS, and G7.
-- **Tech & Corporate Analysis:** Tracking the meteoric rise of AI startups, Big Tech headcount, and SaaS vs. GDP projections.
-- **Demographic Trends:** Population density, workforce participation, and wage gaps.
-- **Automated Data Fetching:** Many scripts fetch the latest data directly from the **World Bank API**.
+This repository provides a versatile toolkit for data storytellers and economists:
+
+- **Static Plotting:** Generate high-resolution `.png` charts for reports and social media.
+- **Dynamic Animations:** Create `.mp4` video animations that visualize economic trends over time (e.g., the closing GDP gap between major powers).
+- **Live Data Fetching:** Many scripts integrate with the **World Bank API** to fetch the most recent global indicators automatically.
+- **Interactive Visuals:** Some scripts include interactive features like hover tooltips and dynamic annotations using Matplotlib's event handling.
 
 ---
 
@@ -81,7 +82,8 @@ Explore the scripts based on your area of interest:
 ### Prerequisites
 
 - **Python 3.7+**
-- **FFmpeg:** Required for saving animations as `.mp4`.
+- **FFmpeg (Optional but Recommended):** Required specifically for scripts ending in `_animate.py` to export animations as `.mp4` videos. If you only intend to generate static plots, this is not needed.
+  - *Why FFmpeg?* It serves as the video encoding backend for `matplotlib.animation`.
   - *Windows:* `choco install ffmpeg` or download from [ffmpeg.org](https://ffmpeg.org/download.html).
   - *macOS:* `brew install ffmpeg`
   - *Linux:* `sudo apt install ffmpeg`
