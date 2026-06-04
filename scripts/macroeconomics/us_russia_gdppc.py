@@ -1,8 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+
+# Define data directory relative to the script
+DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data")
 
 # ---- Load Data ----
-df = pd.read_csv("us_russia_gdppc.csv")
+df = pd.read_csv(os.path.join(DATA_DIR, "us_russia_gdppc.csv"))
 
 # Convert to numeric (empty cells -> NaN)
 df["Russia"] = pd.to_numeric(df["Russia"], errors="coerce")

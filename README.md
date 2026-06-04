@@ -23,9 +23,26 @@ Transforming complex global datasets into insightful, animated, and interactive 
 
 | China vs India: FDI vs GDP | Renewable Growth Comparison | SaaS vs World GDP |
 |:---:|:---:|:---:|
-| ![FDI vs GDP](china_india_fdi_vs_gdp_hardcoded_plot.png) | ![Renewable Growth](renewable_growth_comparison.png) | ![SaaS Growth](saas_vs_world_gdp_projection.png) |
+| ![FDI vs GDP](assets/china_india_fdi_vs_gdp_hardcoded_plot.png) | ![Renewable Growth](assets/renewable_growth_comparison.png) | ![SaaS Growth](assets/saas_vs_world_gdp_projection.png) |
 
 > *Note: More animations and plots are generated dynamically by running the scripts.*
+
+---
+
+## 📂 Project Structure
+
+```text
+economics_plots/
+├── assets/                  # Gallery images and static plots
+├── data/                    # Datasets (CSV files)
+├── scripts/                 # Core visualization scripts
+│   ├── macroeconomics/      # GDP, Trade, Energy, and Geopolitics
+│   ├── technology/          # AI, Big Tech, and Industry trends
+│   └── society/             # Population, Labor, and Environment
+├── README.md
+├── LICENSE
+└── requirements.txt
+```
 
 ---
 
@@ -36,26 +53,26 @@ Explore the scripts based on your area of interest:
 ### 🌍 Macroeconomics & Geopolitics
 | Topic | Scripts |
 | :--- | :--- |
-| **GDP & Convergence** | `brics_vs_g7_gdp.py`, `china_vs_usa_gdppc_ppp_animate.py`, `EU_China_convergence.py`, `india_vs_china_vs_usa_gdppc_animate.py`, `southasiagdppc.py` |
-| **Trade & FDI** | `chinas_crude_imports.py`, `fdi.py`, `fdi_vs_immigrants.py`, `india_crude_import.py` |
-| **Energy & Resources** | `china_vs_usa_energy_price.py`, `cheapest_renewable_energy.py`, `natural_resopurce_per_capita.py`, `us_china_renewable.py`, `rare_earth_metals_per_capita.py` |
-| **Infrastructure** | `China_high_speed_rail.py`, `indian_highway_construction_rate.py` |
+| **GDP & Convergence** | `scripts/macroeconomics/brics_vs_g7_gdp.py`, `scripts/macroeconomics/china_vs_usa_gdppc_ppp_animate.py`, `scripts/macroeconomics/EU_China_convergence.py`, `scripts/macroeconomics/india_vs_china_vs_usa_gdppc_animate.py`, `scripts/macroeconomics/southasiagdppc.py` |
+| **Trade & FDI** | `scripts/macroeconomics/chinas_crude_imports.py`, `scripts/macroeconomics/fdi.py`, `scripts/macroeconomics/fdi_vs_immigrants.py`, `scripts/macroeconomics/india_crude_import.py` |
+| **Energy & Resources** | `scripts/macroeconomics/china_vs_usa_energy_price.py`, `scripts/macroeconomics/cheapest_renewable_energy.py`, `scripts/macroeconomics/natural_resopurce_per_capita.py`, `scripts/macroeconomics/us_china_renewable.py`, `scripts/macroeconomics/rare_earth_metals_per_capita.py` |
+| **Infrastructure** | `scripts/macroeconomics/China_high_speed_rail.py`, `scripts/macroeconomics/indian_highway_construction_rate.py` |
 
 ### 💻 Technology & Industry
 | Topic | Scripts |
 | :--- | :--- |
-| **Artificial Intelligence** | `ai_company_valuations.py`, `ai_startups_revenue.py`, `swe_vs_ai_jobs.py`, `ai_energy_animate.py` |
-| **Big Tech** | `FAANG_headcount.py`, `bigtech_employee_count_by_year.py`, `bigsemiconductor_employee_count_by_year.py` |
-| **Digital Platforms** | `You_vs_Tik.py`, `youtube_cpm.py` |
-| **SaaS** | `saas_vs_gdp.py` |
+| **Artificial Intelligence** | `scripts/technology/ai_company_valuations.py`, `scripts/technology/ai_startups_revenue.py`, `scripts/technology/swe_vs_ai_jobs.py`, `scripts/technology/ai_energy_animate.py` |
+| **Big Tech** | `scripts/technology/FAANG_headcount.py`, `scripts/technology/bigtech_employee_count_by_year.py`, `scripts/technology/bigsemiconductor_employee_count_by_year.py` |
+| **Digital Platforms** | `scripts/technology/You_vs_Tik.py`, `scripts/technology/youtube_cpm.py` |
+| **SaaS** | `scripts/technology/saas_vs_gdp.py` |
 
 ### 👥 Society & Environment
 | Topic | Scripts |
 | :--- | :--- |
-| **Population** | `population_density.py`, `population_india_similar_sized.py`, `population_density_major_economies.py` |
-| **Incomes & Labor** | `US_vs_India_median_wage.py`, `houshold_incomes_indians_vs_chinese.py`, `women_participation_workforce_gdp_per_capita_corelation.py` |
-| **Environment** | `southasiaAQI.py`, `datacenter_power_share.py` |
-| **Education** | `india_engg_vs_med_seats.py` |
+| **Population** | `scripts/society/population_density.py`, `scripts/society/population_india_similar_sized.py`, `scripts/society/population_density_major_economies.py` |
+| **Incomes & Labor** | `scripts/society/US_vs_India_median_wage.py`, `scripts/society/houshold_incomes_indians_vs_chinese.py`, `scripts/society/women_participation_workforce_gdp_per_capita_corelation.py` |
+| **Environment** | `scripts/society/southasiaAQI.py`, `scripts/society/datacenter_power_share.py` |
+| **Education** | `scripts/society/india_engg_vs_med_seats.py` |
 
 ---
 
@@ -88,10 +105,10 @@ Simply run any script to generate its corresponding plot or animation:
 
 ```bash
 # Generate a static plot
-python ai_company_valuations.py
+python scripts/technology/ai_company_valuations.py
 
 # Generate an animated MP4 (Requires FFmpeg)
-python china_vs_usa_gdppc_ppp_animate.py
+python scripts/macroeconomics/china_vs_usa_gdppc_ppp_animate.py
 ```
 
 ---
