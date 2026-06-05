@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 
 # Data
-periods = ["1100 CE", "1757", "1947", "2024"]
-ranks = [1, 10, 100, 148]
+periods = ["1100 CE", "1757", "1947", "2021", "2026"]
+ranks = [1, 10, 100, 132, 148]
 
 # Create figure
 fig, ax = plt.subplots(figsize=(8, 5))
