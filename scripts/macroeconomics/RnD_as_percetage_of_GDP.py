@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 years = [1996, 2000, 2010, 2020, 2022, 2026]
 
 # Data points based on historical World Bank, 
-
 china_rd = [0.56, 0.89, 1.76, 2.40, 2.55, 2.75]
 usa_rd = [2.40, 2.72, 2.74, 3.12, 3.45, 3.45]
 south_korea_rd = [2.26, 2.18, 3.47, 4.80, 5.21, 5.15]
