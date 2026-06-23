@@ -39,6 +39,7 @@ bars = plt.bar(
 plt.title("Patents Granted per $1 Million Research Grant (2024)")
 plt.ylabel("Patents per $1M Research Funding")
 plt.xlabel("University")
+plt.figtext(0.85, 0.01, "Data Source: Offical University Websites", wrap=True, horizontalalignment='center', fontsize=7)
 
 # Value labels
 for bar, value in zip(bars, df["Universities_Patent_Per_Dollar"]):
