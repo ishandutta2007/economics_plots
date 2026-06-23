@@ -10,10 +10,11 @@ data = {
         "Cambridge",
         "Harvard",
         "Caltech",
-        "IIT Madras"
+        "IIT Madras",
+        "Tsinghua"
     ],
-    "Patents_Granted_2024": [362, 199, 34, 294, 155, 164, 435],
-    "Research_Grants_USD_M": [2100, 2200, 1039, 735, 1020, 490.7, 61]
+    "Patents_Granted_2024": [362, 199, 34, 294, 155, 164, 435, 900],
+    "Research_Grants_USD_M": [2100, 2200, 1039, 735, 1020, 490.7, 61, 2750]
 }
 
 df = pd.DataFrame(data)
