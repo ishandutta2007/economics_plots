@@ -73,4 +73,7 @@ plt.figtext(
 )
 
 plt.tight_layout()
+import os
+os.makedirs(os.path.join(os.path.dirname(__file__), "..", "..", "assets"), exist_ok=True)
+plt.savefig(os.path.join(os.path.dirname(__file__), "..", "..", "assets", "india_gdp_ppp_rank.png"), dpi=100)
 plt.show()
