@@ -20,7 +20,7 @@ for bar, rank in zip(bars, ranks):
         label,
         ha="center",
         va="bottom",
-        fontsize=10,
+        fontsize=18,
         fontweight="bold",
         color="#34495e",
     )
@@ -28,7 +28,7 @@ for bar, rank in zip(bars, ranks):
 # Title and Labels
 ax.set_title(
     "India's GDP Per Capita Rank Through History",
-    fontsize=16,
+    fontsize=20,
     fontweight="bold",
     pad=45,
 )

@@ -21,14 +21,14 @@ for bar, rank in zip(bars, ranks):
         label,
         ha="center",
         va="bottom",
-        fontsize=10,
+        fontsize=18,
         fontweight="bold",
         color="#e67e22",
     )
 
 # Title and Labels
 ax.set_title(
-    "India's GDP Rank (PPP) Through History", fontsize=16, fontweight="bold", pad=45
+    "India's GDP Rank (PPP) Through History", fontsize=20, fontweight="bold", pad=45
 )
 ax.set_ylabel("Global Rank (Lower is Better)", fontsize=11, labelpad=15)
 
