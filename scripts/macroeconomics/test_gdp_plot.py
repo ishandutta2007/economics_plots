@@ -22,8 +22,9 @@ modern_gdp = np.array(gdp_values)[modern_mask]
 # log(GDP) = C*t^2 + B*t + A
 C, B, A = np.polyfit(modern_years, np.log(modern_gdp), 2)
 
-# Dynamic acceleration (rate of change of the annual growth rate = 2 * C)
+# Dynamic acceleration
 acceleration = 2 * C
+print(f"Calculated growth rate acceleration: {acceleration * 100:.6f}% per year")
 
 # Solve for the exact years when the quadratic model crosses $1 Quadrillion and $10 Quadrillion
 years_acc = [2022]
@@ -34,6 +35,8 @@ for target in [1e15, 10e15]:
     future_roots = [r for r in roots if r > 2022]
     years_acc.append(int(round(future_roots[0])))
     gdp_acc.append(target)
+
+print("Dynamic projection years:", years_acc)
 
 # Generate dense curves for plotting the projection lines smoothly
 t_range_const = np.linspace(2022, years_const[-1], 100)
@@ -112,6 +115,7 @@ for year, gdp, label in zip(years_const[1:], gdp_const[1:], proj_milestone_label
 
 # Annotate Projection 2 (Accelerating Growth)
 for year, gdp, label in zip(years_acc[1:], gdp_acc[1:], proj_milestone_labels):
+    # Adjust position dynamically if needed
     xytext_val = (-125, 10) if year == years_acc[-1] else (-125, -25)
     plt.annotate(f"{label}\n({year} CE)\n[Accelerating]", 
                  xy=(year, gdp), 
@@ -133,8 +137,5 @@ plt.legend(loc='upper left', fontsize=11)
 
 # Render and display
 plt.tight_layout()
-plt.show()
-
-
-
-
+plt.savefig("C:/Users/ishan/.gemini/antigravity-cli/brain/0d25c235-1f49-4fae-beb6-63eb151d8c75/world_GDP_projected.png", dpi=150)
+print("Saved successfully!")
