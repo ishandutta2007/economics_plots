@@ -91,6 +91,5 @@ plt.legend(loc='upper left', fontsize=11)
 
 # Render and display the visualization
 plt.tight_layout()
-plt.show()
-
-
+plt.savefig("C:/Users/ishan/.gemini/antigravity-cli/brain/0d25c235-1f49-4fae-beb6-63eb151d8c75/world_GDP_projected.png", dpi=150)
+print("Saved successfully!")
