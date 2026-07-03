@@ -84,11 +84,11 @@ for year, gdp, label in zip(years, gdp_values, milestone_labels):
     year_str = f"{abs(year)} BCE" if year < 0 else f"{year}"
     # Adjust annotation positions to prevent overlaps
     if year == 2022:
-        xytext_val = (-90, 10)
+        xytext_val = (-70, 10)
     elif year == 1990:
-        xytext_val = (-90, -15)
+        xytext_val = (-70, -15)
     else:
-        xytext_val = (10, 5)
+        xytext_val = (10, -10)
         
     plt.annotate(f"{label}\n({year_str})", 
                  xy=(year, gdp), 
@@ -112,7 +112,8 @@ for year, gdp, label in zip(years_const[1:], gdp_const[1:], proj_milestone_label
 
 # Annotate Projection 2 (Accelerating Growth)
 for year, gdp, label in zip(years_acc[1:], gdp_acc[1:], proj_milestone_labels):
-    xytext_val = (-125, 10) if year == years_acc[-1] else (-125, -25)
+    # First (2060 CE) should be higher, last (2102 CE) should be lower
+    xytext_val = (-95, -15) if year == years_acc[-1] else (-95, 5)
     plt.annotate(f"{label}\n({year} CE)\n[Accelerating]", 
                  xy=(year, gdp), 
                  xytext=xytext_val, 
