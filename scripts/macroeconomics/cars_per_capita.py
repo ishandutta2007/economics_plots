@@ -23,6 +23,7 @@ df_combined.to_csv('combined_vehicles_per_capita.csv', index=False)
 
 # Initialize canvas (avoiding .figure() to follow best practices)
 fig, ax = plt.subplots(figsize=(12, 7))
+plt.yscale("log")
 
 # Plot structural lines
 ax.plot(df_us['Year'], df_us['US_Vehicles_Per_Capita'], color='#1f77b4', linestyle='-', marker='o', linewidth=2.5, label='United States')
