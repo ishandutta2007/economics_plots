@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # Historical decadal data for India (Sources: MoRTH & Census of India / UN Pop)
 years = [1951, 1961, 1971, 1981, 1991, 2001, 2011, 2021, 2025]
 population_millions = [361.1, 439.2, 548.2, 683.3, 846.3, 1028.7, 1210.6, 1393.4, 1450.0]
-registered_vehicles_millions = [0.31, 0.67, 1.87, 5.39, 21.37, 55.00, 141.87, 334.55, 389.00]
+registered_vehicles_millions = [0.16, 0.31, 0.68, 1.16, 2.95, 7.05, 19.23, 45.16, 52.51]
 
 # Compute per capita metric
 vehicles_per_capita = [v / p for v, p in zip(registered_vehicles_millions, population_millions)]
@@ -18,7 +18,7 @@ df_india = pd.DataFrame({
 })
 
 # Export data matrix to workspace CSV
-df_india.to_csv('india_vehicles_per_capita_historical.csv', index=False)
+df_india.to_csv('data/india_vehicles_per_capita_historical.csv', index=False)
 
 # Initialize dual-axis plotting engine
 fig, ax1 = plt.subplots(figsize=(14, 8))
