@@ -31,13 +31,13 @@ ax.plot(df_in['Year'], df_in['India_Vehicles_Per_Capita'], color='#ff7f0e', line
 
 # Sparsely annotate the US trajectory to prevent clutter
 for i, txt in enumerate(df_us['US_Vehicles_Per_Capita']):
-    if df_us['Year'].iloc[i] in [1910, 1950, 1980, 2000, 2024]:
+    if df_us['Year'].iloc[i] in [1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2024]:
         ax.annotate(f"{txt:.2f}", (df_us['Year'].iloc[i], df_us['US_Vehicles_Per_Capita'].iloc[i]),
                      textcoords="offset points", xytext=(0, 10), ha='center', fontsize=9, fontweight='bold', color='#1f77b4')
 
 # Sparsely annotate India's key macroeconomic inflection points
 for i, txt in enumerate(df_in['India_Vehicles_Per_Capita']):
-    if df_in['Year'].iloc[i] in [1951, 1991, 2011, 2025]:
+    if df_in['Year'].iloc[i] in [1951, 1961, 1971, 1981, 1991, 2001, 2011, 2020, 2021, 2025]:
         ax.annotate(f"{txt:.3f}", (df_in['Year'].iloc[i], df_in['India_Vehicles_Per_Capita'].iloc[i]),
                      textcoords="offset points", xytext=(0, -16), ha='center', fontsize=9, fontweight='bold', color='#ff7f0e')
 
