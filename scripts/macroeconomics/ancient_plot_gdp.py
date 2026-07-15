@@ -22,9 +22,9 @@ def plot_gdp():
     # Plotting
     plt.figure(figsize=(12, 7))
     
-    plt.plot(df['Year'], df['Europe GDP ($B)'], label='Europe GDP', marker='o', linewidth=2)
-    plt.plot(df['Year'], df['India GDP ($B)'], label='India GDP', marker='s', linewidth=2)
-    plt.plot(df['Year'], df['China GDP ($B)'], label='China GDP', marker='^', linewidth=2)
+    plt.plot(df['Year'], df['Europe GDP ($B)'], label='Europe GDP ($B)', marker='o', linewidth=2)
+    plt.plot(df['Year'], df['India GDP ($B)'], label='India GDP ($B)', marker='s', linewidth=2)
+    plt.plot(df['Year'], df['China GDP ($B)'], label='China GDP ($B)', marker='^', linewidth=2)
     
     # Annotate points
     for i in range(len(df)):
