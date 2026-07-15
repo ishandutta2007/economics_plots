@@ -26,6 +26,12 @@ def plot_gdp():
     plt.plot(df['Year'], df['India GDP ($B)'], label='India GDP', marker='s', linewidth=2)
     plt.plot(df['Year'], df['China GDP ($B)'], label='China GDP', marker='^', linewidth=2)
     
+    # Annotate points
+    for i in range(len(df)):
+        plt.annotate(str(df['Europe GDP ($B)'].iloc[i]), (df['Year'].iloc[i], df['Europe GDP ($B)'].iloc[i]), textcoords="offset points", xytext=(0,5), ha='center', fontsize=8, alpha=0.8)
+        plt.annotate(str(df['India GDP ($B)'].iloc[i]), (df['Year'].iloc[i], df['India GDP ($B)'].iloc[i]), textcoords="offset points", xytext=(0,5), ha='center', fontsize=8, alpha=0.8)
+        plt.annotate(str(df['China GDP ($B)'].iloc[i]), (df['Year'].iloc[i], df['China GDP ($B)'].iloc[i]), textcoords="offset points", xytext=(0,5), ha='center', fontsize=8, alpha=0.8)
+    
     # Adding titles and labels
     plt.title('Historical GDP: Europe vs India vs China', fontsize=16)
     plt.xlabel('Year (AD)', fontsize=12)
