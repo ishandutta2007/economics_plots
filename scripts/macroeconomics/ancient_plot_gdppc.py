@@ -81,7 +81,7 @@ def plot_gdp():
 
     # Adding titles and labels
     plt.title(
-        f"Historical GDP per Capita: Europe vs India vs China (source:{source})",
+        f"Historical GDP per Capita (PPP): Europe vs India vs China (source:{source})",
         fontsize=16,
     )
     plt.xlabel("Year (AD)", fontsize=12)
