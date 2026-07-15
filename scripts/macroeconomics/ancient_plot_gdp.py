@@ -35,7 +35,7 @@ def plot_gdp():
         plt.annotate(str(df['China GDP ($B)'].iloc[i]), (df['Year'].iloc[i], df['China GDP ($B)'].iloc[i]), textcoords="offset points", xytext=(0,5), ha='center', fontsize=8, alpha=0.8)
     
     # Adding titles and labels
-    plt.title('Historical GDP: Europe vs India vs China', fontsize=16)
+    plt.title(f'Historical GDP: Europe vs India vs China (source:{source})', fontsize=16)
     plt.xlabel('Year (AD)', fontsize=12)
     plt.ylabel('GDP in Billions ($)', fontsize=12)
     
