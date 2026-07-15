@@ -6,7 +6,8 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 assets_dir = os.path.join(os.path.dirname(__file__), "..", "..", "assets")
 # Navigate up to the project root and into the data directory
-data_path = os.path.join(script_dir, '..', '..', 'data', 'Europe_vs_India_vs_China_PPP.csv')
+data_path = os.path.join(script_dir, '..', '..', 'data', 'Maddison_Europe_India_China_PPP.csv')
+
 # Output plot path
 output_path = os.path.join(assets_dir, 'gdppc_curve.png')
 
