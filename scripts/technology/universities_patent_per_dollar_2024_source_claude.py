@@ -2,6 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Data from the table
+# Notes:
+#   - IISc Bangalore: 111 patents granted in FY2023-24 (NIRF 2025 submission)
+#   - IISc research: NIRF 2025 reports Rs.1,111.85 Cr (~$134M) sponsored research
 data = {
     "University": [
         "MIT",
@@ -11,10 +14,11 @@ data = {
         "Harvard",
         "Caltech",
         "IIT Madras",
+        "IISc Bangalore",
         "Tsinghua",
     ],
-    "Patents_Granted_2024": [295, 199, 57, 75, 155, 143, 435, 900],
-    "Research_Grants_USD_M": [2379, 2200, 1039, 790, 1020, 445.2, 138, 2750],
+    "Patents_Granted_2024": [295, 199, 57, 75, 155, 143, 435, 111, 900],
+    "Research_Grants_USD_M": [2379, 2200, 1039, 790, 1020, 445.2, 138, 134, 2750],
 }
 
 df = pd.DataFrame(data)
