@@ -1,5 +1,13 @@
+import os
+from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
+
+file_path_without_ext = os.path.splitext(os.path.abspath(__file__))[0]
+filename_without_ext = os.path.basename(file_path_without_ext)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+assets_dir = Path(__file__).resolve().parent.parent.parent / "assets"
+output_path = os.path.join(assets_dir, f"{filename_without_ext}.png")
 
 # Data from the table
 # Notes:
@@ -87,6 +95,7 @@ for bar, value in zip(bars, df["Universities_Patent_Per_Dollar"]):
 
 plt.xticks(rotation=30, ha="right")
 plt.tight_layout()
+plt.savefig(output_path)
 plt.show()
 
 # Optional: print exact values
