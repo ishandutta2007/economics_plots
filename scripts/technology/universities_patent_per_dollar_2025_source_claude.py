@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 #     comparability with 2024 dataset.
 #   - IIT Madras: 221 patents granted in FY2024-25 (official, 207 Indian + 14 intl.)
 #   - IIT Madras research: NIRF 2025 reports Rs.1,128.82 Cr (~$136M) sponsored research
+#   - IISc Bangalore: 176 patents granted in FY2024-25 (NIRF 2026 submission)
+#   - IISc research: NIRF 2026 reports Rs.1,070.02 Cr (~$128M) sponsored research
 data = {
     "University": [
         "MIT",
@@ -24,10 +26,11 @@ data = {
         "Harvard",
         "Caltech",
         "IIT Madras",
+        "IISc Bangalore",
         "Tsinghua",
     ],
-    "Patents_Granted_2025": [291, 201, 60, 80, 157, 129, 221, 900],
-    "Research_Grants_USD_M": [2206, 2300, 1042, 803, 1005, 445, 136, 2750],
+    "Patents_Granted_2025": [291, 201, 60, 80, 157, 129, 221, 176, 900],
+    "Research_Grants_USD_M": [2206, 2300, 1042, 803, 1005, 445, 136, 128, 2750],
 }
 
 df = pd.DataFrame(data)
