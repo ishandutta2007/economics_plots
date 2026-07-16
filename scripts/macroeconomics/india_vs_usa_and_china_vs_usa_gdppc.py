@@ -53,7 +53,7 @@ plt.plot(years, ratio_india, color='#e67e22', linewidth=2.5, label='USA vs. Indi
 plt.plot(years, ratio_china, color='#c0392b', linewidth=2.5, label='USA vs. China Gap')
 
 # CORRECTION IS HERE: Filled in the milestone years list
-milestone_years = [1937, 1947, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2025]
+milestone_years = [1937, 1947, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2025]
 
 for yr in milestone_years:
     idx = yr - 1937
@@ -62,14 +62,14 @@ for yr in milestone_years:
     plt.plot(yr, ratio_india[idx], 'o', color='#e67e22', markersize=5)
     plt.annotate(f"{yr}\n{ratio_india[idx]:.1f}x", 
                  (yr, ratio_india[idx]), 
-                 xytext=(0, 12), textcoords='offset points', 
+                 xytext=(0, -25), textcoords='offset points', 
                  ha='center', fontsize=9, color='#b35c16', fontweight='bold')
     
     # Annotate China Points (Below line)
     plt.plot(yr, ratio_china[idx], 'o', color='#c0392b', markersize=5)
     plt.annotate(f"{yr}\n{ratio_china[idx]:.1f}x", 
                  (yr, ratio_china[idx]), 
-                 xytext=(0, -25), textcoords='offset points', 
+                 xytext=(0, 12), textcoords='offset points', 
                  ha='center', fontsize=9, color='#962d22', fontweight='bold')
 
 # Highlight intersection
