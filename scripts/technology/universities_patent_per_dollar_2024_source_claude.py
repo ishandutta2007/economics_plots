@@ -23,6 +23,28 @@ data = {
 
 df = pd.DataFrame(data)
 
+# Country mapping and colors
+university_country = {
+    "MIT": "USA",
+    "Stanford": "USA",
+    "Harvard": "USA",
+    "Caltech": "USA",
+    "Oxford": "UK",
+    "Cambridge": "UK",
+    "IIT Madras": "India",
+    "IISc Bangalore": "India",
+    "Tsinghua": "China",
+}
+
+country_colors = {
+    "USA": "#1f77b4",
+    "UK": "#2ca02c",
+    "India": "#ff7f0e",
+    "China": "#d62728",
+}
+
+df["Country"] = df["University"].map(university_country)
+
 # Patents granted per $1 million of research grants
 df["Universities_Patent_Per_Dollar"] = (
     df["Patents_Granted_2024"] / df["Research_Grants_USD_M"]
@@ -33,7 +55,13 @@ df = df.sort_values("Universities_Patent_Per_Dollar", ascending=False)
 
 # Plot
 plt.figure(figsize=(10, 6))
-bars = plt.bar(df["University"], df["Universities_Patent_Per_Dollar"])
+bar_colors = df["Country"].map(country_colors)
+bars = plt.bar(df["University"], df["Universities_Patent_Per_Dollar"], color=bar_colors)
+
+# Legend (one entry per country)
+from matplotlib.patches import Patch
+legend_handles = [Patch(facecolor=color, label=country) for country, color in country_colors.items()]
+plt.legend(handles=legend_handles, title="Country")
 
 plt.title("Patents Granted per $1 Million Research Grant (2024)")
 plt.ylabel("Patents per $1M Research Funding")
