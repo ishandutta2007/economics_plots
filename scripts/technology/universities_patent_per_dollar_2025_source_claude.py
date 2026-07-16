@@ -80,7 +80,10 @@ bars = plt.bar(df["University"], df["Universities_Patent_Per_Dollar"], color=bar
 
 # Legend (one entry per country)
 from matplotlib.patches import Patch
-legend_handles = [Patch(facecolor=color, label=country) for country, color in country_colors.items()]
+
+legend_handles = [
+    Patch(facecolor=color, label=country) for country, color in country_colors.items()
+]
 plt.legend(handles=legend_handles, title="Country")
 
 plt.title("Patents Granted per $1 Million Research Grant (2025)")
