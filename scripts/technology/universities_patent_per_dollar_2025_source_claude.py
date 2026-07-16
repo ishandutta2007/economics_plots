@@ -112,13 +112,13 @@ for bar, value in zip(bars, df["Universities_Patent_Per_Dollar"]):
         bar.get_x() + bar.get_width() / 2,
         value + 0.05,
         f"{value:.2f}",
-        ha="center",
+        ha="right",
         va="bottom",
         fontsize=11,
         fontweight="bold",
     )
 
-plt.xticks(rotation=45, ha="right", fontsize=11)
+plt.xticks(rotation=45, ha="right", fontsize=16, fontweight="bold")
 plt.yticks(fontsize=11)
 plt.ylim(0, df["Universities_Patent_Per_Dollar"].max() + 0.4)  # Leave room for labels
 plt.tight_layout()
