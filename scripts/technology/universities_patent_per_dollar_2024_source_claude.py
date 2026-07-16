@@ -83,13 +83,13 @@ plt.legend(handles=legend_handles, title="Country", title_fontsize=12, fontsize=
 
 plt.title("Patents Granted per $1 Million Research Grant (2024)", fontsize=15, fontweight="bold", pad=15)
 plt.ylabel("Patents per $1M Research Funding", fontsize=12, fontweight="medium", labelpad=10)
-plt.xlabel("University", fontsize=12, fontweight="medium", labelpad=10)
+# plt.xlabel("University", fontsize=12, fontweight="medium", labelpad=10)
 plt.figtext(
     0.5,
     0.01,
     "Data Sources: NAI Top 100, NSF HERD, Official University Reports",
     wrap=True,
-    horizontalalignment="center",
+    horizontalalignment="left",
     fontsize=9,
     style="italic",
 )
@@ -100,7 +100,7 @@ for bar, value in zip(bars, df["Universities_Patent_Per_Dollar"]):
         bar.get_x() + bar.get_width() / 2,
         value + 0.05,
         f"{value:.2f}",
-        ha="right",
+        ha="center",
         va="bottom",
         fontsize=11,
         fontweight="bold",
