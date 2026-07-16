@@ -73,14 +73,14 @@ for yr in milestone_years:
                  ha='center', fontsize=9, color='#962d22', fontweight='bold')
 
 # Highlight intersection
-cross_idx = np.argwhere(ratio_china < ratio_india)
+cross_idx = np.argwhere((ratio_china < ratio_india) & (years >= 1980))
 if len(cross_idx) > 0:
     cross_yr = years[cross_idx[0]][0]
     cross_val = ratio_china[cross_idx[0]][0]
     plt.plot(cross_yr, cross_val, 'ko', markersize=7)
-    plt.annotate('China outpaces India\'s\ncatch-up rate', 
+    plt.annotate(f'China outpaces India\'s\ncatch-up rate {cross_yr}', 
                  (cross_yr, cross_val), 
-                 xytext=(-70, 40), textcoords='offset points', 
+                 xytext=(-70, 120), textcoords='offset points', 
                  arrowprops=dict(arrowstyle='->', color='black'),
                  fontsize=10, fontweight='bold', bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3))
 
