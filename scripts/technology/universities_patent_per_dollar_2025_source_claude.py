@@ -75,10 +75,17 @@ df = df.sort_values("Universities_Patent_Per_Dollar", ascending=False)
 
 # Plot
 import matplotlib
+
 matplotlib.use("Agg")  # Non-interactive backend to prevent blocking
 plt.figure(figsize=(11, 7))
 bar_colors = df["Country"].map(country_colors)
-bars = plt.bar(df["University"], df["Universities_Patent_Per_Dollar"], color=bar_colors, edgecolor="black", linewidth=0.7)
+bars = plt.bar(
+    df["University"],
+    df["Universities_Patent_Per_Dollar"],
+    color=bar_colors,
+    edgecolor="black",
+    linewidth=0.7,
+)
 
 # Grid
 plt.grid(axis="y", linestyle="--", alpha=0.5, zorder=0)
@@ -89,12 +96,26 @@ for bar in bars:
 from matplotlib.patches import Patch
 
 legend_handles = [
-    Patch(facecolor=color, edgecolor="black", label=country) for country, color in country_colors.items()
+    Patch(facecolor=color, edgecolor="black", label=country)
+    for country, color in country_colors.items()
 ]
-plt.legend(handles=legend_handles, title="Country", title_fontsize=12, fontsize=11, loc="upper right")
+plt.legend(
+    handles=legend_handles,
+    title="Country",
+    title_fontsize=12,
+    fontsize=11,
+    loc="upper right",
+)
 
-plt.title("Patents Granted per $1 Million Research Grant (2025)", fontsize=15, fontweight="bold", pad=15)
-plt.ylabel("Patents per $1M Research Funding", fontsize=12, fontweight="medium", labelpad=10)
+plt.title(
+    "Patents Granted per $1 Million Research Grant (2025)",
+    fontsize=15,
+    fontweight="bold",
+    pad=15,
+)
+plt.ylabel(
+    "Patents per $1M Research Funding", fontsize=12, fontweight="medium", labelpad=10
+)
 # plt.xlabel("University", fontsize=12, fontweight="medium", labelpad=10)
 plt.figtext(
     0.5,
