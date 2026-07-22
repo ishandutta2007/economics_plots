@@ -119,7 +119,7 @@ labels = [l.get_label() for l in lines]
 ax.legend(
     lines,
     labels,
-    loc="upper right",
+    loc="lower right",
     frameon=True,
     facecolor="white",
     edgecolor="#cccccc",
