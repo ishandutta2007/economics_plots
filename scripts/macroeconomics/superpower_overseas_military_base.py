@@ -5,9 +5,9 @@ years = [1945, 1967, 1991, 1998, 2011, 2026]
 
 # Historical base estimates based on global defense tracking data
 base_counts = {
-    "United States": [1200, 2000, 1600, 800, 2100, 750],  # Left Axis
-    "Russia/USSR": [150, 350, 300, 20, 15, 25],  # Right Axis
-    "United Kingdom": [400, 150, 80, 45, 40, 60],  # Right Axis
+    "United States": [1200, 800, 800, 800, 800, 750],  # Left Axis
+    "Russia/USSR": [350, 350, 300, 20, 15, 25],  # Right Axis
+    "United Kingdom": [400, 200, 80, 45, 40, 60],  # Right Axis
     "China": [0, 0, 0, 0, 1, 8],  # Right Axis
     "India": [0, 0, 0, 0, 1, 4],  # Right Axis
 }
