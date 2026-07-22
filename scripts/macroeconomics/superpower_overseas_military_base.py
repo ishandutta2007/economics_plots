@@ -4,12 +4,19 @@ import matplotlib.pyplot as plt
 years = [1945, 1967, 1991, 1998, 2011, 2026]
 
 # Historical base estimates based on global defense tracking data
+# Sources:
+# US: Blaker (1990) historical series; DoD Base Structure Reports; Vine (2015) "Base Nation"
+# Russia/USSR: PONARS Eurasia; CIA archives; defence24.com — USSR relied on Warsaw Pact
+#              continental forces + limited overseas access agreements, not sovereign bases
+# UK: Post-imperial drawdown; ~145 sites (2026) per investigative research, incl. allied facilities
+# China: Djibouti base opened Aug 2017 (first ever); Ream Naval Base (Cambodia) de facto ~2021+
+# India: Farkhor AB (Tajikistan) closed 2022; Agaléga Island (Mauritius) inaugurated 2024
 base_counts = {
-    "United States": [1200, 800, 800, 800, 800, 750],  # Left Axis
-    "Russia/USSR": [350, 350, 300, 20, 15, 25],  # Right Axis
-    "United Kingdom": [400, 200, 80, 45, 40, 60],  # Right Axis
+    "United States": [2000, 1014, 800, 725, 900, 750],  # Left Axis
+    "Russia/USSR": [40, 40, 35, 10, 15, 25],  # Right Axis
+    "United Kingdom": [500, 180, 90, 60, 50, 60],  # Right Axis
     "China": [0, 0, 0, 0, 1, 8],  # Right Axis
-    "India": [0, 0, 0, 0, 1, 4],  # Right Axis
+    "India": [0, 0, 0, 1, 1, 4],  # Right Axis
 }
 
 # Create a figure with dual y-axes due to the massive scale disparity of the U.S.
@@ -121,7 +128,7 @@ ax2.set_ylabel(
 )
 
 ax1.set_ylim(500, 2300)
-ax2.set_ylim(-20, 480)
+ax2.set_ylim(-20, 600)
 plt.xlim(1940, 2032)
 
 # Merge legends from both axes into a single box
@@ -138,8 +145,9 @@ ax1.legend(
 
 # Visual styling
 plt.title(
-    "Global Foreign Military Base Trajectories with Precise Data Values (1945 – 2026)",
-    fontsize=14,
+    "Global Overseas Military Base Trajectories (1945 – 2026)\n"
+    "Sources: Blaker (1990), DoD Base Structure Reports, PONARS Eurasia, Vine (2015)",
+    fontsize=13,
     fontweight="bold",
     pad=20,
 )
