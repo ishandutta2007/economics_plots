@@ -12,74 +12,76 @@ years = [1945, 1967, 1991, 1998, 2011, 2026]
 # China: Djibouti base opened Aug 2017 (first ever); Ream Naval Base (Cambodia) de facto ~2021+
 # India: Farkhor AB (Tajikistan) closed 2022; Agaléga Island (Mauritius) inaugurated 2024
 base_counts = {
-    "United States": [2000, 1014, 800, 725, 900, 750],  # Left Axis
-    "Russia/USSR": [40, 40, 35, 10, 15, 25],  # Right Axis
-    "United Kingdom": [500, 180, 90, 60, 50, 60],  # Right Axis
-    "China": [0, 0, 0, 0, 1, 8],  # Right Axis
-    "India": [0, 0, 0, 1, 1, 4],  # Right Axis
+    "United States": [2000, 1014, 800, 725, 900, 750],
+    "Russia/USSR": [40, 40, 35, 10, 15, 25],
+    "United Kingdom": [500, 180, 90, 60, 50, 60],
+    "China": [0.5, 0.5, 0.5, 0.5, 1, 8],   # 0 → 0.5 for log scale (no overseas bases)
+    "India": [0.5, 0.5, 0.5, 1, 1, 4],      # 0 → 0.5 for log scale (no overseas bases)
 }
 
-# Create a figure with dual y-axes due to the massive scale disparity of the U.S.
-fig, ax1 = plt.subplots(figsize=(14, 8))
-ax2 = ax1.twinx()
+# Single-axis figure
+fig, ax = plt.subplots(figsize=(14, 8))
 
-# Plot lines and store reference handles
-line_us = ax1.plot(
+# Plot all lines on the single axis
+line_us = ax.plot(
     years,
     base_counts["United States"],
     color="#d62728",
     linestyle="-",
     marker="o",
     linewidth=2.5,
-    label="United States (Left)",
+    label="United States",
 )
-line_ru = ax2.plot(
+line_ru = ax.plot(
     years,
     base_counts["Russia/USSR"],
     color="#1f77b4",
     linestyle="--",
     marker="s",
     linewidth=2,
-    label="Russia/USSR (Right)",
+    label="Russia/USSR",
 )
-line_uk = ax2.plot(
+line_uk = ax.plot(
     years,
     base_counts["United Kingdom"],
     color="#2ca02c",
     linestyle="-.",
     marker="^",
     linewidth=2,
-    label="United Kingdom (Right)",
+    label="United Kingdom",
 )
-line_ch = ax2.plot(
+line_ch = ax.plot(
     years,
     base_counts["China"],
     color="#ff7f0e",
     linestyle=":",
     marker="d",
     linewidth=2,
-    label="China (Right)",
+    label="China",
 )
-line_in = ax2.plot(
+line_in = ax.plot(
     years,
     base_counts["India"],
     color="#9467bd",
     linestyle="-",
     marker="x",
     linewidth=2,
-    label="India (Right)",
+    label="India",
 )
 
 
 # Helper function to dynamically add labels to each point to avoid overlaps
 def annotate_points(ax, x_data, y_data, color, offset_y=10, position="top"):
     for x, y in zip(x_data, y_data):
+        # Skip placeholder values used to avoid log(0)
+        display_label = "<1" if y == 0.5 else f"{y}"
+
         # Determine label position relative to data point
         xy_text = (0, offset_y) if position == "top" else (0, -offset_y)
         va = "bottom" if position == "top" else "top"
 
         ax.annotate(
-            f"{y}",
+            display_label,
             (x, y),
             textcoords="offset points",
             xytext=xy_text,
@@ -94,47 +96,27 @@ def annotate_points(ax, x_data, y_data, color, offset_y=10, position="top"):
         )
 
 
-# Annotate each curve using specialized positions to maximize legibility
-annotate_points(
-    ax1, years, base_counts["United States"], "#d62728", offset_y=12, position="top"
-)
-annotate_points(
-    ax2, years, base_counts["Russia/USSR"], "#1f77b4", offset_y=12, position="top"
-)
-annotate_points(
-    ax2, years, base_counts["United Kingdom"], "#2ca02c", offset_y=12, position="bottom"
-)
+# Annotate each curve
+annotate_points(ax, years, base_counts["United States"], "#d62728", offset_y=12, position="top")
+annotate_points(ax, years, base_counts["Russia/USSR"], "#1f77b4", offset_y=12, position="top")
+annotate_points(ax, years, base_counts["United Kingdom"], "#2ca02c", offset_y=12, position="bottom")
 
 # Adjusting offsets slightly for overlapping modern Asian postures
-annotate_points(
-    ax2, years[-2:], base_counts["China"][-2:], "#ff7f0e", offset_y=14, position="top"
-)
-annotate_points(
-    ax2,
-    years[-2:],
-    base_counts["India"][-2:],
-    "#9467bd",
-    offset_y=14,
-    position="bottom",
-)
+annotate_points(ax, years[-2:], base_counts["China"][-2:], "#ff7f0e", offset_y=14, position="top")
+annotate_points(ax, years[-2:], base_counts["India"][-2:], "#9467bd", offset_y=14, position="bottom")
 
 # Labeling and axis boundaries
-ax1.set_xlabel("Year", fontsize=11, fontweight="bold", labelpad=10)
-ax1.set_ylabel(
-    "U.S. Overseas Bases Scale", color="#d62728", fontsize=11, fontweight="bold"
-)
-ax2.set_ylabel(
-    "Other Nations Bases Scale", color="#333333", fontsize=11, fontweight="bold"
-)
+ax.set_xlabel("Year", fontsize=11, fontweight="bold", labelpad=10)
+ax.set_ylabel("Number of Overseas Military Bases (log scale)", fontsize=11, fontweight="bold")
 
-ax1.set_ylim(500, 2300)
-ax2.set_ylim(-20, 600)
+ax.set_yscale("log")
+ax.set_ylim(0.3, 3000)
 plt.xlim(1940, 2032)
 
-# Merge legends from both axes into a single box
+# Single combined legend
 lines = line_us + line_ru + line_uk + line_ch + line_in
 labels = [l.get_label() for l in lines]
-ax1.legend(
+ax.legend(
     lines,
     labels,
     loc="upper right",
@@ -151,7 +133,7 @@ plt.title(
     fontweight="bold",
     pad=20,
 )
-ax1.grid(True, linestyle="--", alpha=0.3)
+ax.grid(True, linestyle="--", alpha=0.3)
 
 plt.tight_layout()
 plt.show()
