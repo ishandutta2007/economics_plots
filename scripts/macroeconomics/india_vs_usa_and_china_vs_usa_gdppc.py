@@ -53,7 +53,7 @@ plt.plot(years, ratio_india, color='#e67e22', linewidth=2.5, label='USA vs. Indi
 plt.plot(years, ratio_china, color='#c0392b', linewidth=2.5, label='USA vs. China Gap')
 
 # CORRECTION IS HERE: Filled in the milestone years list
-milestone_years = [1937, 1947, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020, 2025]
+milestone_years = [1937, 1947, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2015, 2020, 2025]
 
 for yr in milestone_years:
     idx = yr - 1937
@@ -84,6 +84,7 @@ if len(cross_idx) > 0:
                  arrowprops=dict(arrowstyle='->', color='black'),
                  fontsize=10, fontweight='bold', bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3))
 
+plt.yscale("log")
 plt.title('Historical Wealth Gap: USA GDP Per Capita Multiple vs. India & China (1937-2025)', fontsize=14, pad=25, fontweight='bold')
 plt.ylabel('Ratio (USA GDP per capita is X times larger)', fontsize=12)
 plt.xlabel('Year', fontsize=12)
