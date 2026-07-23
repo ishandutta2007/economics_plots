@@ -98,9 +98,9 @@ plt.scatter(
 # Specifically label the all-time high water mark (2018)
 best_2018 = df[df["Year"] == 2018].iloc[0]
 plt.annotate(
-    f"🏆 Historic Peak!\nRank {int(best_2018['Rank'])} of {int(best_2018['Total_Countries'])}\n({best_2018['Percentile']:.1f}th Percentile)",
+    f"🏆 Historic Peak!\nRank {int(best_2018['Rank'])} of {int(best_2018['Total_Countries'])}\n({best_2018['Percentile']:.0f}th Percentile)",
     xy=(2018, best_2018["Percentile"]),
-    xytext=(2020, best_2018["Percentile"] - 1),
+    xytext=(2021, best_2018["Percentile"] + 2),
     arrowprops=dict(
         facecolor="#e74c3c", arrowstyle="->", connectionstyle="arc3,rad=-0.1"
     ),
