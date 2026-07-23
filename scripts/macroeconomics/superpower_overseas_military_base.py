@@ -15,8 +15,8 @@ base_counts = {
     "United States": [2000, 1014, 800, 725, 900, 750],
     "Russia/USSR": [40, 40, 35, 10, 15, 25],
     "United Kingdom": [500, 180, 90, 60, 50, 60],
-    "China": [0.5, 0.5, 0.5, 0.5, 1, 8],   # 0 → 0.5 for log scale (no overseas bases)
-    "India": [0.5, 0.5, 0.5, 1, 1, 4],      # 0 → 0.5 for log scale (no overseas bases)
+    "China": [0.5, 0.5, 0.5, 0.5, 1, 8],  # 0 → 0.5 for log scale (no overseas bases)
+    "India": [0.5, 0.5, 0.5, 1, 1, 4],  # 0 → 0.5 for log scale (no overseas bases)
 }
 
 # Single-axis figure
@@ -97,17 +97,29 @@ def annotate_points(ax, x_data, y_data, color, offset_y=10, position="top"):
 
 
 # Annotate each curve
-annotate_points(ax, years, base_counts["United States"], "#d62728", offset_y=12, position="top")
-annotate_points(ax, years, base_counts["Russia/USSR"], "#1f77b4", offset_y=12, position="top")
-annotate_points(ax, years, base_counts["United Kingdom"], "#2ca02c", offset_y=12, position="bottom")
+annotate_points(
+    ax, years, base_counts["United States"], "#d62728", offset_y=12, position="top"
+)
+annotate_points(
+    ax, years, base_counts["Russia/USSR"], "#1f77b4", offset_y=12, position="top"
+)
+annotate_points(
+    ax, years, base_counts["United Kingdom"], "#2ca02c", offset_y=12, position="bottom"
+)
 
 # Adjusting offsets slightly for overlapping modern Asian postures
-annotate_points(ax, years[-2:], base_counts["China"][-2:], "#ff7f0e", offset_y=14, position="top")
-annotate_points(ax, years[-2:], base_counts["India"][-2:], "#9467bd", offset_y=14, position="bottom")
+annotate_points(
+    ax, years[-2:], base_counts["China"][-2:], "#ff7f0e", offset_y=14, position="top"
+)
+annotate_points(
+    ax, years[-2:], base_counts["India"][-2:], "#9467bd", offset_y=14, position="bottom"
+)
 
 # Labeling and axis boundaries
 ax.set_xlabel("Year", fontsize=11, fontweight="bold", labelpad=10)
-ax.set_ylabel("Number of Overseas Military Bases (log scale)", fontsize=11, fontweight="bold")
+ax.set_ylabel(
+    "Number of Overseas Military Bases (log scale)", fontsize=11, fontweight="bold"
+)
 
 ax.set_yscale("log")
 ax.set_ylim(0.3, 3000)
