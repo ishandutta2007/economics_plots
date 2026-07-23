@@ -98,7 +98,7 @@ plt.scatter(
 # Specifically label the all-time high water mark (2018)
 # Assuming you have isolated the 2018 and 2026 data points
 best_2018 = df[df["Year"] == 2018].iloc[0]
-best_2026 = df[df["Year"] == 2026].iloc[0] 
+best_2026 = df[df["Year"] == 2026].iloc[0]
 
 # 1. Anchor the text at a shared coordinate so both arrows originate from the exact same spot
 text_x = 2022
@@ -109,25 +109,25 @@ plt.annotate(
     f"🏆 Historic Peak!\nRank {int(best_2018['Rank'])} of {int(best_2018['Total_Countries'])}\n({best_2018['Percentile']:.0f}th Percentile)",
     xy=(2018, best_2018["Percentile"]),
     xytext=(text_x, text_y),
-    arrowprops=dict(
-        color="#e74c3c", arrowstyle="->", connectionstyle="arc3,rad=-0.1"
-    ),
+    arrowprops=dict(color="#e74c3c", arrowstyle="->", connectionstyle="arc3,rad=-0.1"),
     fontsize=11,
     fontweight="bold",
     color="#e74c3c",
     ha="center",
-    fontname='Segoe UI Emoji'
+    fontname="Segoe UI Emoji",
 )
 
 # 3. Ghost Annotation (Empty Text + Arrow pointing to 2026)
 plt.annotate(
-    "", # An empty string prevents overlapping text rendering
+    "",  # An empty string prevents overlapping text rendering
     xy=(2026, best_2026["Percentile"]),
-    xytext=(text_x+1, text_y),
+    xytext=(text_x + 1, text_y),
     arrowprops=dict(
-        color="#e74c3c", arrowstyle="->", connectionstyle="arc3,rad=0.1" 
+        color="#e74c3c",
+        arrowstyle="->",
+        connectionstyle="arc3,rad=0.1",
         # Note: Flipped the rad polarity to 0.1 so the arc bows in the opposite direction
-    )
+    ),
 )
 
 # Plot customization
