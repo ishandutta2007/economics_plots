@@ -108,6 +108,7 @@ plt.annotate(
     fontweight="bold",
     color="#e74c3c",
     ha="center",
+    fontname='Segoe UI Emoji'
 )
 
 # Plot customization
