@@ -68,6 +68,7 @@ plt.plot(
 
 # Annotate every individual data point with its Rank / Total Countries string
 prepct = 0
+minpct = 101
 for i, row in df.iterrows():
     year = int(row["Year"])
     rank = int(row["Rank"])
@@ -92,6 +93,7 @@ for i, row in df.iterrows():
         weight="semibold",
     )
     prepct = pct
+    minpct = min(minpct, pct)
 
 # Highlight standout historic peaks (Top-10 finishes)
 top_milestones = df[df["Rank"] <= 10]
@@ -130,7 +132,7 @@ plt.title(
 plt.xlabel("Year", fontsize=12, labelpad=10)
 plt.ylabel("Competitive Percentile (%) — Higher is Better", fontsize=12, labelpad=10)
 plt.xlim(imo_data[0][0] - 1, imo_data[-1][0] + 1)
-plt.ylim(45, 103)
+plt.ylim(minpct - 6, 103)
 plt.grid(True, linestyle=":", alpha=0.6)
 plt.legend(loc="lower left", fontsize=11)
 
