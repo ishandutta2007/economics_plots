@@ -84,7 +84,7 @@ for i, row in df.iterrows():
     minpct = min(minpct, pct)
 
 # Highlight standout historic peaks (Top-10 finishes)
-top_milestones = df[df["Rank"]/df["Total_Countries"] <= 0.20]
+top_milestones = df[df["Rank"] / df["Total_Countries"] <= 0.20]
 plt.scatter(
     top_milestones["Year"],
     top_milestones["Percentile"],
