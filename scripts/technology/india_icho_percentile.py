@@ -113,7 +113,7 @@ plt.annotate(
 
 # Plot customization
 plt.title(
-    "India's IChO Performance Percentile (1989-2026)\nRelative Positioning to Overall Pool Size",
+    f"India's IChO Performance Percentile ({icho_data[0][0]} - {icho_data[-1][0]})\nRelative Positioning to Overall Pool Size",
     fontsize=16,
     fontweight="bold",
     pad=15,
