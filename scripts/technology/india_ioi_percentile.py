@@ -1,34 +1,34 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Historical IOI Data for India (2002 - 2026)
+# Historical IOI Data for India (2003 - 2025)
 # Format: (Year, India's Unofficial Team Rank, Total Participating Countries)
+# Source: stats.ioinformatics.org (unofficial team rank computed from sum of
+# individual scores). India first participated in IOI 2003.
 ioi_data = [
-    (2002, 33, 77),
-    (2003, 35, 75),
-    (2004, 30, 81),
-    (2005, 34, 72),
+    (2003, 29, 69),
+    (2004, 27, 81),
+    (2005, 15, 72),
     (2006, 27, 74),
-    (2007, 31, 76),
-    (2008, 33, 78),
-    (2009, 36, 78),
-    (2010, 32, 80),
-    (2011, 33, 78),
-    (2012, 38, 81),
-    (2013, 29, 77),
-    (2014, 25, 81),
-    (2015, 27, 83),
-    (2016, 26, 80),
+    (2007, 28, 77),
+    (2008, 32, 78),
+    (2009, 24, 78),
+    (2010, 18, 80),
+    (2011, 36, 78),
+    (2012, 51, 81),
+    (2013, 25, 77),
+    (2014, 21, 81),
+    (2015, 24, 83),
+    (2016, 18, 80),
     (2017, 30, 83),
-    (2018, 28, 87),
-    (2019, 31, 87),
-    (2020, 24, 87),
-    (2021, 26, 88),
-    (2022, 23, 89),
-    (2023, 19, 87),
-    (2024, 18, 91),
-    (2025, 15, 90),
-    (2026, 12, 92),
+    (2018, 70, 87),
+    (2019, 33, 87),
+    (2020, 19, 87),
+    (2021, 20, 88),
+    (2022, 20, 88),
+    (2023, 11, 87),
+    (2024, 13, 91),
+    (2025, 29, 84),
 ]
 
 
@@ -94,12 +94,12 @@ plt.scatter(
     label="Top 10 Finishes",
 )
 
-# Specifically label the all-time high water mark (2026)
-best_2026 = df[df["Year"] == 2026].iloc[0]
+# Specifically label the all-time high water mark (2023)
+best_year = df.loc[df["Percentile"].idxmax()]
 plt.annotate(
-    f"🏆 Historic Peak!\nRank {int(best_2026['Rank'])} of {int(best_2026['Total_Countries'])}\n({best_2026['Percentile']:.1f}th Percentile)",
-    xy=(2026, best_2026["Percentile"]),
-    xytext=(2021, best_2026["Percentile"] - 2),
+    f"🏆 Historic Peak!\nRank {int(best_year['Rank'])} of {int(best_year['Total_Countries'])}\n({best_year['Percentile']:.1f}th Percentile)",
+    xy=(best_year["Year"], best_year["Percentile"]),
+    xytext=(best_year["Year"] - 5, best_year["Percentile"] - 2),
     arrowprops=dict(
         facecolor="#e74c3c", arrowstyle="->", connectionstyle="arc3,rad=-0.1"
     ),
@@ -112,7 +112,7 @@ plt.annotate(
 
 # Plot customization
 plt.title(
-    "India's IOI Performance Percentile (1989-2026)\nRelative Positioning to Overall Pool Size",
+    "India's IOI Performance Percentile (2003-2025)\nRelative Positioning to Overall Pool Size",
     fontsize=16,
     fontweight="bold",
     pad=15,
@@ -138,4 +138,4 @@ plt.legend(loc="lower left", fontsize=11)
 # )
 
 plt.tight_layout()
-plt.show()
+plt.savefig('assets/india_ioi_percentile.png')
