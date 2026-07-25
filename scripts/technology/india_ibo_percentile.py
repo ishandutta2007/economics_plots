@@ -138,5 +138,5 @@ plt.text(
 )
 
 plt.tight_layout()
-plt.savefig('assets/india_ibo_percentile.png')
+plt.savefig("assets/india_ibo_percentile.png")
 plt.show()

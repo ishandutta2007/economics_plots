@@ -149,7 +149,7 @@ plt.legend(loc="lower left", fontsize=11)
 plt.axvspan(2019.5, 2021.5, color="#ecf0f1", alpha=0.7, zorder=1)
 plt.text(
     2020.5,
-    minpct+2,
+    minpct + 2,
     "2020 & 2021\nNo Participation",
     color="#7f8c8d",
     fontsize=9,
@@ -158,5 +158,5 @@ plt.text(
 )
 
 plt.tight_layout()
-plt.savefig('assets/india_ipho_percentile.png')
+plt.savefig("assets/india_ipho_percentile.png")
 plt.show()

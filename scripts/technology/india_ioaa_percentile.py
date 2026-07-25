@@ -148,5 +148,5 @@ plt.text(
 )
 
 plt.tight_layout()
-plt.savefig('assets/india_ioaa_percentile.png')
+plt.savefig("assets/india_ioaa_percentile.png")
 plt.show()
