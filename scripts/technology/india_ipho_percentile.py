@@ -133,7 +133,7 @@ plt.annotate(
 
 # Plot customization
 plt.title(
-    "India's IPhO Performance Percentile (1998-2026)\nRelative Positioning to Overall Pool Size",
+    f"India's IPhO Performance Percentile ({ipho_data[0][0]} - {ipho_data[-1][0]})\nRelative Positioning to Overall Pool Size",
     fontsize=16,
     fontweight="bold",
     pad=15,
