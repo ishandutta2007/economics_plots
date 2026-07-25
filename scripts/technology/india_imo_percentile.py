@@ -124,7 +124,7 @@ plt.annotate(
 
 # Plot customization
 plt.title(
-    "India's IMO Performance Percentile (1989-2026)\nRelative Positioning to Overall Pool Size",
+    f"India's IMO Performance Percentile ({imo_data[0][0]} - {imo_data[-1][0]})\nRelative Positioning to Overall Pool Size",
     fontsize=16,
     fontweight="bold",
     pad=15,
