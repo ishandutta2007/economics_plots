@@ -123,7 +123,7 @@ plt.annotate(
 
 # Plot customization
 plt.title(
-    "India's IOAA Performance Percentile (1989-2026)\nRelative Positioning to Overall Pool Size",
+    f"India's IOAA Performance Percentile ({ioaa_data[0][0]} - {ioaa_data[-1][0]})\nRelative Positioning to Overall Pool Size",
     fontsize=16,
     fontweight="bold",
     pad=15,
