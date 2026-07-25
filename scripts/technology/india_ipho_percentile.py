@@ -146,11 +146,11 @@ plt.grid(True, linestyle=":", alpha=0.6)
 plt.legend(loc="lower left", fontsize=11)
 
 # Informative visual anchor for the 2020 gap
-plt.axvspan(2019.5, 2020.5, color="#ecf0f1", alpha=0.7, zorder=1)
+plt.axvspan(2019.5, 2021.5, color="#ecf0f1", alpha=0.7, zorder=1)
 plt.text(
-    2020,
-    55,
-    "2020\nNo Participation",
+    2020.5,
+    minpct+2,
+    "2020 & 2021\nNo Participation",
     color="#7f8c8d",
     fontsize=9,
     ha="center",
