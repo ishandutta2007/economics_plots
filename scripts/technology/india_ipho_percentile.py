@@ -159,4 +159,5 @@ plt.text(
 )
 
 plt.tight_layout()
+plt.savefig('assets/india_ipho_percentile.png')
 plt.show()
