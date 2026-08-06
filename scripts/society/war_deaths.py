@@ -27,6 +27,10 @@ deaths_millions = [
 plt.figure(figsize=(12, 6), dpi=100)
 bars = plt.bar(decades, deaths_millions, color='#b22222', edgecolor='#4a0000', alpha=0.9, width=0.7)
 
+# Add a trend line (line plot overlay)
+plt.plot(decades, deaths_millions, color='#1a1a1a', marker='o', linestyle='-', linewidth=2, alpha=0.7, label='Trend')
+plt.legend(loc='upper right')
+
 # 3. Visual Styling & Labels
 plt.title('Global War-Related Deaths by Decade (1900–2024)\nBased on Mean Estimates of Total Excess Mortality', 
           fontsize=14, fontweight='bold', pad=15, color='#2c3e50')
