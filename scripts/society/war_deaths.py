@@ -27,8 +27,15 @@ deaths_millions = [
 plt.figure(figsize=(12, 6), dpi=100)
 bars = plt.bar(decades, deaths_millions, color='#b22222', edgecolor='#4a0000', alpha=0.9, width=0.7)
 
-# Add a trend line (line plot overlay)
-plt.plot(decades, deaths_millions, color='#1a1a1a', marker='o', linestyle='-', linewidth=2, alpha=0.7, label='Trend')
+# Add a trend line (3-decade rolling mean)
+rolling_mean = []
+for i in range(len(deaths_millions)):
+    start = max(0, i - 1)
+    end = min(len(deaths_millions), i + 2)
+    window = deaths_millions[start:end]
+    rolling_mean.append(sum(window) / len(window))
+
+plt.plot(decades, rolling_mean, color='#1a1a1a', linestyle='-', linewidth=2.5, alpha=0.8, label='3-Decade Trend')
 plt.legend(loc='upper right')
 
 # 3. Visual Styling & Labels
