@@ -32,7 +32,7 @@ plt.plot(
     marker="o", color="#008080", linewidth=2.5, markersize=6, label="Forex Reserves (% of GDP)"
 )
 
-# 4. Highlight key structural economic pivot points
+# 4. Highlight key structural economic pivot points and annotate all data points
 pivots = {
     1991: ("1991 Crisis\n(1.1B Reserves)", "#D9534F"),
     2004: ("Crossed 100B\nReserves", "#F0AD4E"),
@@ -43,9 +43,24 @@ for year, (label, color) in pivots.items():
     val = df.loc[df["Year"] == year, "Forex_as_Percent_of_GDP"].values[0]
     plt.axvline(x=year, color=color, linestyle="--", alpha=0.7)
     plt.annotate(
-        label, xy=(year, val), xytext=(year - 4, val + 1.5),
+        label, xy=(year, val), xytext=(year - 4, val + 2.5),
         arrowprops=dict(facecolor='black', arrowstyle='->', lw=0.8),
-        fontsize=9, fontweight='bold', bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3)
+        fontsize=8, fontweight='bold', bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3)
+    )
+
+# Annotate each individual data point with its Forex as % of GDP value
+for idx, row in df.iterrows():
+    year = int(row["Year"])
+    val = row["Forex_as_Percent_of_GDP"]
+    plt.annotate(
+        f"{val:.1f}%",
+        xy=(year, val),
+        xytext=(0, 6),
+        textcoords="offset points",
+        ha="center",
+        va="bottom",
+        fontsize=7,
+        alpha=0.85
     )
 
 # 5. Format and polish chart elements
@@ -53,7 +68,7 @@ plt.title("India's Foreign Exchange Reserves as a Percentage of GDP (1947–2026
 plt.xlabel("Year", fontsize=11, fontweight='bold')
 plt.ylabel("Forex Reserves (% of GDP)", fontsize=11, fontweight='bold')
 plt.xlim(1945, 2028)
-plt.ylim(0, df["Forex_as_Percent_of_GDP"].max() + 4)
+plt.ylim(0, df["Forex_as_Percent_of_GDP"].max() + 5)
 plt.grid(True, linestyle=":", alpha=0.6)
 plt.legend(loc="upper left")
 
