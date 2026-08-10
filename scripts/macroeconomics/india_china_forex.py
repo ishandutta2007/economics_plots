@@ -61,33 +61,59 @@ plt.plot(
 for idx, row in df_india.iterrows():
     year = int(row["Year"])
     val = row["Forex_as_Percent_of_GDP"]
-    plt.annotate(
-        f"{val:.1f}%",
-        xy=(year, val),
-        xytext=(0, 6),
-        textcoords="offset points",
-        ha="center",
-        va="bottom",
-        fontsize=6.5,
-        color="#004D4D",
-        fontweight="bold"
-    )
+    if year <= 1981:
+        plt.annotate(
+            f"{val:.1f}%",
+            xy=(year, val),
+            xytext=(0, 6),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=6.5,
+            color="#004D4D",
+            fontweight="bold"
+        )
+    else:
+        plt.annotate(
+            f"{val:.1f}%",
+            xy=(year, val),
+            xytext=(0, -20),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=6.5,
+            color="#004D4D",
+            fontweight="bold"
+        )
 
 for idx, row in df_china.iterrows():
     year = int(row["Year"])
     val = row["Forex_as_Percent_of_GDP"]
     # Offset China labels downwards to avoid overlapping when curves are close
-    plt.annotate(
-        f"{val:.1f}%",
-        xy=(year, val),
-        xytext=(0, -10),
-        textcoords="offset points",
-        ha="center",
-        va="top",
-        fontsize=6.5,
-        color="#8B0000",
-        fontweight="bold"
-    )
+    if year <= 1981:
+        plt.annotate(
+            f"{val:.1f}%",
+            xy=(year, val),
+            xytext=(0, -10),
+            textcoords="offset points",
+            ha="center",
+            va="top",
+            fontsize=6.5,
+            color="#8B0000",
+            fontweight="bold"
+        )
+    else:
+        plt.annotate(
+            f"{val:.1f}%",
+            xy=(year, val),
+            xytext=(0, 16),
+            textcoords="offset points",
+            ha="center",
+            va="top",
+            fontsize=6.5,
+            color="#8B0000",
+            fontweight="bold"
+        )
 
 # 5. Format and polish chart elements
 plt.title("Foreign Exchange Reserves as a Percentage of GDP: India vs. China (1947–2026)", fontsize=14, fontweight='bold', pad=15)
