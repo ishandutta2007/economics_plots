@@ -3,7 +3,7 @@ import pandas as pd
 
 # 1. Prepare historical macroeconomic data
 # Figures are in Billions of USD (Nominal values matching historic reporting eras)
-data = {
+data_india = {
     "Year": [
         1947, 1950, 1960, 1965, 1970, 1975, 1980, 1985, 
         1990, 1991, 1992, 1995, 2000, 2004, 2008, 2010, 
@@ -21,35 +21,44 @@ data = {
     ]
 }
 
-# 2. Construct DataFrame and compute ratio
-df = pd.DataFrame(data)
-df["Forex_as_Percent_of_GDP"] = (df["Forex_Reserves_USD_Billion"] / df["GDP_USD_Billion"]) * 100
-
-# 3. Create the plot
-plt.figure(figsize=(12, 6.5))
-plt.plot(
-    df["Year"], df["Forex_as_Percent_of_GDP"], 
-    marker="o", color="#008080", linewidth=2.5, markersize=6, label="Forex Reserves (% of GDP)"
-)
-
-# 4. Highlight key structural economic pivot points and annotate all data points
-pivots = {
-    1991: ("1991 Crisis\n(1.1B Reserves)", "#D9534F"),
-    2004: ("Crossed 100B\nReserves", "#F0AD4E"),
-    2026: ("Current Era\n(692B Reserves)", "#5CB85C")
+data_china = {
+    "Year": [
+        1950, 1960, 1965, 1970, 1975, 1980, 1985, 
+        1990, 1991, 1992, 1995, 2000, 2004, 2008, 2010, 
+        2013, 2015, 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026
+    ],
+    "Forex_Reserves_USD_Billion": [
+        0.15, 0.10, 0.11, 0.18, 0.47, 2.5, 11.9,
+        28.6, 42.6, 19.4, 73.6, 165.6, 609.9, 1946.0, 2847.3,
+        3821.3, 3330.4, 3072.7, 3216.5, 3250.2, 3127.7, 3238.0, 3240.0, 3300.0, 3420.0
+    ],
+    "GDP_USD_Billion": [
+        30.0, 59.7, 70.4, 92.6, 163.6, 191.1, 309.5,
+        360.9, 383.4, 426.9, 734.5, 1211.3, 1955.3, 4598.2, 6087.2,
+        9607.2, 11061.6, 13894.8, 14687.7, 17734.1, 17963.2, 17794.8, 18530.0, 19200.0, 19800.0
+    ]
 }
 
-for year, (label, color) in pivots.items():
-    val = df.loc[df["Year"] == year, "Forex_as_Percent_of_GDP"].values[0]
-    plt.axvline(x=year, color=color, linestyle="--", alpha=0.7)
-    plt.annotate(
-        label, xy=(year, val), xytext=(year - 4, val + 2.5),
-        arrowprops=dict(facecolor='black', arrowstyle='->', lw=0.8),
-        fontsize=8, fontweight='bold', bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3)
-    )
+# 2. Construct DataFrames and compute ratio
+df_india = pd.DataFrame(data_india)
+df_india["Forex_as_Percent_of_GDP"] = (df_india["Forex_Reserves_USD_Billion"] / df_india["GDP_USD_Billion"]) * 100
 
-# Annotate each individual data point with its Forex as % of GDP value
-for idx, row in df.iterrows():
+df_china = pd.DataFrame(data_china)
+df_china["Forex_as_Percent_of_GDP"] = (df_china["Forex_Reserves_USD_Billion"] / df_china["GDP_USD_Billion"]) * 100
+
+# 3. Create the plot
+plt.figure(figsize=(13, 7))
+plt.plot(
+    df_india["Year"], df_india["Forex_as_Percent_of_GDP"], 
+    marker="o", color="#008080", linewidth=2.5, markersize=5, label="India (Forex % of GDP)"
+)
+plt.plot(
+    df_china["Year"], df_china["Forex_as_Percent_of_GDP"], 
+    marker="s", color="#DE2910", linewidth=2.5, markersize=5, label="China (Forex % of GDP)"
+)
+
+# 4. Annotate all individual data points for India and China
+for idx, row in df_india.iterrows():
     year = int(row["Year"])
     val = row["Forex_as_Percent_of_GDP"]
     plt.annotate(
@@ -59,16 +68,34 @@ for idx, row in df.iterrows():
         textcoords="offset points",
         ha="center",
         va="bottom",
-        fontsize=7,
-        alpha=0.85
+        fontsize=6.5,
+        color="#004D4D",
+        fontweight="bold"
+    )
+
+for idx, row in df_china.iterrows():
+    year = int(row["Year"])
+    val = row["Forex_as_Percent_of_GDP"]
+    # Offset China labels downwards to avoid overlapping when curves are close
+    plt.annotate(
+        f"{val:.1f}%",
+        xy=(year, val),
+        xytext=(0, -10),
+        textcoords="offset points",
+        ha="center",
+        va="top",
+        fontsize=6.5,
+        color="#8B0000",
+        fontweight="bold"
     )
 
 # 5. Format and polish chart elements
-plt.title("India's Foreign Exchange Reserves as a Percentage of GDP (1947–2026)", fontsize=14, fontweight='bold', pad=15)
+plt.title("Foreign Exchange Reserves as a Percentage of GDP: India vs. China (1947–2026)", fontsize=14, fontweight='bold', pad=15)
 plt.xlabel("Year", fontsize=11, fontweight='bold')
 plt.ylabel("Forex Reserves (% of GDP)", fontsize=11, fontweight='bold')
 plt.xlim(1945, 2028)
-plt.ylim(0, df["Forex_as_Percent_of_GDP"].max() + 5)
+max_val = max(df_india["Forex_as_Percent_of_GDP"].max(), df_china["Forex_as_Percent_of_GDP"].max())
+plt.ylim(-2, max_val + 7)
 plt.grid(True, linestyle=":", alpha=0.6)
 plt.legend(loc="upper left")
 
