@@ -210,6 +210,8 @@ plt.plot(
 for idx, row in df_india.iterrows():
     year = int(row["Year"])
     val = row["Forex_as_Percent_of_GDP"]
+    if year > 2010 and year % 2 == 0:
+        continue
     if year <= 1981:
         plt.annotate(
             f"{val:.1f}%",
@@ -239,6 +241,8 @@ for idx, row in df_china.iterrows():
     year = int(row["Year"])
     val = row["Forex_as_Percent_of_GDP"]
     # Offset China labels downwards to avoid overlapping when curves are close
+    if year > 2010 and year % 2 == 0:
+        continue
     if year <= 1981:
         plt.annotate(
             f"{val:.1f}%",
