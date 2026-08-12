@@ -5,7 +5,7 @@ import pandas as pd
 data = {
     "Year": list(range(2015, 2027)),
     "US": [
-        0.127,
+        0.127,  # EIA residential avg
         0.126,
         0.129,
         0.129,
@@ -16,7 +16,7 @@ data = {
         0.160,
         0.165,
         0.173,
-        0.188,
+        0.183,  # corrected from 0.188 (EIA STEO forecast: 18.27¢/kWh)
     ],
     "China": [
         0.085,
@@ -43,38 +43,18 @@ data = {
         0.070,
         0.072,
         0.075,
-        0.078,
-        0.080,
-    ],
-    "US_China_Ratio": [
-        1.49,
-        1.54,
-        1.59,
-        1.61,
-        1.69,
-        1.78,
-        1.71,
-        1.83,
-        1.90,
-        1.92,
-        1.99,
-        2.14,
-    ],
-    "US_India_Ratio": [
-        1.79,
-        1.75,
-        1.77,
-        1.74,
-        1.81,
-        2.03,
-        2.01,
-        2.14,
-        2.22,
-        2.20,
-        2.22,
-        2.35,
+        0.071,  # corrected from 0.078 (GlobalPetrolPrices actual: ₹6.78/kWh @ ~85.5 INR/USD)
+        0.074,  # corrected from 0.080 (projected with continued INR depreciation)
     ],
 }
+
+# Compute ratios from price data
+data["US_China_Ratio"] = [
+    round(u / c, 2) for u, c in zip(data["US"], data["China"])
+]
+data["US_India_Ratio"] = [
+    round(u / i, 2) for u, i in zip(data["US"], data["India"])
+]
 df = pd.DataFrame(data)
 
 # 2. Initialize the plot layout
