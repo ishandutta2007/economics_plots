@@ -49,12 +49,8 @@ data = {
 }
 
 # Compute ratios from price data
-data["US_China_Ratio"] = [
-    round(u / c, 2) for u, c in zip(data["US"], data["China"])
-]
-data["US_India_Ratio"] = [
-    round(u / i, 2) for u, i in zip(data["US"], data["India"])
-]
+data["US_China_Ratio"] = [round(u / c, 2) for u, c in zip(data["US"], data["China"])]
+data["US_India_Ratio"] = [round(u / i, 2) for u, i in zip(data["US"], data["India"])]
 df = pd.DataFrame(data)
 
 # 2. Initialize the plot layout
