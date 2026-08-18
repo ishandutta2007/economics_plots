@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # 1. Define dataset including Construction Workers
+raw_monthly_inflation = [1225, 1776, 2266, 3430, 5022, 6554, 9188]
+annual_gdp_pc_inr = [12161, 19863, 31179, 61709, 102351, 142330, 245617]
+baseline = raw_monthly_inflation[0] / (annual_gdp_pc_inr[0] / 12)
 data = {
     "Year": [1995, 2000, 2005, 2010, 2015, 2020, 2026],
     "House Maid / Cook": [550, 1000, 1850, 3750, 6000, 8000, 15750],
@@ -9,9 +12,10 @@ data = {
     "Security Guard": [1500, 2600, 4000, 6250, 9750, 12000, 20750],
     "Janitor / Cleaner": [1000, 1750, 3000, 5250, 8000, 10000, 18000],
     "Construction Worker": [1100, 2000, 3200, 5800, 8500, 11000, 19500],
-    "Core Inflation Curve": [1225, 1776, 2266, 3430, 5022, 6554, 9188],
+    "Core Inflation Curve": [round(x / baseline) for x in raw_monthly_inflation],
+    "GDP Per Capita": [round(x / 12) for x in annual_gdp_pc_inr],
 }
-
+# print(data)
 df = pd.DataFrame(data)
 
 # 2. Setup the figure
@@ -84,13 +88,37 @@ for x, y in zip(df["Year"], df["Core Inflation Curve"]):
         color="red",
     )
 
-# 5. Final Chart Formatting
+# 5. Plot and annotate the Inflation Line
+plt.plot(
+    df["Year"],
+    df["GDP Per Capita"],
+    color="red",
+    linestyle="--",
+    linewidth=3,
+    label="GDP Per Capita(INR)",
+)
+for x, y in zip(df["Year"], df["GDP Per Capita"]):
+    plt.annotate(
+        f"₹{y:,}",
+        xy=(x, y),
+        textcoords="offset points",
+        xytext=(0, -12),
+        ha="center",
+        fontsize=8,
+        color="green",
+    )
+
+# 6. Final Chart Formatting
 plt.title(
     "30-Year Trend of Mean Indian Labor Wages vs. Inflation (1995 - 2026)",
     fontsize=16,
     fontweight="bold",
     pad=20,
 )
+
+# plt.xscale("log")
+plt.yscale("log")
+
 plt.xlabel("Year", fontsize=12, fontweight="bold")
 plt.ylabel("Average Monthly Salary / Scaled Cost (INR)", fontsize=12, fontweight="bold")
 plt.xticks(df["Year"])
