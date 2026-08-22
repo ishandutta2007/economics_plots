@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="Economics & Geopolitical Data Visualizations Banner" width="100%" />
+</p>
+
 # 📈 Economics & Geopolitical Data Visualizations
 
 [![Python](https://img.shields.io/badge/Python-3.7+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)

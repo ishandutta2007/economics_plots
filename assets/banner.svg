@@ -1,0 +1,358 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c16"/>
+      <stop offset="50%" stop-color="#0d1527"/>
+      <stop offset="100%" stop-color="#050811"/>
+    </linearGradient>
+    
+    <linearGradient id="accentCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#4facfe"/>
+    </linearGradient>
+
+    <linearGradient id="accentPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f355da"/>
+      <stop offset="100%" stop-color="#7000ff"/>
+    </linearGradient>
+
+    <linearGradient id="accentEmerald" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="accentAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <linearGradient id="areaGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <linearGradient id="areaGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7000ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7000ff" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#c084fc" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.04)" stroke-width="1"/>
+    </pattern>
+
+    <!-- Filters for Glowing Elements -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <style>
+      .title-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 800;
+        font-size: 46px;
+        letter-spacing: -0.5px;
+      }
+      .subtitle-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 400;
+        font-size: 17px;
+        fill: #94a3b8;
+        letter-spacing: 0.2px;
+      }
+      .badge-text {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+      }
+      
+      /* Dynamic Animations */
+      @keyframes dashMove {
+        0% { stroke-dashoffset: 1000; }
+        100% { stroke-dashoffset: 0; }
+      }
+      @keyframes pulseNode {
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 8px #00f2fe); }
+      }
+      @keyframes pulsePurpleNode {
+        0%, 100% { transform: scale(1); opacity: 0.8; }
+        50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 8px #f355da); }
+      }
+      @keyframes floatSlow {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+      @keyframes floatReverse {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(6px); }
+      }
+      @keyframes barGrow {
+        0%, 100% { transform: scaleY(0.92); }
+        50% { transform: scaleY(1.05); }
+      }
+      @keyframes beaconRing {
+        0% { r: 5px; opacity: 1; }
+        100% { r: 24px; opacity: 0; stroke-width: 1px; }
+      }
+
+      .animated-line-1 {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 0;
+        animation: dashMove 18s linear infinite;
+      }
+      .animated-line-2 {
+        stroke-dasharray: 800;
+        stroke-dashoffset: 0;
+        animation: dashMove 24s linear infinite reverse;
+      }
+      .pulse-node-1 {
+        animation: pulseNode 3s ease-in-out infinite;
+        transform-origin: 1080px 105px;
+      }
+      .pulse-node-2 {
+        animation: pulsePurpleNode 3.5s ease-in-out infinite 0.5s;
+        transform-origin: 960px 170px;
+      }
+      .floating-card-1 {
+        animation: floatSlow 6s ease-in-out infinite;
+      }
+      .floating-card-2 {
+        animation: floatReverse 7s ease-in-out infinite 1s;
+      }
+      .ring-pulse-1 {
+        animation: beaconRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      }
+      .ring-pulse-2 {
+        animation: beaconRing 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite 1s;
+      }
+      .bar-anim-1 {
+        transform-origin: bottom;
+        animation: barGrow 4s ease-in-out infinite;
+      }
+      .bar-anim-2 {
+        transform-origin: bottom;
+        animation: barGrow 4.5s ease-in-out infinite 0.7s;
+      }
+      .bar-anim-3 {
+        transform-origin: bottom;
+        animation: barGrow 5s ease-in-out infinite 1.4s;
+      }
+    </style>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="420" fill="url(#bgGrad)" rx="16"/>
+  <rect width="1200" height="420" fill="url(#grid)" rx="16"/>
+  
+  <!-- Subtle Ambient Glow Orbs -->
+  <circle cx="200" cy="100" r="180" fill="#38bdf8" opacity="0.06" filter="url(#glow)"/>
+  <circle cx="950" cy="200" r="220" fill="#7000ff" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="600" cy="380" r="150" fill="#10b981" opacity="0.04" filter="url(#glow)"/>
+
+  <!-- Left Side: Typography & Badges -->
+  <g transform="translate(60, 0)">
+    <!-- Pill Tag -->
+    <g transform="translate(0, 52)">
+      <rect width="210" height="28" rx="14" fill="rgba(56, 189, 248, 0.1)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+      <circle cx="14" cy="14" r="4" fill="#00f2fe">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="26" y="18" fill="#38bdf8" class="badge-text">DATA INTELLIGENCE SUITE</text>
+    </g>
+
+    <!-- Main Title -->
+    <g transform="translate(0, 125)">
+      <text class="title-text" fill="#ffffff">
+        Economics <tspan fill="url(#accentCyan)">&amp;</tspan> Global
+      </text>
+      <text y="52" class="title-text" fill="url(#glowGrad)">
+        Data Visualizations
+      </text>
+    </g>
+
+    <!-- Subtitle / Mission -->
+    <g transform="translate(0, 222)">
+      <text class="subtitle-text">
+        Transforming complex global datasets into insightful, interactive,
+      </text>
+      <text y="24" class="subtitle-text">
+        and animated visual stories powered by Python &amp; World Bank data.
+      </text>
+    </g>
+
+    <!-- Category Badges -->
+    <g transform="translate(0, 295)">
+      <!-- Badge 1: Macroeconomics -->
+      <g transform="translate(0, 0)">
+        <rect width="136" height="34" rx="8" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1"/>
+        <text x="14" y="21" fill="#38bdf8" font-size="14">🌍</text>
+        <text x="36" y="21" fill="#e2e8f0" class="badge-text">Macro &amp; GDP</text>
+      </g>
+
+      <!-- Badge 2: Tech & AI -->
+      <g transform="translate(146, 0)">
+        <rect width="138" height="34" rx="8" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1"/>
+        <text x="14" y="21" fill="#c084fc" font-size="14">💻</text>
+        <text x="36" y="21" fill="#e2e8f0" class="badge-text">Tech &amp; AI Trends</text>
+      </g>
+
+      <!-- Badge 3: Geopolitics & Energy -->
+      <g transform="translate(294, 0)">
+        <rect width="146" height="34" rx="8" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1"/>
+        <text x="14" y="21" fill="#34d399" font-size="14">⚡</text>
+        <text x="36" y="21" fill="#e2e8f0" class="badge-text">Energy &amp; Trade</text>
+      </g>
+    </g>
+
+    <!-- Bottom Metrics / Mini Highlights -->
+    <g transform="translate(0, 362)">
+      <text fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="12" font-weight="500">
+        <tspan fill="#38bdf8" font-weight="700">50+</tspan> Open-Source Scripts &nbsp;•&nbsp; 
+        <tspan fill="#a855f7" font-weight="700">Dynamic</tspan> Matplotlib &amp; Pandas &nbsp;•&nbsp; 
+        <tspan fill="#34d399" font-weight="700">HD Video</tspan> Animations &amp; Plots
+      </text>
+    </g>
+  </g>
+
+  <!-- Right Side: Graphic Visualizations / Interactive Chart Elements -->
+  <g id="chartVisualization">
+    <!-- Chart Background Glassmorphism Panel -->
+    <rect x="640" y="45" width="500" height="330" rx="16" fill="rgba(15, 23, 42, 0.65)" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1"/>
+    
+    <!-- Top Bar in Window -->
+    <line x1="640" y1="85" x2="1140" y2="85" stroke="rgba(255, 255, 255, 0.06)" stroke-width="1"/>
+    <circle cx="665" cy="65" r="5" fill="#ef4444" opacity="0.8"/>
+    <circle cx="680" cy="65" r="5" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="695" cy="65" r="5" fill="#10b981" opacity="0.8"/>
+    
+    <text x="720" y="69" fill="#64748b" font-family="monospace" font-size="11">global_convergence_trajectory.py</text>
+    
+    <!-- Status Live Indicator -->
+    <g transform="translate(1030, 57)">
+      <rect width="90" height="18" rx="9" fill="rgba(16, 185, 129, 0.15)" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1"/>
+      <circle cx="10" cy="9" r="3" fill="#10b981">
+        <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="18" y="13" fill="#10b981" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI'" font-size="9" font-weight="700">LIVE DYNAMIC</text>
+    </g>
+
+    <!-- Chart Grid Lines -->
+    <g opacity="0.25">
+      <line x1="680" y1="120" x2="1100" y2="120" stroke="#475569" stroke-dasharray="4,4"/>
+      <line x1="680" y1="180" x2="1100" y2="180" stroke="#475569" stroke-dasharray="4,4"/>
+      <line x1="680" y1="240" x2="1100" y2="240" stroke="#475569" stroke-dasharray="4,4"/>
+      <line x1="680" y1="300" x2="1100" y2="300" stroke="#475569" stroke-dasharray="4,4"/>
+      <line x1="680" y1="340" x2="1100" y2="340" stroke="#64748b" stroke-width="1.5"/>
+    </g>
+
+    <!-- Shaded Areas Under Curves -->
+    <path d="M 680 340 L 680 290 Q 740 280, 800 230 T 920 200 T 1020 120 T 1100 100 L 1100 340 Z" fill="url(#areaGrad1)"/>
+    <path d="M 680 340 L 680 310 Q 760 300, 840 260 T 960 170 T 1040 150 T 1100 140 L 1100 340 Z" fill="url(#areaGrad2)"/>
+
+    <!-- Bar Chart Elements (Background Comparison) -->
+    <g class="bar-anim-1">
+      <rect x="710" y="270" width="14" height="70" rx="3" fill="rgba(56, 189, 248, 0.2)"/>
+    </g>
+    <g class="bar-anim-2">
+      <rect x="770" y="240" width="14" height="100" rx="3" fill="rgba(56, 189, 248, 0.25)"/>
+    </g>
+    <g class="bar-anim-3">
+      <rect x="830" y="210" width="14" height="130" rx="3" fill="rgba(56, 189, 248, 0.3)"/>
+    </g>
+    <g class="bar-anim-1">
+      <rect x="890" y="190" width="14" height="150" rx="3" fill="rgba(56, 189, 248, 0.35)"/>
+    </g>
+    <g class="bar-anim-2">
+      <rect x="950" y="160" width="14" height="180" rx="3" fill="rgba(56, 189, 248, 0.4)"/>
+    </g>
+    <g class="bar-anim-3">
+      <rect x="1010" y="130" width="14" height="210" rx="3" fill="rgba(56, 189, 248, 0.45)"/>
+    </g>
+    <g class="bar-anim-1">
+      <rect x="1070" y="110" width="14" height="230" rx="3" fill="rgba(56, 189, 248, 0.5)"/>
+    </g>
+
+    <!-- Dynamic Main Trend Line (Cyan - Emerging Trend) -->
+    <path d="M 680 290 Q 740 280, 800 230 T 920 200 T 1020 120 T 1100 100" 
+          fill="none" 
+          stroke="url(#accentCyan)" 
+          stroke-width="3.5" 
+          stroke-linecap="round"
+          class="animated-line-1"
+          filter="url(#subtleGlow)"/>
+
+    <!-- Dynamic Second Trend Line (Purple/Magenta - Projection) -->
+    <path d="M 680 310 Q 760 300, 840 260 T 960 170 T 1040 150 T 1100 140" 
+          fill="none" 
+          stroke="url(#accentPurple)" 
+          stroke-width="2.5" 
+          stroke-linecap="round"
+          stroke-dasharray="6,6"
+          class="animated-line-2"/>
+
+    <!-- Glowing Nodes on Curve 1 -->
+    <!-- Node 1 -->
+    <g transform="translate(800, 230)">
+      <circle cx="0" cy="0" r="4" fill="#00f2fe" filter="url(#glow)"/>
+      <circle cx="0" cy="0" r="10" stroke="#00f2fe" fill="none" class="ring-pulse-1"/>
+    </g>
+    
+    <!-- Node 2 -->
+    <g transform="translate(920, 200)">
+      <circle cx="0" cy="0" r="4" fill="#00f2fe" filter="url(#glow)"/>
+    </g>
+
+    <!-- Node 3 (Peak) -->
+    <g transform="translate(1080, 105)">
+      <circle cx="0" cy="0" r="6" fill="#ffffff" stroke="#00f2fe" stroke-width="2.5" filter="url(#glow)" class="pulse-node-1"/>
+      <circle cx="0" cy="0" r="14" stroke="#00f2fe" fill="none" class="ring-pulse-2"/>
+    </g>
+
+    <!-- Glowing Nodes on Curve 2 -->
+    <g transform="translate(960, 170)">
+      <circle cx="0" cy="0" r="5" fill="#f355da" filter="url(#glow)" class="pulse-node-2"/>
+    </g>
+
+    <!-- Floating Tooltip Card 1 (Macro Metric) -->
+    <g class="floating-card-1" transform="translate(870, 95)">
+      <rect width="135" height="54" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2" filter="url(#glow)"/>
+      <text x="12" y="20" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI'" font-size="10" font-weight="600">GDP PPP CONVERGENCE</text>
+      <text x="12" y="42" fill="#00f2fe" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI'" font-size="17" font-weight="800">+142.8%</text>
+      <path d="M 102 36 L 110 26 L 118 36" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Floating Tooltip Card 2 (Tech Metric) -->
+    <g class="floating-card-2" transform="translate(670, 195)">
+      <rect width="125" height="48" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="rgba(243, 85, 218, 0.4)" stroke-width="1.2" filter="url(#glow)"/>
+      <text x="10" y="18" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI'" font-size="9" font-weight="600">AI / ENERGY INDEX</text>
+      <text x="10" y="38" fill="#f355da" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI'" font-size="15" font-weight="800">4.8x EXP</text>
+      <circle cx="106" cy="28" r="4" fill="#f355da">
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <!-- Border Gradient Accent Frame -->
+  <rect x="0.5" y="0.5" width="1199" height="419" rx="16" fill="none" stroke="url(#glowGrad)" stroke-width="1" opacity="0.4"/>
+</svg>
