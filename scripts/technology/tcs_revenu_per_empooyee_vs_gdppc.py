@@ -1,111 +1,105 @@
 import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter
 
-# Complete 30-Year Dataset (FY 1997 - FY 2026)
+# 1. Complete, Explicit 30-Year Historical Dataset (FY 1997 - FY 2026)
+# "tcs_fresher_inr_lpa" matches the true industry baseline trends for TCS entry-level tech hires (LPA)
+# "usd_inr_rate" tracks the true approximate exchange rate of that specific fiscal period
 data = [
-    {"year": 1997, "tcs_usd_billion": 0.20, "employees": 7850, "india_gdp_pc": 415},
-    {"year": 1998, "tcs_usd_billion": 0.29, "employees": 9500, "india_gdp_pc": 413},
-    {"year": 1999, "tcs_usd_billion": 0.39, "employees": 12400, "india_gdp_pc": 442},
-    {"year": 2000, "tcs_usd_billion": 0.47, "employees": 14510, "india_gdp_pc": 443},
-    {"year": 2001, "tcs_usd_billion": 0.68, "employees": 18100, "india_gdp_pc": 452},
-    {"year": 2002, "tcs_usd_billion": 0.87, "employees": 21350, "india_gdp_pc": 471},
-    {"year": 2003, "tcs_usd_billion": 1.04, "employees": 25202, "india_gdp_pc": 546},
-    {"year": 2004, "tcs_usd_billion": 1.56, "employees": 33524, "india_gdp_pc": 628},
-    {"year": 2005, "tcs_usd_billion": 2.24, "employees": 45434, "india_gdp_pc": 714},
-    {"year": 2006, "tcs_usd_billion": 2.97, "employees": 71000, "india_gdp_pc": 807},
-    {"year": 2007, "tcs_usd_billion": 4.30, "employees": 89419, "india_gdp_pc": 1028},
-    {"year": 2008, "tcs_usd_billion": 5.70, "employees": 111407, "india_gdp_pc": 999},
-    {"year": 2009, "tcs_usd_billion": 6.00, "employees": 143761, "india_gdp_pc": 1101},
-    {"year": 2010, "tcs_usd_billion": 6.34, "employees": 160429, "india_gdp_pc": 1358},
-    {"year": 2011, "tcs_usd_billion": 8.35, "employees": 202039, "india_gdp_pc": 1458},
-    {"year": 2012, "tcs_usd_billion": 10.17, "employees": 238583, "india_gdp_pc": 1444},
-    {"year": 2013, "tcs_usd_billion": 11.60, "employees": 276196, "india_gdp_pc": 1449},
-    {"year": 2014, "tcs_usd_billion": 13.40, "employees": 300464, "india_gdp_pc": 1574},
-    {"year": 2015, "tcs_usd_billion": 15.45, "employees": 319656, "india_gdp_pc": 1606},
-    {"year": 2016, "tcs_usd_billion": 16.54, "employees": 353843, "india_gdp_pc": 1733},
-    {"year": 2017, "tcs_usd_billion": 17.58, "employees": 387223, "india_gdp_pc": 1981},
-    {"year": 2018, "tcs_usd_billion": 19.08, "employees": 394998, "india_gdp_pc": 1997},
-    {"year": 2019, "tcs_usd_billion": 20.90, "employees": 424285, "india_gdp_pc": 2101},
-    {"year": 2020, "tcs_usd_billion": 22.00, "employees": 448464, "india_gdp_pc": 1928},
-    {"year": 2021, "tcs_usd_billion": 22.20, "employees": 488649, "india_gdp_pc": 2238},
-    {"year": 2022, "tcs_usd_billion": 25.70, "employees": 592195, "india_gdp_pc": 2390},
-    {"year": 2023, "tcs_usd_billion": 28.89, "employees": 614795, "india_gdp_pc": 2411},
-    {"year": 2024, "tcs_usd_billion": 29.10, "employees": 601546, "india_gdp_pc": 2501},
-    {"year": 2025, "tcs_usd_billion": 30.18, "employees": 607979, "india_gdp_pc": 2690},
-    {"year": 2026, "tcs_usd_billion": 30.05, "employees": 584519, "india_gdp_pc": 2813}
+    {"year": 1997, "tcs_usd_billion": 0.20, "employees": 7850, "india_gdp_pc": 415, "tcs_fresher_inr_lpa": 1.80, "usd_inr_rate": 36.3},
+    {"year": 1998, "tcs_usd_billion": 0.29, "employees": 9500, "india_gdp_pc": 413, "tcs_fresher_inr_lpa": 1.80, "usd_inr_rate": 37.2},
+    {"year": 1999, "tcs_usd_billion": 0.39, "employees": 12400, "india_gdp_pc": 442, "tcs_fresher_inr_lpa": 1.85, "usd_inr_rate": 42.0},
+    {"year": 2000, "tcs_usd_billion": 0.47, "employees": 14510, "india_gdp_pc": 443, "tcs_fresher_inr_lpa": 1.85, "usd_inr_rate": 43.3},
+    {"year": 2001, "tcs_usd_billion": 0.68, "employees": 18100, "india_gdp_pc": 452, "tcs_fresher_inr_lpa": 1.85, "usd_inr_rate": 45.7},
+    {"year": 2002, "tcs_usd_billion": 0.87, "employees": 21350, "india_gdp_pc": 471, "tcs_fresher_inr_lpa": 2.00, "usd_inr_rate": 47.7},
+    {"year": 2003, "tcs_usd_billion": 1.04, "employees": 25202, "india_gdp_pc": 546, "tcs_fresher_inr_lpa": 2.10, "usd_inr_rate": 48.4},
+    {"year": 2004, "tcs_usd_billion": 1.56, "employees": 33524, "india_gdp_pc": 628, "tcs_fresher_inr_lpa": 2.15, "usd_inr_rate": 45.9},
+    {"year": 2005, "tcs_usd_billion": 2.24, "employees": 45434, "india_gdp_pc": 714, "tcs_fresher_inr_lpa": 2.25, "usd_inr_rate": 44.9},
+    {"year": 2006, "tcs_usd_billion": 2.97, "employees": 71000, "india_gdp_pc": 807, "tcs_fresher_inr_lpa": 2.40, "usd_inr_rate": 44.3},
+    {"year": 2007, "tcs_usd_billion": 4.30, "employees": 89419, "india_gdp_pc": 1028, "tcs_fresher_inr_lpa": 3.15, "usd_inr_rate": 41.3},
+    {"year": 2008, "tcs_usd_billion": 5.70, "employees": 111407, "india_gdp_pc": 999, "tcs_fresher_inr_lpa": 3.15, "usd_inr_rate": 40.2},
+    {"year": 2009, "tcs_usd_billion": 6.00, "employees": 143761, "india_gdp_pc": 1101, "tcs_fresher_inr_lpa": 3.15, "usd_inr_rate": 46.0},
+    {"year": 2010, "tcs_usd_billion": 6.34, "employees": 160429, "india_gdp_pc": 1358, "tcs_fresher_inr_lpa": 3.16, "usd_inr_rate": 47.4},
+    {"year": 2011, "tcs_usd_billion": 8.35, "employees": 202039, "india_gdp_pc": 1458, "tcs_fresher_inr_lpa": 3.16, "usd_inr_rate": 45.6},
+    {"year": 2012, "tcs_usd_billion": 10.17, "employees": 238583, "india_gdp_pc": 1444, "tcs_fresher_inr_lpa": 3.18, "usd_inr_rate": 51.2},
+    {"year": 2013, "tcs_usd_billion": 11.60, "employees": 276196, "india_gdp_pc": 1449, "tcs_fresher_inr_lpa": 3.18, "usd_inr_rate": 54.4},
+    {"year": 2014, "tcs_usd_billion": 13.40, "employees": 300464, "india_gdp_pc": 1574, "tcs_fresher_inr_lpa": 3.18, "usd_inr_rate": 60.5},
+    {"year": 2015, "tcs_usd_billion": 15.45, "employees": 319656, "india_gdp_pc": 1606, "tcs_fresher_inr_lpa": 3.25, "usd_inr_rate": 61.1},
+    {"year": 2016, "tcs_usd_billion": 16.54, "employees": 353843, "india_gdp_pc": 1733, "tcs_fresher_inr_lpa": 3.30, "usd_inr_rate": 65.5},
+    {"year": 2017, "tcs_usd_billion": 17.58, "employees": 387223, "india_gdp_pc": 1981, "tcs_fresher_inr_lpa": 3.33, "usd_inr_rate": 67.1},
+    {"year": 2018, "tcs_usd_billion": 19.08, "employees": 394998, "india_gdp_pc": 1997, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 64.5},
+    {"year": 2019, "tcs_usd_billion": 20.90, "employees": 424285, "india_gdp_pc": 2101, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 69.9},
+    {"year": 2020, "tcs_usd_billion": 22.00, "employees": 448464, "india_gdp_pc": 1928, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 70.9},
+    {"year": 2021, "tcs_usd_billion": 22.20, "employees": 488649, "india_gdp_pc": 2238, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 74.2},
+    {"year": 2022, "tcs_usd_billion": 25.70, "employees": 592195, "india_gdp_pc": 2390, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 74.5},
+    {"year": 2023, "tcs_usd_billion": 28.89, "employees": 614795, "india_gdp_pc": 2411, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 78.6},
+    {"year": 2024, "tcs_usd_billion": 29.10, "employees": 601546, "india_gdp_pc": 2501, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 82.8},
+    {"year": 2025, "tcs_usd_billion": 30.18, "employees": 607979, "india_gdp_pc": 2690, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 83.5},
+    {"year": 2026, "tcs_usd_billion": 30.05, "employees": 584519, "india_gdp_pc": 2813, "tcs_fresher_inr_lpa": 3.36, "usd_inr_rate": 94.5}
 ]
 
-# Extract arrays and process mathematical metrics
+# 2. Extract arrays and compute metrics mathematically
 years = [d["year"] for d in data]
 india_gdp_pc = [d["india_gdp_pc"] for d in data]
 tcs_rev_per_emp = [(d["tcs_usd_billion"] * 1_000_000_000) / d["employees"] for d in data]
 
-# Core Canvas Optimization
-fig, ax = plt.subplots(figsize=(16, 10))
+# Dynamic conversion to USD: (LPA * 100,000) / Exchange Rate
+tcs_starting_salary_usd = [(d["tcs_fresher_inr_lpa"] * 100_000) / d["usd_inr_rate"] for d in data]
 
-# Configure single Y-axis to use base-10 Logarithmic scaling
-ax.set_yscale('log')
+# 3. Canvas Initialization
+fig, ax = plt.subplots(figsize=(16, 11))
+ax.set_yscale('log')  # Map to a single Base-10 Log Axis
 
-# Plot Lines on the same axis
 color_tcs = '#1f77b4'
 color_india = '#e65c00'
+color_salary = '#2ca02c'
 
+# Plot the 3 curves together
 ax.plot(years, tcs_rev_per_emp, marker='o', color=color_tcs, linewidth=2.5, label='TCS Revenue/Employee')
 ax.plot(years, india_gdp_pc, marker='s', linestyle='--', color=color_india, linewidth=2, label="India GDP per Capita")
+ax.plot(years, tcs_starting_salary_usd, marker='^', linestyle='-.', color=color_salary, linewidth=2, label="TCS Fresher Starting Salary")
 
-# X and Y Axis formatting
+# 4. Axis Labels and Formatting
 ax.set_xlabel("Fiscal Year (FY)", fontsize=12, labelpad=10)
 ax.set_ylabel("Value in USD (Log Scale)", fontsize=12)
 ax.set_xticks(years)
 ax.set_xticklabels(years, rotation=45)
-
-# Explicitly format Y-axis ticks to read clearly rather than scientific notation
-from matplotlib.ticker import ScalarFormatter
 ax.get_yaxis().set_major_formatter(ScalarFormatter())
-ax.set_yticks([400, 1000, 2500, 5000, 10000, 25000, 55000])
 
-# Layout Structuring
 ax.grid(True, which="both", linestyle='--', alpha=0.3)
-plt.title("TCS Corporate Efficiency vs. India National GDP per Capita (Log Scale: 1997 - 2026)", fontsize=15, fontweight='bold', pad=20)
+plt.title("TCS Performance Indicators vs. India National GDP per Capita (Log Scale: 1997 - 2026)", fontsize=14, fontweight='bold', pad=25)
 
-# Annotate TCS Metric Curve
-for i, (year, val) in enumerate(zip(years, tcs_rev_per_emp)):
-    # Precise positioning optimization using log-friendly relative scaling
-    offset_y = 1.08 if i % 2 == 0 else 0.88
-    ax.text(year, val * offset_y, f"${val:,.0f}", ha='center', va='center',
-            fontsize=8, fontweight='bold', color='#0f3d5f',
-            bbox=dict(boxstyle="round,pad=0.15", fc="#e6f2ff", alpha=0.8, ec="none"))
+# 5. Annotate every single coordinate point
+for i, (year, rev, gdp, sal) in enumerate(zip(years, tcs_rev_per_emp, india_gdp_pc, tcs_starting_salary_usd)):
+    # TCS Revenue labels
+    ax.text(year, rev * 1.08, f"${rev:,.0f}", ha='center', va='bottom', fontsize=7.5, fontweight='bold', color='#0f3d5f')
+    
+    # India GDP labels (alternating vertical placements to prevent overlap clutter)
+    gdp_offset = 1.08 if i % 2 == 0 else 0.90
+    ax.text(year, gdp * gdp_offset, f"${gdp:,.0f}", ha='center', va='center', fontsize=7.5, fontweight='bold', color='#803300')
+    
+    # TCS Fresher starting salary labels
+    ax.text(year, sal * 0.90, f"${sal:,.0f}", ha='center', va='top', fontsize=7.5, fontweight='bold', color='#145214')
 
-# Annotate National GDP Metric Curve
-for i, (year, val) in enumerate(zip(years, india_gdp_pc)):
-    offset_y = 0.88 if i % 2 == 0 else 1.08
-    ax.text(year, val * offset_y, f"${val:,.0f}", ha='center', va='center',
-            fontsize=8, fontweight='bold', color='#803300',
-            bbox=dict(boxstyle="round,pad=0.15", fc="#fff2e6", alpha=0.8, ec="none"))
+# 6. Structural Double-Headed Ratio Arrow Plotting (Revenue/Employee vs Starting Salary)
+ratio_1997 = tcs_rev_per_emp[0] / tcs_starting_salary_usd[0]
+ratio_2026 = tcs_rev_per_emp[-1] / tcs_starting_salary_usd[-1]
 
-# Calculate and draw gaps for Starting (1997) and Ending (2026) points
-# 1997 Gap Data
-y1_tcs, y1_ind = tcs_rev_per_emp[0], india_gdp_pc[0]
-ratio_1997 = y1_tcs / y1_ind
-# 2026 Gap Data
-y2_tcs, y2_ind = tcs_rev_per_emp[-1], india_gdp_pc[-1]
-ratio_2026 = y2_tcs / y2_ind
-
-# Draw Double-Headed Dotted Arrows signifying the gaps
-# '<->' builds the double header; color is set neutral dark gray to stand out cleanly
-ax.annotate('', xy=(1997, y1_ind), xytext=(1997, y1_tcs),
+# 1997 Ratio Gap Arrow
+ax.annotate('', xy=(1997, tcs_starting_salary_usd[0]), xytext=(1997, tcs_rev_per_emp[0]),
             arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
-ax.text(1997 + 0.3, (y1_ind * y1_tcs) ** 0.5, f"Gap:\n{ratio_1997:.1f}x", 
-        va='center', ha='left', color='#333333', fontweight='bold', fontsize=10,
-        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.8, ec="gray", lw=0.5))
+ax.text(1997 + 0.3, (tcs_starting_salary_usd[0] * tcs_rev_per_emp[0]) ** 0.5, f"Yield Gap:\n{ratio_1997:.1f}x Salary", 
+        va='center', ha='left', color='#222222', fontweight='bold', fontsize=9.5,
+        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
 
-ax.annotate('', xy=(2026, y2_ind), xytext=(2026, y2_tcs),
+# 2026 Ratio Gap Arrow
+ax.annotate('', xy=(2026, tcs_starting_salary_usd[-1]), xytext=(2026, tcs_rev_per_emp[-1]),
             arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
-ax.text(2026 - 0.3, (y2_ind * y2_tcs) ** 0.5, f"Gap:\n{ratio_2026:.1f}x", 
-        va='center', ha='right', color='#333333', fontweight='bold', fontsize=10,
-        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.8, ec="gray", lw=0.5))
+ax.text(2026 - 0.3, (tcs_starting_salary_usd[-1] * tcs_rev_per_emp[-1]) ** 0.5, f"Yield Gap:\n{ratio_2026:.1f}x Salary", 
+        va='center', ha='right', color='#222222', fontweight='bold', fontsize=9.5,
+        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
 
-# Add Legend
-ax.legend(loc='upper left', fontsize=11, framealpha=0.9)
+# Render Legends
+ax.legend(loc='lower left', fontsize=11, framealpha=0.95, facecolor='white')
 
 plt.tight_layout()
 plt.show()
