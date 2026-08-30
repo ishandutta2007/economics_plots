@@ -73,12 +73,12 @@ for i, (year, rev, gdp, sal) in enumerate(zip(years, tcs_rev_per_emp, india_gdp_
     # TCS Revenue labels
     ax.text(year, rev * 1.08, f"${rev:,.0f}", ha='center', va='bottom', fontsize=7.5, fontweight='bold', color='#0f3d5f')
     
+    # TCS Fresher starting salary labels
+    ax.text(year, sal * 1.08, f"${sal:,.0f}", ha='center', va='bottom', fontsize=7.5, fontweight='bold', color='#145214')
+    
     # India GDP labels (alternating vertical placements to prevent overlap clutter)
     gdp_offset = 1.08 if i % 2 == 0 else 0.90
-    ax.text(year, gdp * gdp_offset, f"${gdp:,.0f}", ha='center', va='center', fontsize=7.5, fontweight='bold', color='#803300')
-    
-    # TCS Fresher starting salary labels
-    ax.text(year, sal * 0.90, f"${sal:,.0f}", ha='center', va='top', fontsize=7.5, fontweight='bold', color='#145214')
+    ax.text(year, gdp * gdp_offset, f"${gdp:,.0f}", ha='center', va='bottom', fontsize=7.5, fontweight='bold', color='#803300')
 
 # 6. Arrow between revenue and salary
 ratio_1997 = tcs_rev_per_emp[0] / tcs_starting_salary_usd[0]
