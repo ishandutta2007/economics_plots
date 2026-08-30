@@ -80,26 +80,43 @@ for i, (year, rev, gdp, sal) in enumerate(zip(years, tcs_rev_per_emp, india_gdp_
     # TCS Fresher starting salary labels
     ax.text(year, sal * 0.90, f"${sal:,.0f}", ha='center', va='top', fontsize=7.5, fontweight='bold', color='#145214')
 
-# 6. Structural Double-Headed Ratio Arrow Plotting (Revenue/Employee vs Starting Salary)
+# 6. Arrow between revenue and salary
 ratio_1997 = tcs_rev_per_emp[0] / tcs_starting_salary_usd[0]
 ratio_2026 = tcs_rev_per_emp[-1] / tcs_starting_salary_usd[-1]
 
 # 1997 Ratio Gap Arrow
 ax.annotate('', xy=(1997, tcs_starting_salary_usd[0]), xytext=(1997, tcs_rev_per_emp[0]),
             arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
-ax.text(1997 + 0.3, (tcs_starting_salary_usd[0] * tcs_rev_per_emp[0]) ** 0.5, f"Yield Gap:\n{ratio_1997:.1f}x Salary", 
+ax.text(1997 + 0.3, (tcs_starting_salary_usd[0] * tcs_rev_per_emp[0]) ** 0.5, f"Margin:\n{ratio_1997:.1f}x Salary", 
         va='center', ha='left', color='#222222', fontweight='bold', fontsize=9.5,
         bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
 
 # 2026 Ratio Gap Arrow
 ax.annotate('', xy=(2026, tcs_starting_salary_usd[-1]), xytext=(2026, tcs_rev_per_emp[-1]),
             arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
-ax.text(2026 - 0.3, (tcs_starting_salary_usd[-1] * tcs_rev_per_emp[-1]) ** 0.5, f"Yield Gap:\n{ratio_2026:.1f}x Salary", 
+ax.text(2026 - 0.3, (tcs_starting_salary_usd[-1] * tcs_rev_per_emp[-1]) ** 0.5, f"Margin:\n{ratio_2026:.1f}x Salary", 
+        va='center', ha='right', color='#222222', fontweight='bold', fontsize=9.5,
+        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
+
+# 7. Arrow between salary and GDP per capita
+ratio_withpc_1997 = tcs_starting_salary_usd[0] / india_gdp_pc[0]
+ratio_withpc_2026 = tcs_starting_salary_usd[-1] / india_gdp_pc[-1]
+# 1997 Ratio Gap Arrow
+ax.annotate('', xy=(1997, tcs_starting_salary_usd[0]), xytext=(1997, india_gdp_pc[0]),
+            arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
+ax.text(1997 + 0.3, (tcs_starting_salary_usd[0] * india_gdp_pc[0]) ** 0.5, f"Salary Gap:\n{ratio_withpc_1997:.1f}x Salary", 
+        va='center', ha='left', color='#222222', fontweight='bold', fontsize=9.5,
+        bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
+
+# 2026 Ratio Gap Arrow
+ax.annotate('', xy=(2026, tcs_starting_salary_usd[-1]), xytext=(2026, india_gdp_pc[-1]),
+            arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2))
+ax.text(2026 - 0.3, (tcs_starting_salary_usd[-1] * india_gdp_pc[-1]) ** 0.5, f"Salary Gap:\n{ratio_withpc_2026:.1f}x Salary", 
         va='center', ha='right', color='#222222', fontweight='bold', fontsize=9.5,
         bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5))
 
 # Render Legends
-ax.legend(loc='lower left', fontsize=11, framealpha=0.95, facecolor='white')
+ax.legend(loc='lower right', fontsize=11, framealpha=0.95, facecolor='white')
 
 plt.tight_layout()
 plt.show()
