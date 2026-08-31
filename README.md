@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/jc4xtF58Ve)
+<a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 
 Transforming complex global datasets into insightful, animated, and interactive visual stories. This repository contains a curated collection of Python scripts leveraging **Matplotlib**, **Pandas**, and **World Bank data** to explore macroeconomics, tech trends, and geopolitical shifts.
 
