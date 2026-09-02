@@ -242,26 +242,26 @@ plt.plot(
     marker="s",
     markersize=5,
 )
-plt.plot(
-    years,
-    usa_delta,
-    color="#0a36af",
-    label="USA - World",
-    linewidth=2.0,
-    linestyle="--",
-    marker="^",
-    markersize=5,
-)
-plt.plot(
-    years,
-    eu_delta,
-    color="#17becf",
-    label="EU - World",
-    linewidth=2.0,
-    linestyle=":",
-    marker="d",
-    markersize=5,
-)
+# plt.plot(
+#     years,
+#     usa_delta,
+#     color="#0a36af",
+#     label="USA - World",
+#     linewidth=2.0,
+#     linestyle="--",
+#     marker="^",
+#     markersize=5,
+# )
+# plt.plot(
+#     years,
+#     eu_delta,
+#     color="#17becf",
+#     label="EU - World",
+#     linewidth=2.0,
+#     linestyle=":",
+#     marker="d",
+#     markersize=5,
+# )
 
 # Horizontal zero baseline reference
 plt.axhline(
@@ -282,7 +282,7 @@ for idx, x in enumerate(years):
         textcoords="offset points",
         xytext=(0, 9),
         ha="center",
-        fontsize=8,
+        fontsize=12,
         color="#9c0f0a",
         fontweight="bold",
     )
@@ -294,38 +294,38 @@ for idx, x in enumerate(years):
         textcoords="offset points",
         xytext=(0, -13),
         ha="center",
-        fontsize=8,
+        fontsize=12,
         color="#b35300",
         fontweight="bold",
     )
 
-    # USA: Alternated or shifted slightly left to clear visual lanes
-    plt.annotate(
-        f"{usa_delta[idx]:+.1f}",
-        (x, usa_delta[idx]),
-        textcoords="offset points",
-        xytext=(-6, 8),
-        ha="right",
-        fontsize=7.5,
-        color="#06216b",
-        alpha=0.9,
-    )
+    # # USA: Alternated or shifted slightly left to clear visual lanes
+    # plt.annotate(
+    #     f"{usa_delta[idx]:+.1f}",
+    #     (x, usa_delta[idx]),
+    #     textcoords="offset points",
+    #     xytext=(-6, 8),
+    #     ha="right",
+    #     fontsize=7.5,
+    #     color="#06216b",
+    #     alpha=0.9,
+    # )
 
-    # EU: Alternated or shifted slightly right to avoid colliding with USA points
-    plt.annotate(
-        f"{eu_delta[idx]:+.1f}",
-        (x, eu_delta[idx]),
-        textcoords="offset points",
-        xytext=(6, -11),
-        ha="left",
-        fontsize=7.5,
-        color="#007a87",
-        alpha=0.9,
-    )
+    # # EU: Alternated or shifted slightly right to avoid colliding with USA points
+    # plt.annotate(
+    #     f"{eu_delta[idx]:+.1f}",
+    #     (x, eu_delta[idx]),
+    #     textcoords="offset points",
+    #     xytext=(6, -11),
+    #     ha="left",
+    #     fontsize=7.5,
+    #     color="#007a87",
+    #     alpha=0.9,
+    # )
 
 # Grid layout calibration
 plt.title(
-    "Global Growth Outperformance Gap (1991 - 2025)\nAll 140 Individual Annual Data Points Fully Annotated",
+    "Net Growth ie substracting world average (1991 - 2025)",
     fontsize=18,
     pad=25,
     fontweight="bold",
