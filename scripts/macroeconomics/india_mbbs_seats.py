@@ -35,12 +35,12 @@ for x, y in zip(years, intake_capacity):
 
 # Vertical Broken Dotted Delta Indicator at 2026 Axis Level
 # Lower segment (1996 baseline height to text box)
-ax1.plot([2026, 2026], [13000, 50000], color=color_intake, linestyle=":", linewidth=2)
+ax1.plot([2026, 2026], [13000, 50000], color=color_intake, linestyle=":", linewidth=2, marker='v', markevery=[0])
 # Upper segment (text box to 2026 peak height)
-ax1.plot([2026, 2026], [90000, 136939], color=color_intake, linestyle=":", linewidth=2, marker='v', markevery=[1])
+ax1.plot([2026, 2026], [90000, 136939], color=color_intake, linestyle=":", linewidth=2, marker='^', markevery=[1])
 
 # Text callout bridging the break in the vertical line
-ax1.text(2026, 70000, "Δ +123,939\n(10.5x Growth)", 
+ax1.text(2026, 70000, "10.5x Growth", 
          color=color_intake, fontsize=10, fontweight='bold', ha='center', va='center',
          bbox=dict(boxstyle='square,pad=0.3', fc='white', alpha=1.0, ec=color_intake, lw=1))
 
@@ -69,12 +69,12 @@ for x, y in zip(years, population_billions):
 
 # Vertical Broken Dotted Delta Indicator at 2026 Axis Level
 # Lower segment (1996 baseline height to text box)
-ax2.plot([2026, 2026], [0.971, 1.130], color=color_pop, linestyle=":", linewidth=2)
+ax2.plot([2026, 2026], [0.971, 1.130], color=color_pop, linestyle=":", linewidth=2, marker='v', markevery=[0])
 # Upper segment (text box to 2026 peak height)
-ax2.plot([2026, 2026], [1.270, 1.450], color=color_pop, linestyle=":", linewidth=2, marker='v', markevery=[1])
+ax2.plot([2026, 2026], [1.270, 1.450], color=color_pop, linestyle=":", linewidth=2, marker='^', markevery=[1])
 
 # Text callout bridging the break in the vertical line
-ax2.text(2026, 1.200, "Δ +0.479B\n(1.49x Growth)", 
+ax2.text(2026, 1.200, "1.49x Growth", 
          color=color_pop, fontsize=10, fontweight='bold', ha='center', va='center',
          bbox=dict(boxstyle='square,pad=0.3', fc='white', alpha=1.0, ec=color_pop, lw=1))
 
