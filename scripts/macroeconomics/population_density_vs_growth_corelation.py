@@ -21,7 +21,6 @@ LAND_FILE = "API_AG.LND.TOTL.K2_DS2_en_csv_v2.csv"
 
 
 def load_indicator(filename):
-
     df = pd.read_csv(filename, skiprows=4)
 
     keep = ["Country Name", "Country Code", START_YEAR, END_YEAR]
