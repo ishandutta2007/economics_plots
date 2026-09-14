@@ -91,7 +91,7 @@ for country, data, color in all_data:
         # For all preceding points, just show the value, centered above the marker
         else:
             label_text = f"{val}%"
-            if country in ["India","S. Korea"]:
+            if country in ["India", "S. Korea"]:
                 xy_offset = (0, -18)
             else:
                 xy_offset = (0, 8)
