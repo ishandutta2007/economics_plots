@@ -1,10 +1,52 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 
-# 1. Complete, Explicit 30-Year Historical Dataset (FY 1997 - FY 2026)
+# 1. Complete, Explicit Historical Dataset (FY 1990 - FY 2026)
 # "tcs_fresher_inr_lpa" matches the true industry baseline trends for TCS entry-level tech hires (LPA)
 # "usd_inr_rate" tracks the true approximate exchange rate of that specific fiscal period
 data = [
+    # {
+    #     "year": 1990,
+    #     "india_gdp_pc": 368,
+    #     "tcs_fresher_inr_lpa": 0.45,
+    #     "usd_inr_rate": 17.5,
+    # },
+    # {
+    #     "year": 1991,
+    #     "india_gdp_pc": 303,
+    #     "tcs_fresher_inr_lpa": 0.50,
+    #     "usd_inr_rate": 22.7,
+    # },
+    # {
+    #     "year": 1992,
+    #     "india_gdp_pc": 317,
+    #     "tcs_fresher_inr_lpa": 0.72,
+    #     "usd_inr_rate": 25.9,
+    # },
+    # {
+    #     "year": 1993,
+    #     "india_gdp_pc": 301,
+    #     "tcs_fresher_inr_lpa": 0.96,
+    #     "usd_inr_rate": 30.5,
+    # },
+    # {
+    #     "year": 1994,
+    #     "india_gdp_pc": 346,
+    #     "tcs_fresher_inr_lpa": 1.20,
+    #     "usd_inr_rate": 31.4,
+    # },
+    # {
+    #     "year": 1995,
+    #     "india_gdp_pc": 374,
+    #     "tcs_fresher_inr_lpa": 1.44,
+    #     "usd_inr_rate": 32.4,
+    # },
+    # {
+    #     "year": 1996,
+    #     "india_gdp_pc": 400,
+    #     "tcs_fresher_inr_lpa": 1.60,
+    #     "usd_inr_rate": 35.4,
+    # },
     {
         "year": 1997,
         "india_gdp_pc": 415,
@@ -232,28 +274,33 @@ ax.set_xticks(years)
 ax.set_xticklabels(years, rotation=45)
 ax.get_yaxis().set_major_formatter(ScalarFormatter())
 
+start_year = data[0]["year"]
+end_year = data[-1]["year"]
+
 ax.grid(True, which="both", linestyle="--", alpha=0.3)
 plt.title(
-    "TCS Salaries vs India GDP per Capita (Log Scale: 1997 - 2026)",
+    f"TCS Salaries vs India GDP per Capita (Log Scale: {start_year} - {end_year})",
     fontsize=14,
     fontweight="bold",
     pad=25,
 )
 
 # 5. Annotate every single coordinate point
-for i, (year, gdp, sal) in enumerate(
+for i, (year, gdp, sal, d) in enumerate(
     zip(
         years,
         india_gdp_pc,
-        tcs_starting_salary_usd
+        tcs_starting_salary_usd,
+        data,
     )
 ):
+    sal_inr = d["tcs_fresher_inr_lpa"]
     # TCS Fresher starting salary labels
-    tcs_sal_offset = 0.92 if i % 2 == 0 else 1.08
+    tcs_sal_offset = 0.92 if i % 2 == 1 else 1.08
     ax.text(
         year,
         sal * tcs_sal_offset,
-        f"${sal:,.0f}",
+        f"${sal:,.0f}\n(₹{sal_inr:.2f}L)",
         ha="center",
         va="bottom",
         fontsize=7.5,
@@ -262,7 +309,7 @@ for i, (year, gdp, sal) in enumerate(
     )
 
     # India GDP labels
-    gdp_offset = 1.08 if i % 2 == 0 else 0.88
+    gdp_offset = 1.08 if i % 2 == 1 else 0.88
     ax.text(
         year,
         gdp * gdp_offset,
@@ -275,19 +322,19 @@ for i, (year, gdp, sal) in enumerate(
     )
 
 # 7. Arrow between salary and GDP per capita
-ratio_withpc_1997 = tcs_starting_salary_usd[0] / india_gdp_pc[0]
-ratio_withpc_2026 = tcs_starting_salary_usd[-1] / india_gdp_pc[-1]
-# 1997 Ratio Gap Arrow
+ratio_withpc_start = tcs_starting_salary_usd[0] / india_gdp_pc[0]
+ratio_withpc_end = tcs_starting_salary_usd[-1] / india_gdp_pc[-1]
+# First Year Ratio Gap Arrow
 ax.annotate(
     "",
-    xy=(1997, tcs_starting_salary_usd[0]),
-    xytext=(1997, india_gdp_pc[0]),
+    xy=(start_year, tcs_starting_salary_usd[0]),
+    xytext=(start_year, india_gdp_pc[0]),
     arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2),
 )
 ax.text(
-    1997 + 0.3,
+    start_year + 0.3,
     (tcs_starting_salary_usd[0] * india_gdp_pc[0]) ** 0.5,
-    f"Salary Gap:\n{ratio_withpc_1997:.1f}x Salary",
+    f"Salary Gap:\n{ratio_withpc_start:.1f}x Salary",
     va="center",
     ha="left",
     color="#222222",
@@ -296,17 +343,17 @@ ax.text(
     bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5),
 )
 
-# 2026 Ratio Gap Arrow
+# Last Year Ratio Gap Arrow
 ax.annotate(
     "",
-    xy=(2026, tcs_starting_salary_usd[-1]),
-    xytext=(2026, india_gdp_pc[-1]),
+    xy=(end_year, tcs_starting_salary_usd[-1]),
+    xytext=(end_year, india_gdp_pc[-1]),
     arrowprops=dict(arrowstyle="<->", linestyle=":", color="#333333", linewidth=2),
 )
 ax.text(
-    2026 - 0.3,
+    end_year - 0.3,
     (tcs_starting_salary_usd[-1] * india_gdp_pc[-1]) ** 0.5,
-    f"Salary Gap:\n{ratio_withpc_2026:.1f}x Salary",
+    f"Salary Gap:\n{ratio_withpc_end:.1f}x Salary",
     va="center",
     ha="right",
     color="#222222",
