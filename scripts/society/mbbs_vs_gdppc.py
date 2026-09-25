@@ -298,7 +298,7 @@ for i, (year, gdp, sal, d) in enumerate(
 ):
     sal_inr = d["mbbs_fresher_inr_lpa"]
     # MBBS Doctor starting salary labels
-    doc_sal_offset = 0.92 if i % 2 == 1 else 1.08
+    doc_sal_offset = 0.82 if i % 2 == 1 else 1.08
     ax.text(
         year,
         sal * doc_sal_offset,
@@ -312,7 +312,7 @@ for i, (year, gdp, sal, d) in enumerate(
 
     # India GDP labels
     gdp_inr_lakhs = (gdp * d["usd_inr_rate"]) / 100_000
-    gdp_offset = 1.08 if i % 2 == 1 else 0.88
+    gdp_offset = 1.08 if i % 2 == 1 else 0.83
     ax.text(
         year,
         gdp * gdp_offset,
