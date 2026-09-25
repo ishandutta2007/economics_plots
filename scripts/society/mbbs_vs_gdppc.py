@@ -9,42 +9,42 @@ from matplotlib.ticker import ScalarFormatter
 #   across 4th, 5th, 6th, and 7th Central Pay Commissions, including Basic Pay, NPA of 20-25%, DA, HRA, and Transport Allowance)
 # - "usd_inr_rate": Annual average USD/INR exchange rate (Source: RBI Handbook of Statistics on the Indian Economy)
 data = [
-    {
-        "year": 1990,
-        "india_gdp_pc": 371,
-        "mbbs_fresher_inr_lpa": 0.42,
-        "usd_inr_rate": 17.5,
-    },
-    {
-        "year": 1991,
-        "india_gdp_pc": 309,
-        "mbbs_fresher_inr_lpa": 0.48,
-        "usd_inr_rate": 22.7,
-    },
-    {
-        "year": 1992,
-        "india_gdp_pc": 314,
-        "mbbs_fresher_inr_lpa": 0.55,
-        "usd_inr_rate": 25.9,
-    },
-    {
-        "year": 1993,
-        "india_gdp_pc": 302,
-        "mbbs_fresher_inr_lpa": 0.64,
-        "usd_inr_rate": 30.5,
-    },
-    {
-        "year": 1994,
-        "india_gdp_pc": 346,
-        "mbbs_fresher_inr_lpa": 0.74,
-        "usd_inr_rate": 31.4,
-    },
-    {
-        "year": 1995,
-        "india_gdp_pc": 374,
-        "mbbs_fresher_inr_lpa": 0.86,
-        "usd_inr_rate": 32.4,
-    },
+    # {
+    #     "year": 1990,
+    #     "india_gdp_pc": 371,
+    #     "mbbs_fresher_inr_lpa": 0.42,
+    #     "usd_inr_rate": 17.5,
+    # },
+    # {
+    #     "year": 1991,
+    #     "india_gdp_pc": 309,
+    #     "mbbs_fresher_inr_lpa": 0.48,
+    #     "usd_inr_rate": 22.7,
+    # },
+    # {
+    #     "year": 1992,
+    #     "india_gdp_pc": 314,
+    #     "mbbs_fresher_inr_lpa": 0.55,
+    #     "usd_inr_rate": 25.9,
+    # },
+    # {
+    #     "year": 1993,
+    #     "india_gdp_pc": 302,
+    #     "mbbs_fresher_inr_lpa": 0.64,
+    #     "usd_inr_rate": 30.5,
+    # },
+    # {
+    #     "year": 1994,
+    #     "india_gdp_pc": 346,
+    #     "mbbs_fresher_inr_lpa": 0.74,
+    #     "usd_inr_rate": 31.4,
+    # },
+    # {
+    #     "year": 1995,
+    #     "india_gdp_pc": 374,
+    #     "mbbs_fresher_inr_lpa": 0.86,
+    #     "usd_inr_rate": 32.4,
+    # },
     {
         "year": 1996,
         "india_gdp_pc": 400,
