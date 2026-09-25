@@ -311,11 +311,12 @@ for i, (year, gdp, sal, d) in enumerate(
     )
 
     # India GDP labels
+    gdp_inr_lakhs = (gdp * d["usd_inr_rate"]) / 100_000
     gdp_offset = 1.08 if i % 2 == 1 else 0.88
     ax.text(
         year,
         gdp * gdp_offset,
-        f"${gdp:,.0f}",
+        f"${gdp:,.0f}\n(₹{gdp_inr_lakhs:.2f}L)",
         ha="center",
         va="bottom",
         fontsize=7.5,
@@ -336,12 +337,12 @@ ax.annotate(
 ax.text(
     start_year + 0.3,
     (tcs_starting_salary_usd[0] * india_gdp_pc[0]) ** 0.5,
-    f"Salary Gap:\n{ratio_withpc_start:.1f}x Salary",
+    f"Salary to GDPPC Ratio: {ratio_withpc_start:.1f}x",
     va="center",
     ha="left",
     color="#222222",
     fontweight="bold",
-    fontsize=9.5,
+    fontsize=12.5,
     bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5),
 )
 
@@ -355,12 +356,12 @@ ax.annotate(
 ax.text(
     end_year - 0.3,
     (tcs_starting_salary_usd[-1] * india_gdp_pc[-1]) ** 0.5,
-    f"Salary Gap:\n{ratio_withpc_end:.1f}x Salary",
+    f"Salary to GDPPC Ratio: {ratio_withpc_end:.1f}x",
     va="center",
     ha="right",
     color="#222222",
     fontweight="bold",
-    fontsize=9.5,
+    fontsize=12.5,
     bbox=dict(boxstyle="square,pad=0.2", fc="white", alpha=0.85, ec="gray", lw=0.5),
 )
 
