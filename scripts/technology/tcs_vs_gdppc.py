@@ -7,42 +7,42 @@ from matplotlib.ticker import ScalarFormatter
 # - "tcs_fresher_inr_lpa": Baseline CTC for TCS entry-level tech hires in LPA (Assistant System Engineer-Trainee / "Ninja" track; official CTC from 2018-2026 is ₹3,36,877)
 # - "usd_inr_rate": Annual average USD/INR exchange rate (Source: RBI Handbook of Statistics on the Indian Economy)
 data = [
-    {
-        "year": 1990,
-        "india_gdp_pc": 371,
-        "tcs_fresher_inr_lpa": 0.45,
-        "usd_inr_rate": 17.5,
-    },
-    {
-        "year": 1991,
-        "india_gdp_pc": 309,
-        "tcs_fresher_inr_lpa": 0.50,
-        "usd_inr_rate": 22.7,
-    },
-    {
-        "year": 1992,
-        "india_gdp_pc": 314,
-        "tcs_fresher_inr_lpa": 0.72,
-        "usd_inr_rate": 25.9,
-    },
-    {
-        "year": 1993,
-        "india_gdp_pc": 302,
-        "tcs_fresher_inr_lpa": 0.96,
-        "usd_inr_rate": 30.5,
-    },
-    {
-        "year": 1994,
-        "india_gdp_pc": 346,
-        "tcs_fresher_inr_lpa": 1.20,
-        "usd_inr_rate": 31.4,
-    },
-    {
-        "year": 1995,
-        "india_gdp_pc": 374,
-        "tcs_fresher_inr_lpa": 1.44,
-        "usd_inr_rate": 32.4,
-    },
+    # {
+    #     "year": 1990,
+    #     "india_gdp_pc": 371,
+    #     "tcs_fresher_inr_lpa": 0.45,
+    #     "usd_inr_rate": 17.5,
+    # },
+    # {
+    #     "year": 1991,
+    #     "india_gdp_pc": 309,
+    #     "tcs_fresher_inr_lpa": 0.50,
+    #     "usd_inr_rate": 22.7,
+    # },
+    # {
+    #     "year": 1992,
+    #     "india_gdp_pc": 314,
+    #     "tcs_fresher_inr_lpa": 0.72,
+    #     "usd_inr_rate": 25.9,
+    # },
+    # {
+    #     "year": 1993,
+    #     "india_gdp_pc": 302,
+    #     "tcs_fresher_inr_lpa": 0.96,
+    #     "usd_inr_rate": 30.5,
+    # },
+    # {
+    #     "year": 1994,
+    #     "india_gdp_pc": 346,
+    #     "tcs_fresher_inr_lpa": 1.20,
+    #     "usd_inr_rate": 31.4,
+    # },
+    # {
+    #     "year": 1995,
+    #     "india_gdp_pc": 374,
+    #     "tcs_fresher_inr_lpa": 1.44,
+    #     "usd_inr_rate": 32.4,
+    # },
     {
         "year": 1996,
         "india_gdp_pc": 400,
