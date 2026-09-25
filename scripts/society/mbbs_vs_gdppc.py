@@ -289,9 +289,9 @@ doctor_central_usd = [
 fig, ax = plt.subplots(figsize=(16, 11))
 ax.set_yscale("log")  # Map to a single Base-10 Log Axis
 
-color_market = "#0284c7"   # Vivid Medical Blue (Private RMO / National Median)
+color_market = "#0284c7"  # Vivid Medical Blue (Private RMO / National Median)
 color_central = "#7c3aed"  # Purple (Central Govt / AIIMS Top Tier)
-color_india = "#e65c00"    # Warm Orange (India GDP per Capita)
+color_india = "#e65c00"  # Warm Orange (India GDP per Capita)
 
 # Plot curves
 ax.plot(
@@ -394,7 +394,9 @@ for i, (year, gdp, sal_mkt, sal_cen, d) in enumerate(
             fontsize=7,
             fontweight="bold",
             color="#5b21b6",
-            bbox=dict(boxstyle="round,pad=0.15", fc="#f5f3ff", ec="#8b5cf6", lw=0.5, alpha=0.9),
+            bbox=dict(
+                boxstyle="round,pad=0.15", fc="#f5f3ff", ec="#8b5cf6", lw=0.5, alpha=0.9
+            ),
         )
 
 # 6. Arrows between Salaries and GDP per capita
